@@ -9,7 +9,7 @@ require_once(DIR_CONFIG . 'config_tuning.php');
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
-// Application Classes
+// Application Classe
 require_once(DIR_SYSTEM . 'library/currency.php');
 require_once(DIR_SYSTEM . 'library/user.php');
 require_once(DIR_SYSTEM . 'library/weight.php');
@@ -30,14 +30,14 @@ $registry->set('config', $config);
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 $registry->set('db', $db);
 
-// Settings
+// Setting
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
- 
+
 foreach ($query->rows as $setting) {
 	$config->set($setting['key'], $setting['value']);
 }
 
-// Log 
+// Log
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
@@ -66,7 +66,7 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	if ($config->get('config_error_display')) {
 		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
 	}
-	
+
 	if ($config->get('config_error_log')) {
 		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
 	}
@@ -84,7 +84,7 @@ $registry->set('request', $request);
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
-$registry->set('response', $response); 
+$registry->set('response', $response);
 
 // Session
 $registry->set('session', new Session());
@@ -98,7 +98,7 @@ $registry->set('document', new Document());
 // Language
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language"); 
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "language");
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = array(
@@ -114,7 +114,7 @@ foreach ($query->rows as $result) {
 $config->set('config_language_id', $languages[$config->get('config_admin_language')]['language_id']);
 
 $language = new Language($languages[$config->get('config_admin_language')]['directory']);
-$language->load($languages[$config->get('config_admin_language')]['filename']);	
+$language->load($languages[$config->get('config_admin_language')]['filename']);
 $registry->set('language', $language);
 
 // Currency
@@ -136,26 +136,26 @@ $controller = new Front($registry);
 if (isset($request->get['mode'])) {
 
 	if( $request->get['mode'] == 'checkauth') {
-	
+
 		$action = new Action('dataexchange/exchange1c/modeCheckauth');
-		
+
 	} elseif( $request->get['mode'] == 'init') {
-	
+
 		$action = new Action('dataexchange/exchange1c/modeInit');
-		
+
 	} elseif( $request->get['mode'] == 'file') {
-	
+
 		$action = new Action('dataexchange/exchange1c/modeFile');
-		
+
 	} elseif( $request->get['mode'] == 'import') {
-	
+
 		$action = new Action('dataexchange/exchange1c/modeImport');
-		
+
 	} else {
 		echo "success\n";
 		exit;
 	}
-	
+
 
 } else {
 	echo "success\n";

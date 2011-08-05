@@ -1,7 +1,7 @@
 <?php
 // Heading
 $_['heading_title']    = 'Карта сайта';
- 
+
 // Text
 $_['text_special']     = 'Специальные предложения';
 $_['text_account']     = 'Личный кабинет';

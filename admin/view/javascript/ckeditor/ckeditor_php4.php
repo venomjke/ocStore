@@ -343,7 +343,7 @@ class CKEditor
 	 * Prints javascript code.
 	 * \private
 	 *
-	 * @param string $js
+	 * @param string $j
 	 */
 	function script($js)
 	{
@@ -423,7 +423,7 @@ class CKEditor
 					if (!isset($returnedEvents[$eventName])) {
 						$returnedEvents[$eventName] = array();
 					}
-					// Return only new events
+					// Return only new event
 					if (!in_array($code, $returnedEvents[$eventName])) {
 						$out .= ($code ? "\n" : "") . "CKEDITOR.on('". $eventName ."', $code);";
 						$returnedEvents[$eventName][] = $code;

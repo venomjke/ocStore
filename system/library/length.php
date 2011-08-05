@@ -1,13 +1,13 @@
 <?php
 final class Length {
 	private $lengths = array();
-	
+
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
 		$this->config = $registry->get('config');
 
 		$length_class_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "length_class mc LEFT JOIN " . DB_PREFIX . "length_class_description mcd ON (mc.length_class_id = mcd.length_class_id) WHERE mcd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
-    
+
     	foreach ($length_class_query->rows as $result) {
       		$this->lengths[$result['length_class_id']] = array(
 				'length_class_id' => $result['length_class_id'],
@@ -17,24 +17,24 @@ final class Length {
       		);
     	}
   	}
-	  
+
   	public function convert($value, $from, $to) {
 		if ($from == $to) {
       		return $value;
 		}
-		
+
 		if (isset($this->lengths[$from])) {
 			$from = $this->lengths[$from]['value'];
 		} else {
 			$from = 0;
 		}
-		
+
 		if (isset($this->lengths[$to])) {
 			$to = $this->lengths[$to]['value'];
 		} else {
 			$to = 0;
-		}		
-		
+		}
+
       	return $value * ($to / $from);
   	}
 

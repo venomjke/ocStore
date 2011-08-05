@@ -5,7 +5,7 @@ class ControllerStep4 extends Controller {
 			'header',
 			'footer'
 		);
-		
+
 		$this->template = 'step_4.tpl';
 
 		$this->response->setOutput($this->render(TRUE));

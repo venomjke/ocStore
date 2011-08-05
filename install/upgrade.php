@@ -58,7 +58,7 @@ if (!$link = @mysql_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD)) {
 		$output .= '// Параметр имеет значение, только если CONF_SESSION_DIR = \'opencart\'' . "\n";
 		$output .= 'define(\'CONF_SESSION_LIFETIME\', ' . (defined('CONF_SESSION_LIFETIME') ? CONF_SESSION_LIFETIME : '180') . ');' . "\n";
 		$output .= '?>';
-		
+
 		if ($file = @fopen(DIR_CONFIG . 'config_tuning.php', 'w')) {
 			fwrite($file, $output);
 			fclose($file);

@@ -12,7 +12,7 @@ define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
 
-// Startup 
+// Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
 // Registry
@@ -35,7 +35,7 @@ $registry->set('response', $response);
 $document = new Document();
 $registry->set('document', $document);
 
-// Front Controller 
+// Front Controller
 $controller = new Front($registry);
 
 // Router

@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']     = 'Estimate Shipping &amp; Taxes';
 // Text
 $_['text_shipping']     = 'Enter your destination to get a shipping estimate.';

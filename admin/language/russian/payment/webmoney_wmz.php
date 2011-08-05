@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      	= 'Webmoney WMZ';
 
-// Text 
+// Text
 $_['text_payment']      	= 'Оплаты';
 $_['text_success']       	= 'Настройки модуля обновлены!';
 $_['text_webmoney_wmz'] 		= '<a onclick="window.open(\'http://webmoney.ru\');"><img src="/image/payment/webmoney_wmz.gif" alt="Webmoney" title="Webmoney" style="border: 1px solid #EEEEEE;" height="25px" /></a>';

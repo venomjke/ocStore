@@ -1,7 +1,7 @@
 <?php
 // Heading
 $_['heading_title']     = 'Поиск';
- 
+
 // Text
 $_['text_search']       = 'Товары, соответствующие критериям поиска';
 $_['text_keyword']      = 'Поиск...';
@@ -11,12 +11,12 @@ $_['text_critea']       = 'Критерии поиска:';
 $_['text_empty']        = 'Нет товаров, которые соответствуют критериям поиска.';
 $_['text_quantity']     = 'Количество:';
 $_['text_manufacturer'] = 'Производитель:';
-$_['text_model']        = 'Модель:'; 
-$_['text_points']       = 'Бонусные баллы:'; 
-$_['text_price']        = 'Цена:'; 
-$_['text_tax']          = 'С налогом:'; 
-$_['text_reviews']      = 'Отзывов: %s'; 
-$_['text_compare']      = 'Сравнить (%s)'; 
+$_['text_model']        = 'Модель:';
+$_['text_points']       = 'Бонусные баллы:';
+$_['text_price']        = 'Цена:';
+$_['text_tax']          = 'С налогом:';
+$_['text_reviews']      = 'Отзывов: %s';
+$_['text_compare']      = 'Сравнить (%s)';
 $_['text_display']      = 'Вид:';
 $_['text_list']         = 'Список';
 $_['text_grid']         = 'Витрина';

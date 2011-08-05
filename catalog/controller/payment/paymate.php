@@ -1,10 +1,10 @@
-<?php 
+<?php
 class ControllerPaymentPaymate extends Controller {
 	protected function index() {
     	$this->data['button_confirm'] = $this->language->get('button_confirm');
 
 		$this->load->model('checkout/order');
-		
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$this->data['mid'] = $this->config->get('paymate_username');
@@ -27,7 +27,7 @@ class ControllerPaymentPaymate extends Controller {
 
 		if (in_array(strtoupper($order_info['currency_code']), $currency)) {
 			$this->data['currency'] = $order_info['currency_code'];
-			$this->data['amt'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false); 
+			$this->data['amt'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 		} else {
 			for ($findcur = 0; $findcur < sizeof($currency); $findcur++) {
 				if ($this->currency->getValue($currency[$findcur])) {
@@ -53,19 +53,19 @@ class ControllerPaymentPaymate extends Controller {
 		$this->data['pmt_country'] = $order_info['payment_iso_code_2'];
 
 		$this->data['action'] = 'https://www.paymate.com/PayMate/ExpressPayment';
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paymate.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/paymate.tpl';
 		} else {
 			$this->template = 'default/template/payment/paymate.tpl';
-		}	
-		
+		}
+
 		$this->render();
 	}
-	
+
 	public function callback() {
 	 	$this->load->language('payment/paymate');
-		
+
 		$error = '';
 
 		if (isset($this->request->post['responseCode'])) {
@@ -74,7 +74,7 @@ class ControllerPaymentPaymate extends Controller {
 					$order_id = base64_decode($this->request->get['oid']);
 
 					$this->load->model('checkout/order');
-					
+
 					$order_info = $this->model_checkout_order->getOrder($order_id);
 
 					if ((isset($order_info['payment_firstname']) && isset($order_info['payment_lastname'])) && strcmp(base64_decode($this->request->get['conf']), $order_info['payment_firstname'] . $order_info['payment_lastname']) == 0) {
@@ -86,7 +86,7 @@ class ControllerPaymentPaymate extends Controller {
 					$error = $this->language->get('text_unable');
 				}
 			} else {
-				$error = $this->language->get('text_declined'); 
+				$error = $this->language->get('text_declined');
 			}
 		} else {
 			$error = $this->language->get('text_unable');
@@ -97,13 +97,13 @@ class ControllerPaymentPaymate extends Controller {
 			$this->data['text_message'] = sprintf($this->language->get('text_failed_message'), $error, $this->url->link('information/contact'));
 			$this->data['button_continue'] = $this->language->get('button_continue');
 			$this->data['continue'] = $this->url->link('common/home');
-			
+
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
 			} else {
 				$this->template = 'default/template/common/success.tpl';
 			}
-			
+
 			$this->children = array(
 				'common/column_left',
 				'common/column_right',
@@ -112,7 +112,7 @@ class ControllerPaymentPaymate extends Controller {
 				'common/footer',
 				'common/header'
 			);
-			
+
 			$this->response->setOutput($this->render());
 		} else {
 			$this->redirect($this->url->link('checkout/success'));

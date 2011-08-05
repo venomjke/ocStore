@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      = '2Checkout';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified 2Checkout account details!';
 

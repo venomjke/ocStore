@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']    = '1C data exchange v8.x';
 
-// Text 
+// Text
 $_['text_info']        = 'About';
 $_['text_homepage']    = 'Module homepage';
 $_['text_forum']       = 'Support';

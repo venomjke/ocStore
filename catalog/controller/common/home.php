@@ -1,4 +1,4 @@
-<?php  
+<?php
 class ControllerCommonHome extends Controller {
 	public function index() {
 		$this->document->setTitle($this->config->get('config_title'));
@@ -11,7 +11,7 @@ class ControllerCommonHome extends Controller {
 		} else {
 			$this->template = 'default/template/common/home.tpl';
 		}
-		
+
 		$this->children = array(
 			'common/column_left',
 			'common/column_right',
@@ -20,7 +20,7 @@ class ControllerCommonHome extends Controller {
 			'common/footer',
 			'common/header'
 		);
-										
+
 		$this->response->setOutput($this->render());
 	}
 }

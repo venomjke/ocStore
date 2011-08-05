@@ -87,14 +87,14 @@ final class Mail {
 		$boundary = '----=_NextPart_' . md5(time());
 
 		$header = '';
-		
+
 		$header .= 'MIME-Version: 1.0' . $this->newline;
 
 		if ($this->protocol != 'mail') {
 			$header .= 'To: ' . $to . $this->newline;
 			$header .= 'Subject: ' . '=?utf-8?B?'.base64_encode($this->subject).'?=' . $this->newline;
 		}
-		
+
 		$header .= 'Date: ' . date("D, d M Y H:i:s O") . $this->newline;
 		$header .= 'From: ' . '=?UTF-8?B?'.base64_encode($this->sender).'?=' . '<' . $this->from . '>' . $this->newline;
 		$header .= 'Reply-To: ' . '=?utf-8?B?'.base64_encode($this->sender).'?=' . '<' . $this->from . '>' . $this->newline;
@@ -130,7 +130,7 @@ final class Mail {
 		foreach ($this->attachments as $attachment) {
 			if (file_exists($attachment['file'])) {
 				$handle = fopen($attachment['file'], 'r');
-				
+
 				$content = fread($handle, filesize($attachment['file']));
 
 				fclose($handle);
@@ -341,25 +341,25 @@ final class Mail {
 				if (substr($reply, 0, 3) != 354) {
 					exit('Error: DATA not accepted from server!');
 				}
-            	
+
 				// According to rfc 821 we should not send more than 1000 including the CRLF
 				$message = str_replace("\r\n", "\n",  $header . $message);
 				$message = str_replace("\r", "\n", $message);
-				
+
 				$lines = explode("\n", $message);
-				
+
 				foreach ($lines as $line) {
 					$results = str_split($line, 998);
-					
+
 					foreach ($results as $result) {
 						if (substr(PHP_OS, 0, 3) != 'WIN') {
 							fputs($handle, $result . $this->crlf);
 						} else {
 							fputs($handle, str_replace("\n", "\r\n", $result) . $this->crlf);
-						}							
+						}
 					}
 				}
-				
+
 				fputs($handle, '.' . $this->crlf);
 
 				$reply = '';
@@ -375,7 +375,7 @@ final class Mail {
 				if (substr($reply, 0, 3) != 250) {
 					exit('Error: DATA not accepted from server!');
 				}
-				
+
 				fputs($handle, 'QUIT' . $this->crlf);
 
 				$reply = '';

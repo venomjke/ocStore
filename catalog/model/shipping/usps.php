@@ -2,9 +2,9 @@
 class ModelShippingUsps extends Model {
 	public function getQuote($address) {
 		$this->load->language('shipping/usps');
-		
+
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('usps_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
-	
+
 		if (!$this->config->get('usps_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
@@ -12,22 +12,22 @@ class ModelShippingUsps extends Model {
 		} else {
 			$status = false;
 		}
-	  
+
 		$method_data = array();
-	
+
 		if ($status) {
 			$this->load->model('localisation/country');
 
 			$quote_data = array();
-			
+
 			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('usps_weight_class_id'));
-			
+
 			$weight = ($weight < 0.1 ? 0.1 : $weight);
 			$pounds = floor($weight);
-			$ounces = round(16 * ($weight - $pounds), 2); // max 5 digits
-			
+			$ounces = round(16 * ($weight - $pounds), 2); // max 5 digit
+
 			$postcode = str_replace(' ', '', $address['postcode']);
-			
+
 			if ($address['iso_code_2'] == 'US') {
 				$xml  = '<RateV4Request USERID="' . $this->config->get('usps_user_id') . '">';
 				$xml .= '	<Package ID="1">';
@@ -48,7 +48,7 @@ class ModelShippingUsps extends Model {
 				$xml .= '		<Length>' . $this->config->get('usps_length') . '</Length>';
 				$xml .= '		<Height>' . $this->config->get('usps_height') . '</Height>';
 				$xml .= '		<Girth>' . $this->config->get('usps_girth') . '</Girth>';
-				
+
 				$xml .=	'		<Machinable>' . ($this->config->get('usps_machinable') ? 'true' : 'false') . '</Machinable>';
 				$xml .=	'	</Package>';
 				$xml .= '</RateV4Request>';
@@ -370,7 +370,7 @@ class ModelShippingUsps extends Model {
 								}
 							} else {
 								$error = $package->getElementsByTagName('Error')->item(0);
-								
+
 								$method_data = array(
 									'id'         => 'usps',
 									'title'      => $this->language->get('text_title'),
@@ -419,15 +419,15 @@ class ModelShippingUsps extends Model {
 					}
 				}
 			}
-			
+
 	  		if ($quote_data) {
-				
+
 				$title = $this->language->get('text_title');
-									
-				if ($this->config->get('usps_display_weight')) {	  
+
+				if ($this->config->get('usps_display_weight')) {
 					$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('usps_weight_class_id')) . ')';
-				}		
-			
+				}
+
       			$method_data = array(
         			'code'       => 'usps',
         			'title'      => $title,
@@ -437,8 +437,8 @@ class ModelShippingUsps extends Model {
       			);
 			}
 		}
-	
+
 		return $method_data;
-	}	
+	}
 }
 ?>

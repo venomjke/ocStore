@@ -1,17 +1,17 @@
 <?php
 // Configuration
 require_once('config.php');
-   
-// Install 
+
+// Install
 if (!defined('DIR_APPLICATION')) {
 	header('Location: install/index.php');
 	exit;
-} 
+}
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
-// Application Classes
+// Application Classe
 require_once(DIR_SYSTEM . 'library/customer.php');
 require_once(DIR_SYSTEM . 'library/currency.php');
 require_once(DIR_SYSTEM . 'library/tax.php');
@@ -30,25 +30,25 @@ $registry->set('load', $loader);
 $config = new Config();
 $registry->set('config', $config);
 
-// Database 
+// Database
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 $registry->set('db', $db);
 
-// Settings
+// Setting
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
 
 foreach ($query->rows as $setting) {
 	$config->set($setting['key'], $setting['value']);
-}	
+}
 
-// Log 
+// Log
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
 function error_handler($errno, $errstr, $errfile, $errline) {
 	global $config, $log;
-	
+
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
@@ -66,11 +66,11 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 			$error = 'Unknown';
 			break;
 	}
-		
+
     if ($config->get('config_error_display')) {
         echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
 	}
-	
+
 	if ($config->get('config_error_log')) {
 		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
 	}
@@ -84,11 +84,11 @@ set_error_handler('error_handler');
 // Request
 $request = new Request();
 $registry->set('request', $request);
- 
+
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
-$registry->set('response', $response); 
+$registry->set('response', $response);
 
 // Store
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "store WHERE domain = '" . $db->escape($request->server['HTTP_HOST']) . "'");
@@ -116,14 +116,14 @@ $registry->set('cache', new Cache());
 // Session
 $session = new Session();
 $registry->set('session', $session);
-	
+
 // Document
 $registry->set('document', new Document());
 
 // Language Detection
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language"); 
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "language");
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = array(
@@ -138,9 +138,9 @@ foreach ($query->rows as $result) {
 
 $detect = '';
 
-if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && ($request->server['HTTP_ACCEPT_LANGUAGE'])) { 
+if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && ($request->server['HTTP_ACCEPT_LANGUAGE'])) {
 	$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
-	
+
 	foreach ($browser_languages as $browser_language) {
 		foreach ($languages as $key => $value) {
 			$locale = explode(',', $value['locale']);
@@ -166,16 +166,16 @@ if (!isset($session->data['language']) || $session->data['language'] != $code) {
 	$session->data['language'] = $code;
 }
 
-if (!isset($request->cookie['language']) || $request->cookie['language'] != $code) {	  
+if (!isset($request->cookie['language']) || $request->cookie['language'] != $code) {
 	// do not use $request->server['HTTP_HOST'] as 'domain' because this may be broken if back-end server is used
 	setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', '');
-}			
+}
 
 $config->set('config_language_id', $languages[$code]['language_id']);
 
-// Language		
+// Language
 $language = new Language($languages[$code]['directory']);
-$language->load($languages[$code]['filename']);	
+$language->load($languages[$code]['filename']);
 $registry->set('language', $language);
 
 // Customer
@@ -196,10 +196,10 @@ $registry->set('length', new Length($registry));
 // Cart
 $registry->set('cart', new Cart($registry));
 
-// Front Controller 
+// Front Controller
 $controller = new Front($registry);
 
-// SEO URL's
+// SEO URL'
 $controller->addPreAction(new Action('common/seo_url'));
 
 // Router

@@ -12,12 +12,12 @@ class ControllerAffiliatePayment extends Controller {
 		$this->language->load('affiliate/payment');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('affiliate/affiliate');
-		
+
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->model_affiliate_affiliate->editPayment($this->request->post);
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->redirect($this->url->link('affiliate/account', '', 'SSL'));
@@ -27,29 +27,29 @@ class ControllerAffiliatePayment extends Controller {
 
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),     	
+			'href'      => $this->url->link('common/home'),
         	'separator' => false
-      	); 
+      	);
 
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('affiliate/account', '', 'SSL'),        	
+			'href'      => $this->url->link('affiliate/account', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);
 
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_payment'),
-			'href'      => $this->url->link('affiliate/payment', '', 'SSL'),       	
+			'href'      => $this->url->link('affiliate/payment', '', 'SSL'),
         	'separator' => $this->language->get('text_separator')
       	);
-		
+
 		$this->data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$this->data['text_your_payment'] = $this->language->get('text_your_payment');
 		$this->data['text_cheque'] = $this->language->get('text_cheque');
 		$this->data['text_paypal'] = $this->language->get('text_paypal');
 		$this->data['text_bank'] = $this->language->get('text_bank');
-		
+
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
 		$this->data['entry_payment'] = $this->language->get('entry_payment');
 		$this->data['entry_cheque'] = $this->language->get('entry_cheque');
@@ -62,7 +62,7 @@ class ControllerAffiliatePayment extends Controller {
 
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		$this->data['button_back'] = $this->language->get('button_back');
-		
+
 		$this->data['action'] = $this->url->link('affiliate/payment', '', 'SSL');
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
@@ -74,7 +74,7 @@ class ControllerAffiliatePayment extends Controller {
 		} else {
 			$this->data['tax'] = '';
 		}
-		
+
 		if (isset($this->request->post['payment'])) {
     		$this->data['payment'] = $this->request->post['payment'];
 		} else {
@@ -116,13 +116,13 @@ class ControllerAffiliatePayment extends Controller {
 		} else {
 			$this->data['bank_account_name'] = '';
 		}
-		
+
 		if (isset($this->request->post['bank_account_number'])) {
     		$this->data['bank_account_number'] = $this->request->post['bank_account_number'];
 		} else {
 			$this->data['bank_account_number'] = '';
 		}
-		
+
 		$this->data['back'] = $this->url->link('affiliate/account', '', 'SSL');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/payment.tpl')) {
@@ -130,17 +130,17 @@ class ControllerAffiliatePayment extends Controller {
 		} else {
 			$this->template = 'default/template/affiliate/payment.tpl';
 		}
-		
+
 		$this->children = array(
 			'common/column_left',
 			'common/column_right',
 			'common/content_top',
 			'common/content_bottom',
 			'common/footer',
-			'common/header'	
+			'common/header'
 		);
-						
-		$this->response->setOutput($this->render());		
+
+		$this->response->setOutput($this->render());
 	}
 }
 ?>

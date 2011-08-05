@@ -1,23 +1,23 @@
 <?php
 class ControllerModuleFeatured extends Controller {
 	protected function index($setting) {
-		$this->language->load('module/featured'); 
+		$this->language->load('module/featured');
 
       	$this->data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$this->data['button_cart'] = $this->language->get('button_cart');
-		
-		$this->load->model('catalog/product'); 
-		
+
+		$this->load->model('catalog/product');
+
 		$this->load->model('tool/image');
 
 		$this->data['products'] = array();
 
-		$products = explode(',', $this->config->get('featured_product'));		
+		$products = explode(',', $this->config->get('featured_product'));
 
 		foreach ($products as $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
-			
+
 			if ($product_info) {
 				if ($product_info['image']) {
 					$image = $this->model_tool_image->resize($product_info['image'], $setting['image_width'], $setting['image_height']);
@@ -30,19 +30,19 @@ class ControllerModuleFeatured extends Controller {
 				} else {
 					$price = false;
 				}
-						
+
 				if ((float)$product_info['special']) {
 					$special = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
 				} else {
 					$special = false;
 				}
-				
+
 				if ($this->config->get('config_review_status')) {
 					$rating = $product_info['rating'];
 				} else {
 					$rating = false;
 				}
-					
+
 				$this->data['products'][] = array(
 					'product_id' => $product_info['product_id'],
 					'thumb'   	 => $image,

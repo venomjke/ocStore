@@ -4,20 +4,20 @@ class ModelTotalTax extends Model {
 		foreach ($taxes as $key => $value) {
 			if ($value > 0) {
 				$tax_classes = $this->tax->getDescription($key);
-				
+
 				foreach ($tax_classes as $tax_class) {
 					$rate = $this->tax->getRate($key);
-					
+
 					$tax = $value * ($tax_class['rate'] / $rate);
-					
+
 					$total_data[] = array(
 						'code'       => 'tax',
-						'title'      => $tax_class['description'], 
+						'title'      => $tax_class['description'],
 						'text'       => $this->currency->format($tax),
 						'value'      => $tax,
 						'sort_order' => $this->config->get('tax_sort_order')
 					);
-		
+
 					$total += $tax;
 				}
 			}
