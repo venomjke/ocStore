@@ -416,7 +416,7 @@ class CKEditor
 					if (!isset($returnedEvents[$eventName])) {
 						$returnedEvents[$eventName] = array();
 					}
-					// Return only new event
+					// Return only new events
 					if (!in_array($code, $returnedEvents[$eventName])) {
 						$out .= ($code ? "\n" : "") . "CKEDITOR.on('". $eventName ."', $code);";
 						$returnedEvents[$eventName][] = $code;

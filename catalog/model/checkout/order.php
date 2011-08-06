@@ -185,7 +185,7 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
-			// Send out any gift voucher mailx
+			// Send out any gift voucher mails
 			if ($this->config->get('config_complete_status_id') == $order_status_id) {
 				$this->load->model('checkout/voucher');
 
