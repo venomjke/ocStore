@@ -88,7 +88,7 @@ final class Pagination {
 			($total) ? (($page - 1) * $limit) + 1 : 0,
 			((($page - 1) * $limit) > ($total - $limit)) ? $total : ((($page - 1) * $limit) + $limit),
 			$total,
-			$num_page
+			$num_pages
 		);
 
 		return ($output ? '<div class="' . $this->style_links . '">' . $output . '</div>' : '') . '<div class="' . $this->style_results . '">' . str_replace($find, $replace, $this->text) . '</div>';
