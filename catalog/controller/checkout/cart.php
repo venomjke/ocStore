@@ -224,7 +224,7 @@ class ControllerCheckoutCart extends Controller {
 
 			$this->data['totals'] = $total_data;
 
-			// Module
+			// Modules
 			$this->data['modules'] = array();
 
 			if (isset($results)) {
@@ -438,7 +438,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 		}
 
-		// Calculate Total
+		// Calculate Totals
 		$total_data = array();
 		$total = 0;
 		$taxes = $this->cart->getTaxes();

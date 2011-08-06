@@ -85,7 +85,7 @@ class ModelShippingUps extends Model {
 					'54' => $this->language->get('text_mx_origin_54'),
 					'65' => $this->language->get('text_mx_origin_65')
 				),
-				// All other origin
+				// All other origins
 				'other' => array(
 					// service code 7 seems to be gone after January 2, 2007
 					'07' => $this->language->get('text_other_origin_07'),

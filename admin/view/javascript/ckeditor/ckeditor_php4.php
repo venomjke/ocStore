@@ -343,7 +343,7 @@ class CKEditor
 	 * Prints javascript code.
 	 * \private
 	 *
-	 * @param string $j
+	 * @param string $js
 	 */
 	function script($js)
 	{

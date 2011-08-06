@@ -11,7 +11,7 @@ if (!defined('DIR_APPLICATION')) {
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
-// Application Classe
+// Application Classes
 require_once(DIR_SYSTEM . 'library/customer.php');
 require_once(DIR_SYSTEM . 'library/currency.php');
 require_once(DIR_SYSTEM . 'library/tax.php');
@@ -34,7 +34,7 @@ $registry->set('config', $config);
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 $registry->set('db', $db);
 
-// Setting
+// Settings
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
 
 foreach ($query->rows as $setting) {
@@ -199,7 +199,7 @@ $registry->set('cart', new Cart($registry));
 // Front Controller
 $controller = new Front($registry);
 
-// SEO URL'
+// SEO URL's
 $controller->addPreAction(new Action('common/seo_url'));
 
 // Router

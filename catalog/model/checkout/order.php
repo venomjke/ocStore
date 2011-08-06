@@ -185,7 +185,7 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
-			// Send out any gift voucher mail
+			// Send out any gift voucher mailx
 			if ($this->config->get('config_complete_status_id') == $order_status_id) {
 				$this->load->model('checkout/voucher');
 
@@ -486,7 +486,7 @@ class ModelCheckoutOrder extends Model {
 				$mail->setText($text);
 				$mail->send();
 
-				// Send to additional alert email
+				// Send to additional alert emails
 				$emails = explode(',', $this->config->get('config_alert_emails'));
 
 				foreach ($emails as $email) {
@@ -507,7 +507,7 @@ class ModelCheckoutOrder extends Model {
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 
-			// Send out any gift voucher mail
+			// Send out any gift voucher mails
 			if ($this->config->get('config_complete_status_id') == $order_status_id) {
 				$this->load->model('checkout/voucher');
 

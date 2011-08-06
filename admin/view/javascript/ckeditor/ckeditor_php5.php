@@ -338,7 +338,7 @@ class CKEditor
 	/**
 	 * Prints javascript code.
 	 *
-	 * @param string $j
+	 * @param string $js
 	 */
 	private function script($js)
 	{

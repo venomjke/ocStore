@@ -10,7 +10,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 
 		$data =& $this->data;
 
-		/* 6.1 Essential Field
+		/* 6.1 Essential Fields
 		 * The following parameters are required, and validated with each request. If one
 		 * is missing or the validation fails the customer will see an error page. The
 		 * merchant will also receive an email explaining the problem.

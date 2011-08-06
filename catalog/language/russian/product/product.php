@@ -34,7 +34,7 @@ $_['entry_good']        = 'Хорошо';
 $_['entry_bad']         = 'Плохо';
 $_['entry_captcha']     = 'Введите код, указанный на картинке:';
 
-// Tab
+// Tabs
 $_['tab_description']   = 'Описание';
 $_['tab_attribute']     = 'Характеристики';
 $_['tab_review']        = 'Отзывы (%s)';

@@ -49,7 +49,7 @@ class ControllerCheckoutPayment extends Controller {
 			}
 		} else {
 			if (!isset($this->session->data['payment_methods'])) {
-				// Calculate Total
+				// Calculate Totals
 				$total_data = array();
 				$total = 0;
 				$taxes = $this->cart->getTaxes();
@@ -74,7 +74,7 @@ class ControllerCheckoutPayment extends Controller {
 					}
 				}
 
-				// Payment Method
+				// Payment Methods
 				$method_data = array();
 
 				$this->load->model('setting/extension');

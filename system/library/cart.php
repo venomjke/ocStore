@@ -21,7 +21,7 @@ final class Cart {
       		$product_id = $product[0];
 			$stock = true;
 
-			// Option
+			// Options
       		if (isset($product[1])) {
         		$options = unserialize(base64_decode($product[1]));
       		} else {
@@ -161,7 +161,7 @@ final class Cart {
 
 				$price = $product_query->row['price'];
 
-				// Product Discount
+				// Product Discounts
 				$discount_quantity = 0;
 
 				foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
@@ -178,14 +178,14 @@ final class Cart {
 					$price = $product_discount_query->row['price'];
 				}
 
-				// Product Special
+				// Product Specials
 				$product_special_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_special WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$customer_group_id . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) ORDER BY priority ASC, price ASC LIMIT 1");
 
 				if ($product_special_query->num_rows) {
 					$price = $product_special_query->row['price'];
 				}
 
-				// Reward Point
+				// Reward Points
 				$query = $this->db->query("SELECT points FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$customer_group_id . "'");
 
 				if ($query->num_rows) {
@@ -194,7 +194,7 @@ final class Cart {
 					$reward = 0;
 				}
 
-				// Download
+				// Downloads
 				$download_data = array();
 
 				$download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_to_download p2d LEFT JOIN " . DB_PREFIX . "download d ON (p2d.download_id = d.download_id) LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE p2d.product_id = '" . (int)$product_id . "' AND dd.language_id = '" . (int)$this->config->get('config_language_id') . "'");

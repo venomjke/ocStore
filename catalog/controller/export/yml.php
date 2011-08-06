@@ -165,7 +165,7 @@ class ControllerExportYml extends Controller {
 				$this->currencies[] = array(
 					'id'=>$this->prepareField(strtoupper($id)),
 					'rate'=>$rate,
-					'plus'=>(float)$plu
+					'plus'=>(float)$plus
 				);
 			} else {
 				$this->currencies[] = array(
@@ -371,7 +371,7 @@ class ControllerExportYml extends Controller {
 	/**
 	 * Фрмирование элемента
 	 *
-	 * @param array $attribute
+	 * @param array $attributes
 	 * @param string $element_name
 	 * @param string $element_value
 	 * @return string
@@ -390,7 +390,7 @@ class ControllerExportYml extends Controller {
 	/**
 	 * Преобразование массива в теги
 	 *
-	 * @param array $tag
+	 * @param array $tags
 	 * @return string
 	 */
 	private function array2Tag($tags) {
@@ -405,7 +405,7 @@ class ControllerExportYml extends Controller {
 	/**
 	 * Преобразование массива в теги параметров
 	 *
-	 * @param array $param
+	 * @param array $params
 	 * @return string
 	 */
 	private function array2Param($params) {

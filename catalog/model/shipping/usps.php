@@ -24,7 +24,7 @@ class ModelShippingUsps extends Model {
 
 			$weight = ($weight < 0.1 ? 0.1 : $weight);
 			$pounds = floor($weight);
-			$ounces = round(16 * ($weight - $pounds), 2); // max 5 digit
+			$ounces = round(16 * ($weight - $pounds), 2); // max 5 digits
 
 			$postcode = str_replace(' ', '', $address['postcode']);
 

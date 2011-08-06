@@ -9,7 +9,7 @@ require_once(DIR_CONFIG . 'config_tuning.php');
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
-// Application Classe
+// Application Classes
 require_once(DIR_SYSTEM . 'library/currency.php');
 require_once(DIR_SYSTEM . 'library/user.php');
 require_once(DIR_SYSTEM . 'library/weight.php');
@@ -30,7 +30,7 @@ $registry->set('config', $config);
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 $registry->set('db', $db);
 
-// Setting
+// Settings
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting");
 
 foreach ($query->rows as $setting) {

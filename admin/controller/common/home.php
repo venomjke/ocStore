@@ -35,7 +35,7 @@ class ControllerCommonHome extends Controller {
 
 		$this->data['entry_range'] = $this->language->get('entry_range');
 
-		// Check install directory exist
+		// Check install directory exists
  		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
 			$this->data['error_install'] = $this->language->get('error_install');
 		} else {

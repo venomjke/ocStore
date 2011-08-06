@@ -499,7 +499,7 @@ class ModelSaleOrder extends Model {
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$data['order_status_id'] . "', notify = '" . (isset($data['notify']) ? (int)$data['notify'] : 0) . "', comment = '" . $this->db->escape(strip_tags($data['comment'])) . "', date_added = NOW()");
 
-		// Send out any gift voucher mail
+		// Send out any gift voucher mails
 		if ($this->config->get('config_complete_status_id') == $data['order_status_id']) {
 			$this->load->model('sale/voucher');
 

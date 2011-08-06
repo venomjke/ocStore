@@ -7,7 +7,7 @@ if (version_compare(phpversion(), '5.1.0', '<') == TRUE) {
 	exit('PHP5.1+ Required');
 }
 
-// Register Global
+// Register Globals
 if (ini_get('register_globals')) {
 	ini_set('session.use_cookies', 'On');
 	ini_set('session.use_trans_sid', 'Off');

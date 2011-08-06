@@ -14,7 +14,7 @@ if (!defined('DIR_APPLICATION')) {
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
-// Application Classe
+// Application Classes
 require_once(DIR_SYSTEM . 'library/customer.php');
 require_once(DIR_SYSTEM . 'library/affiliate.php');
 require_once(DIR_SYSTEM . 'library/currency.php');
@@ -51,7 +51,7 @@ if ($store_query->num_rows) {
 	$config->set('config_store_id', 0);
 }
 
-// Setting
+// Settings
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0' OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
 
 foreach ($query->rows as $setting) {
@@ -219,7 +219,7 @@ $controller = new Front($registry);
 // Maintenance Mode
 $controller->addPreAction(new Action('common/maintenance'));
 
-// SEO URL'
+// SEO URL's
 if (!$seo_type = $config->get('config_seo_url_type')) {
 	$seo_type = 'seo_url';
 }

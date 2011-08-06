@@ -40,7 +40,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['logo'] = '';
 		}
 
-		// Calculate Total
+		// Calculate Totals
 		$total_data = array();
 		$total = 0;
 		$taxes = $this->cart->getTaxes();

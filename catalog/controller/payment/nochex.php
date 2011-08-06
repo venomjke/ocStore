@@ -1,5 +1,5 @@
 <?php
-// Nochex via form will work for both simple "Seller" account and "Merchant" account holder
+// Nochex via form will work for both simple "Seller" account and "Merchant" account holders
 // Nochex via APC maybe only avaiable to "Merchant" account holders only - site docs a bit vague on this point
 class ControllerPaymentNochex extends Controller {
 
@@ -30,7 +30,7 @@ class ControllerPaymentNochex extends Controller {
 
 		$this->data['fields'] = array();
 
-        // Nochex minimum requirement
+        // Nochex minimum requirements
         // The merchant ID is usually your Nochex registered email address but can be altered for "Merchant" accounts see below
         $this->data['fields']['merchant_id']          = $this->config->get('nochex_email');
 
@@ -39,7 +39,7 @@ class ControllerPaymentNochex extends Controller {
         }
 
         $this->data['fields']['amount']               = $this->currency->format($order_info['total'], $currency, FALSE, FALSE);
-        // End minimum requirement
+        // End minimum requirements
 
         $this->data['fields']['order_id']             = $this->session->data['order_id'];
         $this->data['fields']['description']          = (($this->config->get('config_name')) ? $this->config->get('config_name') : $this->config->get('config_store'));
@@ -63,7 +63,7 @@ class ControllerPaymentNochex extends Controller {
         $this->data['fields']['email_address']        = $order_info['email'];
         $this->data['fields']['customer_phone_number']= $order_info['telephone'];
 
-		$this->data['fields']['hide_billing_details'] = 'true'; // So customer can't change address setting
+		$this->data['fields']['hide_billing_details'] = 'true'; // So customer can't change address settings
 
         $this->data['fields']['success_url']        = $this->url->link('checkout/success', '', 'SSL');
         $this->data['fields']['cancel_url']         = $this->url->link('checkout/payment', '', 'SSL');
