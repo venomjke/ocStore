@@ -81,7 +81,7 @@ CREATE TABLE `oc_affiliate` (
   `bank_swift_code` varchar(64) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `bank_account_name` varchar(64) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `bank_account_number` varchar(64) COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL,
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL,
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
@@ -901,7 +901,7 @@ CREATE TABLE `oc_customer` (
   `newsletter` tinyint(1) NOT NULL DEFAULT '0',
   `address_id` int(11) NOT NULL DEFAULT '0',
   `customer_group_id` int(11) NOT NULL,
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -944,7 +944,7 @@ DROP TABLE IF EXISTS `oc_customer_ip`;
 CREATE TABLE `oc_customer_ip` (
   `customer_ip_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL,
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_ip_id`),
   KEY `ip` (`ip`)
@@ -1569,7 +1569,7 @@ CREATE TABLE `oc_order` (
   `currency_value` decimal(15,8) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2790,7 +2790,7 @@ CREATE TABLE `oc_user` (
   `lastname` varchar(32) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `email` varchar(96) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `code` varchar(32) COLLATE utf8_general_ci NOT NULL,
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`user_id`)
