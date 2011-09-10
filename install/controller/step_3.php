@@ -31,7 +31,7 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_host']) . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_user']) . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
@@ -70,7 +70,7 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
+			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_host']) . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_user']) . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
@@ -188,9 +188,15 @@ class ControllerStep3 extends Controller {
 		$this->response->setOutput($this->render(TRUE));
 	}
 
+//TODO: перевести ошибки!
+
 	private function validate() {
 		if (!$this->request->post['db_host']) {
 			$this->error['db_host'] = 'Host required!';
+		}
+
+		if (!$this->request->post['db_driver']) {
+			$this->error['db_host'] = 'Driver required!';
 		}
 
 		if (!$this->request->post['db_user']) {
@@ -213,14 +219,21 @@ class ControllerStep3 extends Controller {
 			$this->error['email'] = 'Invalid E-Mail!';
 		}
 
-		if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
-			$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
-		} else {
-			if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
-				$this->error['warning'] = 'Error: Database does not exist!';
+		if (($this->request->post['db_driver'] == 'mysql') || ($this->request->post['db_driver'] == 'mysql_cached')) {
+			if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
+				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+			} else {
+				if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
+					$this->error['warning'] = 'Error: Database does not exist!';
+				}
+				mysql_close($connection);
 			}
-
-			mysql_close($connection);
+		} elseif ($this->request->post['db_driver'] == 'pgsql') {
+			if (!$connection = @pg_pconnect('host='.$this->request->post['db_host'].' dbname='.$this->request->post['db_name'].' user='.$this->request->post['db_user'].' p$
+				$this->error['warning'] = 'Error: Невозможно подключиться к БД, проверьте правильность сервера, имени пользователя, пароля и имени БД!<br><b>' . pg_last_error() .$
+			} else {
+				pg_close($connection);
+			}
 		}
 
 		if (!is_writable(DIR_OPENCART . 'config.php')) {
