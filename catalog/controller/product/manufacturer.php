@@ -4,7 +4,6 @@ class ControllerProductManufacturer extends Controller {
 		$this->language->load('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
-
 		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -35,10 +34,10 @@ class ControllerProductManufacturer extends Controller {
 		$results = $this->model_catalog_manufacturer->getManufacturers();
 
 		foreach ($results as $result) {
-			if (is_int(substr($result['name'], 0, 1))) {
+			if (is_int(mb_substr($result['name'], 0, 1, 'UTF-8'))) {
 				$key = '0 - 9';
 			} else {
-				$key = substr(strtoupper($result['name']), 0, 1);
+				$key = mb_substr(strtoupper($result['name']), 0, 1, 'UTF-8');
 			}
 
 			if (!isset($this->data['manufacturers'][$key])) {
@@ -221,11 +220,17 @@ class ControllerProductManufacturer extends Controller {
 					$rating = false;
 				}
 
+				$cut_descr_symbols = 400;
+				$descr_plaintext = strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'));
+				if( mb_strlen($descr_plaintext, 'UTF-8') > $cut_descr_symbols )
+				{
+					$descr_plaintext = mb_substr($descr_plaintext, 0, $cut_descr_symbols, 'UTF-8') . '&nbsp;&hellip;';
+				}
 				$this->data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
+					'description' => $descr_plaintext,
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
