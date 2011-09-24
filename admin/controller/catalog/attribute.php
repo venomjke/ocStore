@@ -432,6 +432,7 @@ class ControllerCatalogAttribute extends Controller {
 			}
 		}
 
+/*
 		$sort_order = array();
 
 		foreach ($json as $key => $value) {
@@ -439,7 +440,7 @@ class ControllerCatalogAttribute extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $json);
-
+*/
 		$this->load->library('json');
 
 		$this->response->setOutput(Json::encode($json));
