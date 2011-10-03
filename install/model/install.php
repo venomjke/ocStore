@@ -77,7 +77,7 @@ class ModelInstall extends Model {
 					}
 				}
 			}
-			pg_query($connection, "SET client_encoding TO "UTF-8";");
+			pg_query($connection, "SET client_encoding TO \"UTF-8\";");
 			pg_query($connection, "DELETE FROM \"" . $data['db_prefix'] . "user\" WHERE user_id = 1");
 			pg_query($connection, "INSERT INTO \"" . $data['db_prefix'] . "user\" (user_id, user_group_id, username, password, status, date_added) VALUES (1, 1, '" . pg_escape_str$
 			pg_query($connection, "DELETE FROM \"" . $data['db_prefix'] . "setting\" WHERE \"key\" = 'config_email'");
