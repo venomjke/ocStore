@@ -79,11 +79,11 @@ class ModelInstall extends Model {
 			}
 			pg_query($connection, "SET client_encoding TO \"UTF-8\";");
 			pg_query($connection, "DELETE FROM \"" . $data['db_prefix'] . "user\" WHERE user_id = 1");
-			pg_query($connection, "INSERT INTO \"" . $data['db_prefix'] . "user\" (user_id, user_group_id, username, password, status, date_added) VALUES (1, 1, '" . pg_escape_str$
+			pg_query($connection, "INSERT INTO \"" . $data['db_prefix'] . "user\" (user_id, user_group_id, username, password, status, date_added) VALUES (1, 1, '" . pg_escape_string($data['username']) . "', '" . pg_escape_string(md5($data['password'])) . "', 1, NOW())");
 			pg_query($connection, "DELETE FROM \"" . $data['db_prefix'] . "setting\" WHERE \"key\" = 'config_email'");
-			pg_query($connection, "INSERT INTO \"" . $data['db_prefix'] . "setting\" (\"group\", \"key\", \"value\") VALUES ('config', 'config_email', '" . pg_escape_string($data[$
+			pg_query($connection, "INSERT INTO \"" . $data['db_prefix'] . "setting\" (\"group\", \"key\", \"value\") VALUES ('config', 'config_email', '" . pg_escape_string($data['email']) . "')");
 			pg_query($connection, "DELETE FROM \"" . $data['db_prefix'] . "setting\" WHERE \"key\" = 'config_url'");
-			pg_query($connection, "INSERT INTO \"" . $data['db_prefix'] . "setting\" (\"group\", \"key\", \"value\") VALUES ('config', 'config_url', '" . pg_escape_string(HTTP_OPE$
+			pg_query($connection, "INSERT INTO \"" . $data['db_prefix'] . "setting\" (\"group\", \"key\", \"value\") VALUES ('config', 'config_url', '" . pg_escape_string(HTTP_OPENCART) . "')");
 			pg_query($connection, "UPDATE \"" . $data['db_prefix'] . "product\" SET \"viewed\" = 0");
 			pg_close($connection);
 		}
