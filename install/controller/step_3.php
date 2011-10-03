@@ -229,8 +229,8 @@ class ControllerStep3 extends Controller {
 				mysql_close($connection);
 			}
 		} elseif ($this->request->post['db_driver'] == 'pgsql') {
-			if (!$connection = @pg_pconnect('host='.$this->request->post['db_host'].' dbname='.$this->request->post['db_name'].' user='.$this->request->post['db_user'].' p$
-				$this->error['warning'] = 'Error: Невозможно подключиться к БД, проверьте правильность сервера, имени пользователя, пароля и имени БД!<br><b>' . pg_last_error() .$
+			if (!$connection = @pg_pconnect('host='.$this->request->post['db_host'].' dbname='.$this->request->post['db_name'].' user='.$this->request->post['db_user'].' password='.$this->request->post['db_password'])) {
+				$this->error['warning'] = 'Невозможно подключиться к БД, проверьте правильность сервера, имени пользователя, пароля и имени БД!<br><b>' . pg_last_error() . '</b>';
 			} else {
 				pg_close($connection);
 			}
