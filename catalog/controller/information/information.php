@@ -22,15 +22,23 @@ class ControllerInformationInformation extends Controller {
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 
 		if ($information_info) {
-	  		$this->document->setTitle($information_info['title']);
-
+			if ($information_info['seo_title']) {
+				$this->document->setTitle($information_info['seo_title']);
+			} else {
+				$this->document->setTitle($information_info['title']);
+			}
+			$this->document->setDescription($information_info['meta_description']);
+			$this->document->setKeywords($information_info['meta_keyword']);
+			
       		$this->data['breadcrumbs'][] = array(
         		'text'      => $information_info['title'],
 				'href'      => $this->url->link('information/information', 'information_id=' .  $information_id),
         		'separator' => $this->language->get('text_separator')
       		);
 
-      		$this->data['heading_title'] = $information_info['title'];
+			$this->data['seo_h1'] = $information_info['seo_h1'];
+
+			$this->data['heading_title'] = $information_info['title'];
 
       		$this->data['button_continue'] = $this->language->get('button_continue');
 
@@ -108,7 +116,7 @@ class ControllerInformationInformation extends Controller {
 			$output .= '  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
 			$output .= '</head>' . "\n";
 			$output .= '<body>' . "\n";
-			$output .= '  <br /><br /><h1>' . $information_info['title'] . '</h1>' . "\n";
+			$output .= '  <h1>' . $information_info['title'] . '</h1>' . "\n";
 			$output .= html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8') . "\n";
 			$output .= '  </body>' . "\n";
 			$output .= '</html>' . "\n";

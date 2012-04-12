@@ -1,11 +1,11 @@
 <?php
-final class Config {
+class Config {
 	private $data = array();
 
   	public function get($key) {
     	return (isset($this->data[$key]) ? $this->data[$key] : null);
-  	}
-
+  	}	
+	
 	public function set($key, $value) {
     	$this->data[$key] = $value;
   	}
@@ -16,15 +16,16 @@ final class Config {
 
   	public function load($filename) {
 		$file = DIR_CONFIG . $filename . '.php';
-
-    	if (file_exists($file)) {
-	  		$cfg = array();
-
+		
+    	if (file_exists($file)) { 
+	  		$_ = array();
+	  
 	  		require($file);
-
-	  		$this->data = array_merge($this->data, $cfg);
+	  
+	  		$this->data = array_merge($this->data, $_);
 		} else {
-			exit('Error: Could not load config ' . $filename . '!');
+			trigger_error('Error: Could not load config ' . $filename . '!');
+			exit();
 		}
   	}
 }

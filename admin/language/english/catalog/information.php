@@ -15,10 +15,14 @@ $_['column_action']     = 'Action';
 $_['entry_title']       = 'Information Title:';
 $_['entry_description'] = 'Description:';
 $_['entry_store']       = 'Stores:';
-$_['entry_keyword']     = 'SEO Keyword:';
+$_['entry_keyword']     = 'SEO Keyword:<br /><span class="help">Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.</span>';
 $_['entry_status']      = 'Status:';
 $_['entry_sort_order']  = 'Sort Order:<br/><span class="help">Set to -1 to hide from listing</span>';
 $_['entry_layout']      = 'Layout Override:';
+$_['entry_seo_title']   = 'HTML Tag Title:';
+$_['entry_seo_h1']      = 'HTML Tag H1:';
+$_['entry_meta_keyword'] = 'Meta Tag Keywords:';
+$_['entry_meta_description'] = 'Meta Tag Description:';
 
 // Error
 $_['error_warning']     = 'Warning: Please check the form carefully for errors!';

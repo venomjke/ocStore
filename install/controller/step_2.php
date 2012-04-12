@@ -31,14 +31,13 @@ class ControllerStep2 extends Controller {
 			'header',
 			'footer'
 		);
-		$this->response->setOutput($this->render(TRUE));
+
+		$this->response->setOutput($this->render());
 	}
 
-// TODO: сделать переводы ошибок!
-
 	private function validate() {
-		if (phpversion() < '5.0') {
-			$this->error['warning'] = 'Warning: You need to use PHP5 or above for OpenCart to work!';
+		if (phpversion() < '5.2') {
+			$this->error['warning'] = 'Warning: You need to use PHP5.2 or above for OpenCart to work!';
 		}
 
 		if (!ini_get('file_uploads')) {
@@ -49,10 +48,8 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: OpenCart will not work with session.auto_start enabled!';
 		}
 
-		if (!extension_loaded('pgsql') and !extension_loaded('mysql') and !extension_loaded('mysqli')) {
-//and !extension_loaded('mssql') and !extension_loaded('berkdb') and !extension_loaded('firebird') and !extension_loaded('sqlite')) {
-// когда драйвера будут готовы — не забыть перенести в список :)
-			$this->error['warning'] = 'Warning: At least one of supported database driver extensions needs to be loaded for OpenCart to work!';
+		if (!extension_loaded('mysql')) {
+			$this->error['warning'] = 'Warning: MySQL extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!extension_loaded('gd')) {
@@ -96,9 +93,9 @@ class ControllerStep2 extends Controller {
 		}
 
     	if (!$this->error) {
-      		return TRUE;
+      		return true;
     	} else {
-      		return FALSE;
+      		return false;
     	}
 	}
 }

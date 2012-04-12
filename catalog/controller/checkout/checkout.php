@@ -1,25 +1,20 @@
 <?php
 class ControllerCheckoutCheckout extends Controller {
 	public function index() {
-		if ((!$this->cart->hasProducts() && (!isset($this->session->data['vouchers']) || !$this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		// Validate cart has products and has stock.
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 	  		$this->redirect($this->url->link('checkout/cart'));
     	}
-
-		$this->language->load('checkout/checkout');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		// Minimum quantity validation
+		
+		// Validate minimum quantity requirments.			
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
 			$product_total = 0;
 
-			foreach ($this->session->data['cart'] as $key => $quantity) {
-				$product_2 = explode(':', $key);
-
-				if ($product_2[0] == $product['product_id']) {
-					$product_total += $quantity;
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
 				}
 			}
 
@@ -29,6 +24,10 @@ class ControllerCheckoutCheckout extends Controller {
 				$this->redirect($this->url->link('checkout/cart'));
 			}
 		}
+
+		$this->language->load('checkout/checkout');
+
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->data['breadcrumbs'] = array();
 

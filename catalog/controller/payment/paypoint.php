@@ -7,11 +7,16 @@ class ControllerPaymentPaypoint extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$this->data['action'] = 'https://www.secpay.com/java-bin/ValCard';
-
 		$this->data['merchant'] = $this->config->get('paypoint_merchant');
 		$this->data['trans_id'] = $this->session->data['order_id'];
 		$this->data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+		
+		if ($this->config->get('paypoint_password')) {
+			$this->data['digest'] = md5($this->session->data['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $this->config->get('paypoint_password'));
+		} else {
+			$this->data['digest'] = '';
+		}		
+		
 		$this->data['bill_name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
 		$this->data['bill_addr_1'] = $order_info['payment_address_1'];
 		$this->data['bill_addr_2'] = $order_info['payment_address_2'];
@@ -41,13 +46,7 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 
 		$this->data['currency'] = $this->currency->getCode();
-		$this->data['callback'] = $this->url->link('payment/paypoint/callback');
-
-		$this->load->library('encryption');
-
-		$encryption = new Encryption($this->config->get('config_encryption'));
-
-		$this->data['order_id'] = $encryption->encrypt($this->session->data['order_id']);
+		$this->data['callback'] = $this->url->link('payment/paypoint/callback', '', 'SSL');
 
 		switch ($this->config->get('paypoint_test')) {
 			case 'live':
@@ -61,9 +60,9 @@ class ControllerPaymentPaypoint extends Controller {
 				$status = 'false';
 				break;
 		}
-
-		$this->data['options'] = 'test_status=' . $status . ',dups=false,cb_flds=order_id';
-
+		
+		$this->data['options'] = 'test_status=' . $status . ',dups=false,cb_post=false';
+	 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/paypoint.tpl';
 		} else {
@@ -74,104 +73,116 @@ class ControllerPaymentPaypoint extends Controller {
 	}
 
 	public function callback() {
-		$this->language->load('payment/paypoint');
-
-		$this->data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
-
-		if (!isset($this->request->server['HTTPS']) || ($this->request->server['HTTPS'] != 'on')) {
-			$this->data['base'] = HTTP_SERVER;
+		if (isset($this->request->get['trans_id'])) {
+			$order_id = $this->request->get['trans_id'];
 		} else {
-			$this->data['base'] = HTTPS_SERVER;
+			$order_id = 0;
+		}	
+		
+		$this->load->model('checkout/order');
+				
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+		
+		// Validate the request is from PayPoint
+		if ($this->config->get('paypoint_password')) {
+			if (!empty($this->request->get['hash'])) {
+				$status = ($this->request->get['hash'] == str_replace('&hash=' . $this->request->get['hash'], '', $this->request->server['REQUEST_URI']) . '&' . $this->config->get('paypoint_password'));
+			} else {
+				$status = false;
+			}
+		} else {
+			$status = true;
 		}
-
-		$this->data['charset'] = $this->language->get('charset');
-		$this->data['language'] = $this->language->get('code');
-		$this->data['direction'] = $this->language->get('direction');
-
-		$this->data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
-
-		$this->data['text_response'] = $this->language->get('text_response');
-		$this->data['text_success'] = $this->language->get('text_success');
-		$this->data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success'));
-		$this->data['text_failure'] = $this->language->get('text_failure');
-		$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/cart'));
-
-		if (isset($this->request->get['valid']) && $this->request->get['valid'] == 'true') {
-			$this->load->library('encryption');
-
-			$encryption = new Encryption($this->config->get('config_encryption'));
-
-			$order_id = $encryption->decrypt($this->request->get['order_id']);
-
-			$this->load->model('checkout/order');
-
-			$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
-
-			$message = '';
-
-			if (isset($this->request->get['code'])) {
-				$message .= 'code: ' . $this->request->get['code'] . "\n";
-			}
-
-			if (isset($this->request->get['auth_code'])) {
-				$message .= 'auth_code: ' . $this->request->get['auth_code'] . "\n";
-			}
-
-			if (isset($this->request->get['ip'])) {
-				$message .= 'ip: ' . $this->request->get['ip'] . "\n";
-			}
-
-			if (isset($this->request->get['cv2avs'])) {
-				$message .= 'cv2avs: ' . $this->request->get['cv2avs'] . "\n";
-			}
-
-			if (isset($this->request->get['trans_id'])) {
-				$message .= 'trans_id: ' . $this->request->get['trans_id'] . "\n";
-			}
-
-			if (isset($this->request->get['valid'])) {
-				$message .= 'valid: ' . $this->request->get['valid'] . "\n";
-			}
-
-			$this->model_checkout_order->update($order_id, $this->config->get('paypoint_order_status_id'), $message, false);
-
-			$this->data['continue'] = $this->url->link('checkout/success');
-
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint_success.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/payment/paypoint_success.tpl';
+									
+		if ($order_info && $status) {
+			$this->language->load('payment/paypoint');
+	
+			$this->data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
+	
+			if (!isset($this->request->server['HTTPS']) || ($this->request->server['HTTPS'] != 'on')) {
+				$this->data['base'] = HTTP_SERVER;
 			} else {
-				$this->template = 'default/template/payment/paypoint_success.tpl';
+				$this->data['base'] = HTTPS_SERVER;
 			}
-
-			$this->children = array(
-				'common/column_left',
-				'common/column_right',
-				'common/content_top',
-				'common/content_bottom',
-				'common/footer',
-				'common/header'
-			);
-
-	  		$this->response->setOutput($this->render());
-		} else {
-			$this->data['continue'] = $this->url->link('checkout/cart');
-
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint_failure.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/payment/paypoint_failure.tpl';
+	
+			$this->data['language'] = $this->language->get('code');
+			$this->data['direction'] = $this->language->get('direction');
+	
+			$this->data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
+	
+			$this->data['text_response'] = $this->language->get('text_response');
+			$this->data['text_success'] = $this->language->get('text_success');
+			$this->data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success'));
+			$this->data['text_failure'] = $this->language->get('text_failure');
+			$this->data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/cart'));
+	
+			if (isset($this->request->get['code']) && $this->request->get['code'] == 'A') {
+				$this->load->model('checkout/order');
+	
+				$this->model_checkout_order->confirm($this->request->get['trans_id'], $this->config->get('config_order_status_id'));
+	
+				$message = '';
+	
+				if (isset($this->request->get['code'])) {
+					$message .= 'code: ' . $this->request->get['code'] . "\n";
+				}
+	
+				if (isset($this->request->get['auth_code'])) {
+					$message .= 'auth_code: ' . $this->request->get['auth_code'] . "\n";
+				}
+	
+				if (isset($this->request->get['ip'])) {
+					$message .= 'ip: ' . $this->request->get['ip'] . "\n";
+				}
+	
+				if (isset($this->request->get['cv2avs'])) {
+					$message .= 'cv2avs: ' . $this->request->get['cv2avs'] . "\n";
+				}
+	
+				if (isset($this->request->get['valid'])) {
+					$message .= 'valid: ' . $this->request->get['valid'] . "\n";
+				}
+	
+				$this->model_checkout_order->update($order_id, $this->config->get('paypoint_order_status_id'), $message, false);
+	
+				$this->data['continue'] = $this->url->link('checkout/success');
+	
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint_success.tpl')) {
+					$this->template = $this->config->get('config_template') . '/template/payment/paypoint_success.tpl';
+				} else {
+					$this->template = 'default/template/payment/paypoint_success.tpl';
+				}
+	
+				$this->children = array(
+					'common/column_left',
+					'common/column_right',
+					'common/content_top',
+					'common/content_bottom',
+					'common/footer',
+					'common/header'
+				);
+	
+				$this->response->setOutput($this->render());
 			} else {
-				$this->template = 'default/template/payment/paypoint_failure.tpl';
+				$this->data['continue'] = $this->url->link('checkout/cart');
+	
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paypoint_failure.tpl')) {
+					$this->template = $this->config->get('config_template') . '/template/payment/paypoint_failure.tpl';
+				} else {
+					$this->template = 'default/template/payment/paypoint_failure.tpl';
+				}
+	
+				$this->children = array(
+					'common/column_left',
+					'common/column_right',
+					'common/content_top',
+					'common/content_bottom',
+					'common/footer',
+					'common/header'
+				);
+	
+				$this->response->setOutput($this->render());
 			}
-
-			$this->children = array(
-				'common/column_left',
-				'common/column_right',
-				'common/content_top',
-				'common/content_bottom',
-				'common/footer',
-				'common/header'
-			);
-
-			$this->response->setOutput($this->render());
 		}
 	}
 }

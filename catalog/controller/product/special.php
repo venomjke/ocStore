@@ -131,17 +131,11 @@ class ControllerProductSpecial extends Controller {
 				$rating = false;
 			}
 
-			$cut_descr_symbols = 400;
-			$descr_plaintext = strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'));
-			if( mb_strlen($descr_plaintext, 'UTF-8') > $cut_descr_symbols )
-			{
-				$descr_plaintext = mb_substr($descr_plaintext, 0, $cut_descr_symbols, 'UTF-8') . '&nbsp;&hellip;';
-			}
 			$this->data['products'][] = array(
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
 				'name'        => $result['name'],
-				'description' => $descr_plaintext,
+				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
@@ -185,21 +179,23 @@ class ControllerProductSpecial extends Controller {
 
 		$this->data['sorts'][] = array(
 			'text'  => $this->language->get('text_price_desc'),
-			'value' => 'special-DESC',
-			'href'  => $this->url->link('product/special', 'sort=special&order=DESC' . $url)
+			'value' => 'ps.price-DESC',
+			'href'  => $this->url->link('product/special', 'sort=ps.price&order=DESC' . $url)
 		);
 
-		$this->data['sorts'][] = array(
-			'text'  => $this->language->get('text_rating_desc'),
-			'value' => 'rating-DESC',
-			'href'  => $this->url->link('product/special', 'sort=rating&order=DESC' . $url)
-		);
+		if ($this->config->get('config_review_status')) {
+			$this->data['sorts'][] = array(
+				'text'  => $this->language->get('text_rating_desc'),
+				'value' => 'rating-DESC',
+				'href'  => $this->url->link('product/special', 'sort=rating&order=DESC' . $url)
+			);
 
-		$this->data['sorts'][] = array(
-			'text'  => $this->language->get('text_rating_asc'),
-			'value' => 'rating-ASC',
-			'href'  => $this->url->link('product/special', 'sort=rating&order=ASC' . $url)
-		);
+			$this->data['sorts'][] = array(
+				'text'  => $this->language->get('text_rating_asc'),
+				'value' => 'rating-ASC',
+				'href'  => $this->url->link('product/special', 'sort=rating&order=ASC' . $url)
+			);
+		}
 
 		$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_model_asc'),

@@ -29,6 +29,7 @@ class ControllerPaymentPayPoint extends Controller {
 		$this->data['text_fail'] = $this->language->get('text_fail');
 
 		$this->data['entry_merchant'] = $this->language->get('entry_merchant');
+		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_total'] = $this->language->get('entry_total');
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
@@ -38,8 +39,6 @@ class ControllerPaymentPayPoint extends Controller {
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->data['tab_general'] = $this->language->get('tab_general');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -81,6 +80,12 @@ class ControllerPaymentPayPoint extends Controller {
 			$this->data['paypoint_merchant'] = $this->request->post['paypoint_merchant'];
 		} else {
 			$this->data['paypoint_merchant'] = $this->config->get('paypoint_merchant');
+		}
+
+		if (isset($this->request->post['paypoint_password'])) {
+			$this->data['paypoint_password'] = $this->request->post['paypoint_password'];
+		} else {
+			$this->data['paypoint_password'] = $this->config->get('paypoint_password');
 		}
 
 		if (isset($this->request->post['paypoint_test'])) {
@@ -130,7 +135,7 @@ class ControllerPaymentPayPoint extends Controller {
 		$this->template = 'payment/paypoint.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 
 		$this->response->setOutput($this->render());

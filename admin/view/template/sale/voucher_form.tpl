@@ -11,7 +11,7 @@
 <div class="box">
   <div class="heading">
     <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
-    <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+    <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
   </div>
   <div class="content">
     <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a>
@@ -58,17 +58,6 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><span class="required">*</span> <?php echo $entry_message; ?></td>
-            <td><textarea name="message" cols="40" rows="5"><?php echo $message; ?></textarea></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_amount; ?></td>
-            <td><input type="text" name="amount" value="<?php echo $amount; ?>" />
-              <?php if ($error_amount) { ?>
-              <span class="error"><?php echo $error_amount; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
             <td><?php echo $entry_theme; ?></td>
             <td><select name="voucher_theme_id">
                 <?php foreach ($voucher_themes as $voucher_theme) { ?>
@@ -79,6 +68,17 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
+          </tr>          
+          <tr>
+            <td><span class="required">*</span> <?php echo $entry_message; ?></td>
+            <td><textarea name="message" cols="40" rows="5"><?php echo $message; ?></textarea></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_amount; ?></td>
+            <td><input type="text" name="amount" value="<?php echo $amount; ?>" />
+              <?php if ($error_amount) { ?>
+              <span class="error"><?php echo $error_amount; ?></span>
+              <?php } ?></td>
           </tr>
           <tr>
             <td><?php echo $entry_status; ?></td>

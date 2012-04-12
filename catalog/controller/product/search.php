@@ -4,7 +4,9 @@ class ControllerProductSearch extends Controller {
     	$this->language->load('product/search');
 
 		$this->load->model('catalog/category');
+		
 		$this->load->model('catalog/product');
+		
 		$this->load->model('tool/image');
 
 		if (isset($this->request->get['filter_name'])) {
@@ -15,6 +17,8 @@ class ControllerProductSearch extends Controller {
 
 		if (isset($this->request->get['filter_tag'])) {
 			$filter_tag = $this->request->get['filter_tag'];
+		} elseif (isset($this->request->get['filter_name'])) {
+			$filter_tag = $this->request->get['filter_name'];
 		} else {
 			$filter_tag = '';
 		}
@@ -238,18 +242,11 @@ class ControllerProductSearch extends Controller {
 					$rating = false;
 				}
 
-				$cut_descr_symbols = 400;
-				$descr_plaintext = strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'));
-				if( mb_strlen($descr_plaintext, 'UTF-8') > $cut_descr_symbols )
-				{
-					$descr_plaintext = mb_substr($descr_plaintext, 0, $cut_descr_symbols, 'UTF-8');
-					$descr_plaintext = mb_substr($descr_plaintext, 0, mb_strripos($descr_plaintext, ' ', 0, 'UTF-8'), 'UTF-8') . '&nbsp;&hellip;';
-				}
 				$this->data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => $descr_plaintext,
+					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
@@ -317,17 +314,19 @@ class ControllerProductSearch extends Controller {
 				'href'  => $this->url->link('product/search', 'sort=p.price&order=DESC' . $url)
 			);
 
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_rating_desc'),
-				'value' => 'rating-DESC',
-				'href'  => $this->url->link('product/search', 'sort=rating&order=DESC' . $url)
-			);
-
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_rating_asc'),
-				'value' => 'rating-ASC',
-				'href'  => $this->url->link('product/search', 'sort=rating&order=ASC' . $url)
-			);
+			if ($this->config->get('config_review_status')) {
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_rating_desc'),
+					'value' => 'rating-DESC',
+					'href'  => $this->url->link('product/search', 'sort=rating&order=DESC' . $url)
+				); 
+				
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_rating_asc'),
+					'value' => 'rating-ASC',
+					'href'  => $this->url->link('product/search', 'sort=rating&order=ASC' . $url)
+				);
+			}
 
 			$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_model_asc'),

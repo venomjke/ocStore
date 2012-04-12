@@ -11,7 +11,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/information.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-data"><?php echo $tab_data; ?></a><a href="#tab-design"><?php echo $tab_design; ?></a></div>
@@ -27,10 +27,26 @@
             <table class="form">
               <tr>
                 <td><span class="required">*</span> <?php echo $entry_title; ?></td>
-                <td><input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" size="100" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" />
+                <td><input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" maxlength="255" size="100" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" />
                   <?php if (isset($error_title[$language['language_id']])) { ?>
                   <span class="error"><?php echo $error_title[$language['language_id']]; ?></span>
                   <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $entry_seo_h1; ?></td>
+                <td><input type="text" name="information_description[<?php echo $language['language_id']; ?>][seo_h1]" maxlength="255" size="100" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['seo_h1'] : ''; ?>" /></td>
+              </tr>
+              <tr>
+                <td><?php echo $entry_seo_title; ?></td>
+                <td><input type="text" name="information_description[<?php echo $language['language_id']; ?>][seo_title]" maxlength="255" size="100" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['seo_title'] : ''; ?>" /></td>
+              </tr>
+              <tr>
+                <td><?php echo $entry_meta_keyword; ?></td>
+                <td><input type="text" name="information_description[<?php echo $language['language_id']; ?>][meta_keyword]" maxlength="255" size="100" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_keyword'] : ''; ?>" /></td>
+              </tr>
+              <tr>
+                <td><?php echo $entry_meta_description; ?></td>
+                <td><textarea name="information_description[<?php echo $language['language_id']; ?>][meta_description]" cols="100" rows="2"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_description'] : ''; ?></textarea></td>
               </tr>
               <tr>
                 <td><span class="required">*</span> <?php echo $entry_description; ?></td>

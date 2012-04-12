@@ -72,9 +72,16 @@ class ControllerProductCategory extends Controller {
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 
 		if ($category_info) {
-	  		$this->document->setTitle($category_info['name']);
+			if ($category_info['seo_title']) {
+		  		$this->document->setTitle($category_info['seo_title']);
+			} else {
+		  		$this->document->setTitle($category_info['name']);
+			}
+
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
+
+			$this->data['seo_h1'] = $category_info['seo_h1'];
 
 			$this->data['heading_title'] = $category_info['name'];
 
@@ -126,7 +133,12 @@ class ControllerProductCategory extends Controller {
 			$results = $this->model_catalog_category->getCategories($category_id);
 
 			foreach ($results as $result) {
-				$product_total = $this->model_catalog_product->getTotalProducts(array('filter_category_id' => $result['category_id']));
+				$data = array(
+					'filter_category_id'  => $result['category_id'],
+					'filter_sub_category' => true	
+				);
+							
+				$product_total = $this->model_catalog_product->getTotalProducts($data);
 
 				$this->data['categories'][] = array(
 					'name'  => $result['name'] . ' (' . $product_total . ')',
@@ -179,17 +191,11 @@ class ControllerProductCategory extends Controller {
 					$rating = false;
 				}
 
-				$cut_descr_symbols = 400;
-				$descr_plaintext = strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'));
-				if( mb_strlen($descr_plaintext, 'UTF-8') > $cut_descr_symbols )
-				{
-					$descr_plaintext = mb_substr($descr_plaintext, 0, $cut_descr_symbols, 'UTF-8') . '&nbsp;&hellip;';
-				}
 				$this->data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => $descr_plaintext,
+					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
@@ -237,17 +243,19 @@ class ControllerProductCategory extends Controller {
 				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.price&order=DESC' . $url)
 			);
 
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_rating_desc'),
-				'value' => 'rating-DESC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=DESC' . $url)
-			);
-
-			$this->data['sorts'][] = array(
-				'text'  => $this->language->get('text_rating_asc'),
-				'value' => 'rating-ASC',
-				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=ASC' . $url)
-			);
+			if ($this->config->get('config_review_status')) {
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_rating_desc'),
+					'value' => 'rating-DESC',
+					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=DESC' . $url)
+				); 
+				
+				$this->data['sorts'][] = array(
+					'text'  => $this->language->get('text_rating_asc'),
+					'value' => 'rating-ASC',
+					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=ASC' . $url)
+				);
+			}
 
 			$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_model_asc'),

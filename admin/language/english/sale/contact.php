@@ -1,9 +1,10 @@
-<?php
+<?php  
 // Heading
 $_['heading_title']        = 'Mail';
 
 // Text
 $_['text_success']         = 'Your message has been successfully sent!';
+$_['text_sent']            = 'Your message has been successfully sent to %s of %s recipetants!';
 $_['text_default']         = 'Default';
 $_['text_newsletter']      = 'All Newsletter Subscribers';
 $_['text_customer_all']    = 'All Customers';
@@ -17,9 +18,9 @@ $_['text_product']         = 'Products';
 $_['entry_store']          = 'From:';
 $_['entry_to']             = 'To:';
 $_['entry_customer_group'] = 'Customer Group:';
-$_['entry_customer']       = 'Customer:';
-$_['entry_affiliate']      = 'Affiliate:';
-$_['entry_product']        = 'Products:<br /><span class="help">Send only to customers who have ordered products in the list.</span>';
+$_['entry_customer']       = 'Customer:<br /><span class="help">Autocomplete</span>';
+$_['entry_affiliate']      = 'Affiliate:<br /><span class="help">Autocomplete</span>';
+$_['entry_product']        = 'Products:<br /><span class="help">Send only to customers who have ordered products in the list. (Autocomplete)</span>';
 $_['entry_subject']        = 'Subject:';
 $_['entry_message']        = 'Message:';
 

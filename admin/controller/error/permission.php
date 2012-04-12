@@ -1,14 +1,14 @@
-<?php
-class ControllerErrorPermission extends Controller {
-	public function index() {
+<?php    
+class ControllerErrorPermission extends Controller {    
+	public function index() { 
     	$this->load->language('error/permission');
-
+  
     	$this->document->setTitle($this->language->get('heading_title'));
-
+		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_permission'] = $this->language->get('text_permission');
-
+													
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
@@ -26,9 +26,9 @@ class ControllerErrorPermission extends Controller {
 		$this->template = 'error/permission.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
-
+				
 		$this->response->setOutput($this->render());
   	}
 }

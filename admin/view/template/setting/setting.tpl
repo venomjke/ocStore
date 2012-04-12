@@ -14,10 +14,10 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/setting.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>
+      <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-sms"><?php echo $tab_sms; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <div id="tab-general">
           <table class="form">
@@ -231,14 +231,62 @@
                 <?php } ?></td>
             </tr>
             <tr>
+              <td><?php echo $entry_tax_default; ?></td>
+              <td><select name="config_tax_default">
+                  <option value=""><?php echo $text_none; ?></option>
+                  <?php  if ($config_tax_default == 'shipping') { ?>
+                  <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
+                  <?php } else { ?>
+                  <option value="shipping"><?php echo $text_shipping; ?></option>
+                  <?php } ?>
+                  <?php  if ($config_tax_default == 'payment') { ?>
+                  <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
+                  <?php } else { ?>
+                  <option value="payment"><?php echo $text_payment; ?></option>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_tax_customer; ?></td>
+              <td><select name="config_tax_customer">
+              	  <option value=""><?php echo $text_none; ?></option>
+                  <?php  if ($config_tax_customer == 'shipping') { ?>
+                  <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
+                  <?php } else { ?>
+                  <option value="shipping"><?php echo $text_shipping; ?></option>
+                  <?php } ?>
+                  <?php  if ($config_tax_customer == 'payment') { ?>
+                  <option value="payment" selected="selected"><?php echo $text_payment; ?></option>
+                  <?php } else { ?>
+                  <option value="payment"><?php echo $text_payment; ?></option>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_invoice_prefix; ?></td>
               <td><input type="text" name="config_invoice_prefix" value="<?php echo $config_invoice_prefix; ?>" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_order_edit; ?></td>
+              <td><input type="text" name="config_order_edit" value="<?php echo $config_order_edit; ?>" size="3" /></td>
             </tr>
             <tr>
               <td><?php echo $entry_customer_group; ?></td>
               <td><select name="config_customer_group_id">
                   <?php foreach ($customer_groups as $customer_group) { ?>
                   <?php if ($customer_group['customer_group_id'] == $config_customer_group_id) { ?>
+                  <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_registred_group; ?></td>
+              <td><select name="config_registred_group_id">
+                  <?php foreach ($customer_groups as $customer_group) { ?>
+                  <?php if ($customer_group['customer_group_id'] == $config_registred_group_id) { ?>
                   <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
                   <?php } else { ?>
                   <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
@@ -408,7 +456,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-            </tr>            
+            </tr>
             <tr>
               <td><?php echo $entry_return_status; ?></td>
               <td><select name="config_return_status_id">
@@ -473,13 +521,26 @@
           <table class="form">
             <tr>
               <td><?php echo $entry_logo; ?></td>
-              <td><input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="logo" />
-                <img src="<?php echo $logo; ?>" alt="" id="preview-logo" class="image" onclick="image_upload('logo', 'preview-logo');" /></td>
+              <td><div class="image"><img src="<?php echo $logo; ?>" alt="" id="thumb-logo" />
+                  <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="logo" />
+                  <br />
+                  <a onclick="image_upload('logo', 'thumb-logo');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-logo').attr('src', '<?php echo $no_image; ?>'); $('#logo').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
             </tr>
             <tr>
               <td><?php echo $entry_icon; ?></td>
-              <td><input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
-                <img src="<?php echo $icon; ?>" alt="" id="preview-icon" class="image" onclick="image_upload('icon', 'preview-icon');" /></td>
+              <td><div class="image"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" />
+                  <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
+                  <br />
+                  <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+            </tr>
+            <tr>
+              <td><span class="required">*</span> <?php echo $entry_image_category; ?></td>
+              <td><input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" size="3" />
+                x
+                <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" size="3" />
+                <?php if ($error_image_category) { ?>
+                <span class="error"><?php echo $error_image_category; ?></span>
+                <?php } ?></td>
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_image_thumb; ?></td>
@@ -508,24 +569,6 @@
                 <span class="error"><?php echo $error_image_product; ?></span>
                 <?php } ?></td>
             </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_category; ?></td>
-              <td><input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" size="3" />
-                x
-                <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" size="3" />
-                <?php if ($error_image_category) { ?>
-                <span class="error"><?php echo $error_image_category; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> <?php echo $entry_image_manufacturer; ?></td>
-              <td><input type="text" name="config_image_manufacturer_width" value="<?php echo $config_image_manufacturer_width; ?>" size="3" />
-                x
-                <input type="text" name="config_image_manufacturer_height" value="<?php echo $config_image_manufacturer_height; ?>" size="3" />
-                <?php if ($error_image_manufacturer) { ?>
-                <span class="error"><?php echo $error_image_manufacturer; ?></span>
-                <?php } ?></td>
-            </tr>            
             <tr>
               <td><span class="required">*</span> <?php echo $entry_image_additional; ?></td>
               <td><input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" size="3" />
@@ -628,7 +671,7 @@
                 <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>
-			<tr>
+	    <tr>
               <td><?php echo $entry_account_mail; ?></td>
               <td><?php if ($config_account_mail) { ?>
                 <input type="radio" name="config_account_mail" value="1" checked="checked" />
@@ -645,6 +688,100 @@
             <tr>
               <td><?php echo $entry_alert_emails; ?></td>
               <td><textarea name="config_alert_emails" cols="40" rows="5"><?php echo $config_alert_emails; ?></textarea></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-fraud">
+          <table class="form">
+            <tr>
+              <td><?php echo $entry_fraud_detection; ?></td>
+              <td><?php if ($config_fraud_detection) { ?>
+                <input type="radio" name="config_fraud_detection" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_fraud_detection" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_fraud_detection" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_fraud_detection" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>          
+            <tr>
+              <td><?php echo $entry_fraud_key; ?></td>
+              <td><input type="text" name="config_fraud_key" value="<?php echo $config_fraud_key; ?>" /></td>
+            </tr>                 
+            <tr>
+              <td><?php echo $entry_fraud_score; ?></td>
+              <td><input type="text" name="config_fraud_score" value="<?php echo $config_fraud_score; ?>" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_fraud_status; ?></td>
+              <td><select name="config_fraud_status_id">
+                  <?php foreach ($order_statuses as $order_status) { ?>
+                  <?php if ($order_status['order_status_id'] == $config_fraud_status_id) { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+            </tr>            
+          </table>
+        </div>
+        <div id="tab-sms">
+          <table class="form">
+            <tr>
+              <td><?php echo $entry_sms_alert; ?></td>
+              <td><?php if ($config_sms_alert) { ?>
+                <input type="radio" name="config_sms_alert" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_sms_alert" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_sms_alert" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_sms_alert" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_sms_gatename; ?></td>
+              <td>
+                <select name="config_sms_gatename">
+                <?php foreach($sms_gatenames as $sms_gatename) { ?>
+                <?php if ($config_sms_gatename == $sms_gatename) { ?>
+                <option value="<?php echo $sms_gatename; ?>" selected="selected"><?php echo $sms_gatename; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $sms_gatename; ?>"><?php echo $sms_gatename; ?></option>
+                <?php } ?>
+                <?php } ?>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_sms_from; ?></td>
+              <td><input type="text" name="config_sms_from" value="<?php echo $config_sms_from; ?>" maxlength="15" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_sms_to; ?></td>
+              <td><input type="text" name="config_sms_to" value="<?php echo $config_sms_to; ?>" maxlength="15" /></td>
+            </tr>
+            <tr>
+              <td valign="top"><?php echo $entry_sms_copy; ?></td>
+              <td><textarea name="config_sms_copy" cols="40"><?php echo $config_sms_copy; ?></textarea></td>
+            </tr>
+            <tr>
+              <td valign="top"><?php echo $entry_sms_message; ?></td>
+              <td><textarea name="config_sms_message" cols="40" rows="5"><?php echo $config_sms_message; ?></textarea></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_sms_gate_username; ?></td>
+              <td><input type="text" name="config_sms_gate_username" value="<?php echo $config_sms_gate_username; ?>" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_sms_gate_password; ?></td>
+              <td><input type="text" name="config_sms_gate_password" value="<?php echo $config_sms_gate_password; ?>" /></td>
             </tr>
           </table>
         </div>
@@ -779,28 +916,26 @@
 $('#template').load('index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
 
 $('select[name=\'config_zone_id\']').load('index.php?route=setting/setting/zone&token=<?php echo $token; ?>&country_id=<?php echo $config_country_id; ?>&zone_id=<?php echo $config_zone_id; ?>');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-function image_upload(field, preview) {
+function image_upload(field, thumb) {
 	$('#dialog').remove();
-	
+
 	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
-	
+
 	$('#dialog').dialog({
 		title: '<?php echo $text_image_manager; ?>',
 		close: function (event, ui) {
 			if ($('#' + field).attr('value')) {
 				$.ajax({
-					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>',
-					type: 'POST',
-					data: 'image=' + encodeURIComponent($('#' + field).val()),
+					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).val()),
 					dataType: 'text',
 					success: function(data) {
-						$('#' + preview).replaceWith('<img src="' + data + '" alt="" id="' + preview + '" class="image" onclick="image_upload(\'' + field + '\', \'' + preview + '\');" />');
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
 					}
 				});
 			}
-		},	
+		},
 		bgiframe: false,
 		width: 800,
 		height: 400,
@@ -808,8 +943,8 @@ function image_upload(field, preview) {
 		modal: false
 	});
 };
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#tabs a').tabs();
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

@@ -146,13 +146,13 @@ class ControllerCatalogAttribute extends Controller {
   		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
+	       		'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
       		'separator' => false
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
+	       		'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL'),
       		'separator' => ' :: '
    		);
@@ -227,7 +227,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
-		}
+	}
 
 		$this->data['sort_name'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . '&sort=ad.name' . $url, 'SSL');
 		$this->data['sort_attribute_group'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . '&sort=attribute_group' . $url, 'SSL');
@@ -258,7 +258,7 @@ class ControllerCatalogAttribute extends Controller {
 		$this->template = 'catalog/attribute_list.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 
 		$this->response->setOutput($this->render());
@@ -340,7 +340,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		if (isset($this->request->post['attribute_group_id'])) {
 			$this->data['attribute_group_id'] = $this->request->post['attribute_group_id'];
-		} elseif (isset($attribute_info)) {
+		} elseif (!empty($attribute_info)) {
 			$this->data['attribute_group_id'] = $attribute_info['attribute_group_id'];
 		} else {
 			$this->data['attribute_group_id'] = '';
@@ -352,7 +352,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
-		} elseif (isset($attribute_info)) {
+		} elseif (!empty($attribute_info)) {
 			$this->data['sort_order'] = $attribute_info['sort_order'];
 		} else {
 			$this->data['sort_order'] = '';
@@ -361,7 +361,7 @@ class ControllerCatalogAttribute extends Controller {
 		$this->template = 'catalog/attribute_form.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 
 		$this->response->setOutput($this->render());
@@ -373,7 +373,7 @@ class ControllerCatalogAttribute extends Controller {
     	}
 
     	foreach ($this->request->post['attribute_description'] as $language_id => $value) {
-      		if ((strlen(utf8_decode($value['name'])) < 3) || (strlen(utf8_decode($value['name'])) > 64)) {
+      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 64)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
     	}
@@ -410,11 +410,11 @@ class ControllerCatalogAttribute extends Controller {
 	public function autocomplete() {
 		$json = array();
 
-		if (isset($this->request->post['filter_name'])) {
+		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('catalog/attribute');
 
 			$data = array(
-				'filter_name' => $this->request->post['filter_name'],
+				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
 				'limit'       => 20
 			);
@@ -432,7 +432,6 @@ class ControllerCatalogAttribute extends Controller {
 			}
 		}
 
-/*
 		$sort_order = array();
 
 		foreach ($json as $key => $value) {
@@ -440,10 +439,7 @@ class ControllerCatalogAttribute extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $json);
-*/
-		$this->load->library('json');
 
-		$this->response->setOutput(Json::encode($json));
+		$this->response->setOutput(json_encode($json));
 	}
 }
-?>

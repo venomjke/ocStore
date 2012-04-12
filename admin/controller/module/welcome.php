@@ -73,8 +73,6 @@ class ControllerModuleWelcome extends Controller {
 
 		$this->data['modules'] = array();
 
-		$this->data['modules'] = array();
-
 		if (isset($this->request->post['welcome_module'])) {
 			$this->data['modules'] = $this->request->post['welcome_module'];
 		} elseif ($this->config->get('welcome_module')) {
@@ -92,7 +90,7 @@ class ControllerModuleWelcome extends Controller {
 		$this->template = 'module/welcome.tpl';
 		$this->children = array(
 			'common/header',
-			'common/footer',
+			'common/footer'
 		);
 
 		$this->response->setOutput($this->render());

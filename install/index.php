@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // HTTP
 define('HTTP_SERVER', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/');
 define('HTTP_OPENCART', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['PHP_SELF']), 'install'), '/.\\'). '/');
@@ -11,6 +14,21 @@ define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
+
+// Upgrade
+$upgrade = false;
+
+if (filesize('../config.php') > 0) {
+	$upgrade = true;
+
+	$file = file(DIR_OPENCART . 'config.php');
+
+	foreach ($file as $num => $line) {
+		if (strpos(strtoupper($line), 'DB_') !== false) {
+			eval($line);
+		}
+	}
+}
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
@@ -41,6 +59,8 @@ $controller = new Front($registry);
 // Router
 if (isset($request->get['route'])) {
 	$action = new Action($request->get['route']);
+} elseif ($upgrade) {
+	$action = new Action('upgrade');
 } else {
 	$action = new Action('step_1');
 }

@@ -6,7 +6,7 @@ class ControllerAccountDownload extends Controller {
 
 			$this->redirect($this->url->link('account/login', '', 'SSL'));
 		}
-
+         		
 		$this->language->load('account/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -15,26 +15,26 @@ class ControllerAccountDownload extends Controller {
 
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
+			'href'      => $this->url->link('common/home'),        	
         	'separator' => false
-      	);
+      	); 
 
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
+			'href'      => $this->url->link('account/account', '', 'SSL'),       	
         	'separator' => $this->language->get('text_separator')
       	);
-
+		
       	$this->data['breadcrumbs'][] = array(
         	'text'      => $this->language->get('text_downloads'),
-			'href'      => $this->url->link('account/download', '', 'SSL'),
+			'href'      => $this->url->link('account/download', '', 'SSL'),       	
         	'separator' => $this->language->get('text_separator')
       	);
-
+				
 		$this->load->model('account/download');
 
 		$download_total = $this->model_account_download->getTotalDownloads();
-
+		
 		if ($download_total) {
 			$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -43,20 +43,20 @@ class ControllerAccountDownload extends Controller {
 			$this->data['text_name'] = $this->language->get('text_name');
 			$this->data['text_remaining'] = $this->language->get('text_remaining');
 			$this->data['text_size'] = $this->language->get('text_size');
-			$this->data['text_download'] = $this->language->get('text_download');
-
+			
+			$this->data['button_download'] = $this->language->get('button_download');
 			$this->data['button_continue'] = $this->language->get('button_continue');
 
 			if (isset($this->request->get['page'])) {
 				$page = $this->request->get['page'];
 			} else {
 				$page = 1;
-			}
-
+			}			
+	
 			$this->data['downloads'] = array();
-
+			
 			$results = $this->model_account_download->getDownloads(($page - 1) * $this->config->get('config_catalog_limit'), $this->config->get('config_catalog_limit'));
-
+			
 			foreach ($results as $result) {
 				if (file_exists(DIR_DOWNLOAD . $result['filename'])) {
 					$size = filesize(DIR_DOWNLOAD . $result['filename']);
@@ -90,16 +90,16 @@ class ControllerAccountDownload extends Controller {
 					);
 				}
 			}
-
+		
 			$pagination = new Pagination();
 			$pagination->total = $download_total;
 			$pagination->page = $page;
 			$pagination->limit = $this->config->get('config_catalog_limit');
 			$pagination->text = $this->language->get('text_pagination');
 			$pagination->url = $this->url->link('account/download', 'page={page}', 'SSL');
-
+			
 			$this->data['pagination'] = $pagination->render();
-
+			
 			$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/download.tpl')) {
@@ -107,17 +107,17 @@ class ControllerAccountDownload extends Controller {
 			} else {
 				$this->template = 'default/template/account/download.tpl';
 			}
-
+			
 			$this->children = array(
 				'common/column_left',
 				'common/column_right',
 				'common/content_top',
 				'common/content_bottom',
 				'common/footer',
-				'common/header'
+				'common/header'		
 			);
-
-			$this->response->setOutput($this->render());
+							
+			$this->response->setOutput($this->render());				
 		} else {
 			$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -132,16 +132,16 @@ class ControllerAccountDownload extends Controller {
 			} else {
 				$this->template = 'default/template/error/not_found.tpl';
 			}
-
+			
 			$this->children = array(
 				'common/column_left',
 				'common/column_right',
 				'common/content_top',
 				'common/content_bottom',
 				'common/footer',
-				'common/header'
+				'common/header'		
 			);
-
+										
 			$this->response->setOutput($this->render());
 		}
 	}
@@ -154,42 +154,41 @@ class ControllerAccountDownload extends Controller {
 		}
 
 		$this->load->model('account/download');
-
+		
 		if (isset($this->request->get['order_download_id'])) {
 			$order_download_id = $this->request->get['order_download_id'];
 		} else {
 			$order_download_id = 0;
 		}
-
+		
 		$download_info = $this->model_account_download->getDownload($order_download_id);
-
+		
 		if ($download_info) {
 			$file = DIR_DOWNLOAD . $download_info['filename'];
 			$mask = basename($download_info['mask']);
-			$mime = 'application/octet-stream';
-			$encoding = 'binary';
 
 			if (!headers_sent()) {
 				if (file_exists($file)) {
-					header('Pragma: public');
-					header('Expires: 0');
 					header('Content-Description: File Transfer');
-					header('Content-Type: ' . $mime);
-					header('Content-Transfer-Encoding: ' . $encoding);
-					header('Content-Disposition: attachment; filename=' . ($mask ? $mask : basename($file)));
+					header('Content-Type: application/octet-stream');
+					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
+					header('Content-Transfer-Encoding: binary');
+					header('Expires: 0');
+					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+					header('Pragma: public');
 					header('Content-Length: ' . filesize($file));
-
-					$file = readfile($file, 'rb');
-
-					print($file);
+					
+					readfile($file, 'rb');
+					
+					$this->model_account_download->updateRemaining($this->request->get['order_download_id']);
+					
+					exit;
 				} else {
 					exit('Error: Could not find file ' . $file . '!');
 				}
 			} else {
 				exit('Error: Headers already sent out!');
 			}
-
-			$this->model_account_download->updateRemaining($this->request->get['order_download_id']);
 		} else {
 			$this->redirect($this->url->link('account/download', '', 'SSL'));
 		}

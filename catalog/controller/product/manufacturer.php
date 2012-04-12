@@ -4,6 +4,7 @@ class ControllerProductManufacturer extends Controller {
 		$this->language->load('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
+		
 		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -34,10 +35,10 @@ class ControllerProductManufacturer extends Controller {
 		$results = $this->model_catalog_manufacturer->getManufacturers();
 
 		foreach ($results as $result) {
-			if (is_int(mb_substr($result['name'], 0, 1, 'UTF-8'))) {
+			if (is_numeric(utf8_substr($result['name'], 0, 1))) {
 				$key = '0 - 9';
 			} else {
-				$key = mb_substr(strtoupper($result['name']), 0, 1, 'UTF-8');
+				$key = utf8_substr(utf8_strtoupper($result['name']), 0, 1);
 			}
 
 			if (!isset($this->data['manufacturers'][$key])) {
@@ -126,7 +127,14 @@ class ControllerProductManufacturer extends Controller {
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
 		if ($manufacturer_info) {
-			$this->document->setTitle($manufacturer_info['name']);
+			if ($manufacturer_info['seo_title']) {
+				$this->document->setTitle($manufacturer_info['seo_title']);
+			} else {
+				$this->document->setTitle($manufacturer_info['name']);
+			}
+
+			$this->document->setDescription($manufacturer_info['meta_description']);
+			$this->document->setKeywords($manufacturer_info['meta_keyword']);
 
 			$url = '';
 
@@ -151,6 +159,10 @@ class ControllerProductManufacturer extends Controller {
 				'href'      => $this->url->link('product/manufacturer/product', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url),
       			'separator' => $this->language->get('text_separator')
    			);
+
+			$this->data['seo_h1'] = $manufacturer_info['seo_h1'];
+
+			$this->data['description'] = html_entity_decode($manufacturer_info['description'], ENT_QUOTES, 'UTF-8');
 
 			$this->data['heading_title'] = $manufacturer_info['name'];
 
@@ -220,17 +232,11 @@ class ControllerProductManufacturer extends Controller {
 					$rating = false;
 				}
 
-				$cut_descr_symbols = 400;
-				$descr_plaintext = strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'));
-				if( mb_strlen($descr_plaintext, 'UTF-8') > $cut_descr_symbols )
-				{
-					$descr_plaintext = mb_substr($descr_plaintext, 0, $cut_descr_symbols, 'UTF-8') . '&nbsp;&hellip;';
-				}
 				$this->data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => $descr_plaintext,
+					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
@@ -278,6 +284,7 @@ class ControllerProductManufacturer extends Controller {
 				'href'  => $this->url->link('product/manufacturer/product', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=p.price&order=DESC' . $url)
 			);
 
+			if ($this->config->get('config_review_status')) {
 			$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_rating_desc'),
 				'value' => 'rating-DESC',
@@ -289,6 +296,7 @@ class ControllerProductManufacturer extends Controller {
 				'value' => 'rating-ASC',
 				'href'  => $this->url->link('product/manufacturer/product', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . '&sort=rating&order=ASC' . $url)
 			);
+			}
 
 			$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_model_asc'),

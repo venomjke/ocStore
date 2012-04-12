@@ -8,28 +8,26 @@ $_['text_plus']			= '+';
 $_['text_minus']		= '-';
 $_['text_default']		= 'Основной магазин';
 $_['text_image_manager']	= 'Менеджер изображений';
+$_['text_browse']            = 'Обзор';
+$_['text_clear']             = 'Очистить';
 $_['text_option']		= 'Опция';
 $_['text_option_value']		= 'Значение опции';
 $_['text_percent']		= 'Процент';
 $_['text_amount']		= 'Фиксированная сумма';
 
 // Column
-$_['column_date_added']		= 'Добавлено';
-$_['column_name']		= 'Название товара';
-$_['column_model']		= 'Модель';
-$_['column_image']		= 'Изображения';
-$_['column_manufacturer_price']	= 'Цена производителя';
-$_['column_price']		= 'Цена на сайте';
-$_['column_quantity']		= 'Количество';
-$_['column_status']		= 'Статус';
-$_['column_action']		= 'Действие';
-$_['entry_title']		= 'Тег "title"';
-$_['entry_h1']			= 'Заголовок "h1"';
+$_['column_name']            = 'Название товара';
+$_['column_model']           = 'Модель';
+$_['column_image']           = 'Изображения';
+$_['column_price']           = 'Цена на сайте';
+$_['column_quantity']        = 'Количество';
+$_['column_status']          = 'Статус';
+$_['column_action']          = 'Действие';
 
 // Entry
 $_['entry_name']		= 'Название товара:';
-$_['entry_meta_keyword']	= 'Мета-тег "Ключевые слова":';
-$_['entry_meta_description'] 	= 'Мета-тег "Описание":';
+$_['entry_meta_keyword']     = 'Мета-тег Keywords:';
+$_['entry_meta_description'] = 'Мета-тег "Описание":';
 $_['entry_description']      	= 'Описание:';
 $_['entry_store']            	= 'Магазины:';
 $_['entry_keyword']          	= 'SEO URL:<br/><span class="help">Должно быть уникальным на всю систему.</span>';
@@ -43,9 +41,8 @@ $_['entry_date_available']   	= 'Дата поступления:';
 $_['entry_quantity']         	= 'Количество:';
 $_['entry_minimum']          	= 'Минимальное количество:<br/><span class="help">Указание минимально количества в заказе</span>';
 $_['entry_stock_status']     	= 'Остутствие на складе:<br /><span class="help">Статус, показываемый, когда товара нет на складе</span>';
+$_['entry_price']            = 'Цена:';
 $_['entry_tax_class']        	= 'Налог:';
-$_['entry_manufacturer_price']	= 'Цена производителя:';
-$_['entry_price']		= 'Цена:';
 $_['entry_points']		= 'Баллы:<br/><span class="help">Количество баллов для покупки продукта. Поставьте 0, чтобы не использовать баллы.</span>';
 $_['entry_option_points']	= 'Баллы:';
 $_['entry_subtract']		= 'Вычитать со склада:';
@@ -73,6 +70,8 @@ $_['entry_tag']			= 'Теги товара:<br /><span class="help">раздел
 $_['entry_reward']		= 'Бонусные баллы:';
 $_['entry_layout']		= 'Изменить схему:';
 $_['entry_main_category']	= 'Категория:';
+$_['entry_seo_title']        = 'HTML-тег Title:';
+$_['entry_seo_h1']           = 'HTML-тег H1:';
 
 // Error
 $_['error_warning']		= 'Внимательно проверьте форму на ошибки!';

@@ -25,9 +25,10 @@ class ControllerShippingUsps extends Controller {
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
-		$this->data['text_select_all'] = $this->language->get('text_select_all');
-		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
-		$this->data['text_domestic_0'] = $this->language->get('text_domestic_0');
+		$this->data['text_domestic_00'] = $this->language->get('text_domestic_00');
+		$this->data['text_domestic_01'] = $this->language->get('text_domestic_01');
+		$this->data['text_domestic_02'] = $this->language->get('text_domestic_02');
+		$this->data['text_domestic_03'] = $this->language->get('text_domestic_03');
 		$this->data['text_domestic_1'] = $this->language->get('text_domestic_1');
 		$this->data['text_domestic_2'] = $this->language->get('text_domestic_2');
 		$this->data['text_domestic_3'] = $this->language->get('text_domestic_3');
@@ -71,7 +72,6 @@ class ControllerShippingUsps extends Controller {
 		$this->data['entry_container'] = $this->language->get('entry_container');
 		$this->data['entry_machinable'] = $this->language->get('entry_machinable');
 		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
-		$this->data['entry_girth'] = $this->language->get('entry_girth');
 		$this->data['entry_display_time'] = $this->language->get('entry_display_time');
 		$this->data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
@@ -79,13 +79,10 @@ class ControllerShippingUsps extends Controller {
 		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$this->data['entry_firstclass'] = $this->language->get('entry_firstclass');
 		$this->data['entry_debug'] = $this->language->get('entry_debug');
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->data['tab_general'] = $this->language->get('tab_general');
 
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -121,12 +118,6 @@ class ControllerShippingUsps extends Controller {
 			$this->data['error_height'] = $this->error['height'];
 		} else {
 			$this->data['error_height'] = '';
-		}
-
-		if (isset($this->error['girth'])) {
-			$this->data['error_girth'] = $this->error['girth'];
-		} else {
-			$this->data['error_girth'] = '';
 		}
 
   		$this->data['breadcrumbs'] = array();
@@ -165,10 +156,28 @@ class ControllerShippingUsps extends Controller {
 			$this->data['usps_postcode'] = $this->config->get('usps_postcode');
 		}
 
-		if (isset($this->request->post['usps_domestic_0'])) {
-			$this->data['usps_domestic_0'] = $this->request->post['usps_domestic_0'];
+		if (isset($this->request->post['usps_domestic_00'])) {
+			$this->data['usps_domestic_00'] = $this->request->post['usps_domestic_00'];
 		} else {
-			$this->data['usps_domestic_0'] = $this->config->get('usps_domestic_0');
+			$this->data['usps_domestic_00'] = $this->config->get('usps_domestic_00');
+		}
+
+		if (isset($this->request->post['usps_domestic_01'])) {
+			$this->data['usps_domestic_01'] = $this->request->post['usps_domestic_01'];
+		} else {
+			$this->data['usps_domestic_01'] = $this->config->get('usps_domestic_01');
+		}
+
+		if (isset($this->request->post['usps_domestic_02'])) {
+			$this->data['usps_domestic_02'] = $this->request->post['usps_domestic_02'];
+		} else {
+			$this->data['usps_domestic_02'] = $this->config->get('usps_domestic_02');
+		}
+
+		if (isset($this->request->post['usps_domestic_03'])) {
+			$this->data['usps_domestic_03'] = $this->request->post['usps_domestic_03'];
+		} else {
+			$this->data['usps_domestic_03'] = $this->config->get('usps_domestic_03');
 		}
 
 		if (isset($this->request->post['usps_domestic_1'])) {
@@ -446,12 +455,6 @@ class ControllerShippingUsps extends Controller {
 			$this->data['usps_length'] = $this->config->get('usps_length');
 		}
 
-		if (isset($this->request->post['usps_girth'])) {
-			$this->data['usps_girth'] = $this->request->post['usps_girth'];
-		} else {
-			$this->data['usps_girth'] = $this->config->get('usps_girth');
-		}
-
 		if (isset($this->request->post['usps_display_time'])) {
 			$this->data['usps_display_time'] = $this->request->post['usps_display_time'];
 		} else {
@@ -484,29 +487,6 @@ class ControllerShippingUsps extends Controller {
 			$this->data['usps_geo_zone_id'] = $this->request->post['usps_geo_zone_id'];
 		} else {
 			$this->data['usps_geo_zone_id'] = $this->config->get('usps_geo_zone_id');
-		}
-
-		$this->data['firstclass_types'] = array();
-
-		$this->data['firstclass_types'][] = array(
-			'text'  => $this->language->get('text_disabled'),
-			'value' => ''
-		);
-
-		$this->data['firstclass_types'][] = array(
-			'text'  => $this->language->get('text_letter'),
-			'value' => 'LETTER'
-		);
-
-		$this->data['firstclass_types'][] = array(
-			'text'  => $this->language->get('text_parcel'),
-			'value' => 'PARCEL'
-		);
-
-		if (isset($this->request->post['usps_firstclass_type'])) {
-			$this->data['usps_firstclass_type'] = $this->request->post['usps_firstclass_type'];
-		} else {
-			$this->data['usps_firstclass_type'] = $this->config->get('usps_firstclass_type');
 		}
 
 		if (isset($this->request->post['usps_debug'])) {
@@ -567,10 +547,6 @@ class ControllerShippingUsps extends Controller {
 
 		if (!$this->request->post['usps_length']) {
 			$this->error['length'] = $this->language->get('error_length');
-		}
-
-		if (!$this->request->post['usps_girth']) {
-			$this->error['girth'] = $this->language->get('error_girth');
 		}
 
 		if (!$this->error) {

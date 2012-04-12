@@ -15,6 +15,18 @@ class ModelPaymentPayMate extends Model {
 			$status = false;
 		}
 
+		$currencies = array(
+			'AUD',
+			'NZD',
+			'USD',
+			'EUR',
+			'GBP'
+		);
+
+		if (!in_array(strtoupper($this->currency->getCode()), $currencies)) {
+			$status = false;
+		}
+					
 		$method_data = array();
 
 		if ($status) {
