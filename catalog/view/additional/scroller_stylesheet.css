@@ -1,0 +1,11 @@
+#scroller_container {
+position: relative;
+width: 100%;
+height: 30px;
+overflow: hidden;
+}
+#scroller {
+white-space: nowrap;
+font-size: 14px;
+font-weight: bold;
+}

@@ -3,16 +3,6 @@
 	<version>1.5.1.x</version>
 	<vqmver>1.1.0</vqmver>
 	<author>mva</author>
-	<file name="catalog/view/theme/*/stylesheet/stylesheet.css">
-		<operation>
-			<search position="bottom"></search>
-			<add><![CDATA[ #scroller_container { position: relative; width: 100%; height: 30px; overflow: hidden; }]]></add>
-		</operation>
-		<operation>
-			<search position="bottom"></search>
-			<add><![CDATA[ #scroller { white-space: nowrap; font-size: 14px; font-weight: bold; }]]></add>
-		</operation>
-	</file>
 	<file name="catalog/view/theme/*/template/common/header.tpl">
 		<operation>
 			<search position="before"><![CDATA[</head>]]></search>
@@ -21,6 +11,10 @@
 		<operation>
 			<search position="before"><![CDATA[</head>]]></search>
 			<add><![CDATA[<script type="text/javascript" src="catalog/view/javascript/running_line.js"></script>]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[</head>]]></search>
+			<add><![CDATA[<link rel="stylesheet" type="text/css" href="catalog/view/additional/scroller_stylesheet.css" />]]></add>
 		</operation>
 	</file>
 </modification>
