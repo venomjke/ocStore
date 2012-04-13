@@ -69,7 +69,7 @@ class ModelSaleOrder extends Model {
 
 		if ($currency_info) {
 			$currency_id = $currency_info['currency_id'];
-			$currency_code = $currency_code = $currency_info['code'];
+			$currency_code = $currency_info['code'];
 			$currency_value = $currency_info['value'];
 		} else {
 			$currency_id = 0;
