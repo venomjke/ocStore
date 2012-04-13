@@ -23,19 +23,26 @@ final class MySQL_Cached {
   	}
 
   	public function query($sql) {
+		    // Кэшируем только SELECT запросы (ключь = md5hash всего запроса, в переменной сапоминаем точный текст запроса для точного сравнения)
+		    // При кэшировании результат последнего запроса запоминаем в $this->cachedquery (для функции countAffected)
+		    // При кэшировании запроса в запросе указываем время кэширования
+		    // В специальной глобальной переменной держим дату последнего сброса кэша. При этом если у извлеченного значения время записи меньше указанного времени зброса - кэшь считается неактуальным
 		    $isselect = 0;
 		    $md5query = '';
 		    $pos = stripos($sql, 'select ');
 		    if ($pos == 0)
 		    {
 			$isselect = 1;
+			// Это select
 			$md5query = md5($sql);
 			if ($query = $this->cache->get('sql_' . $md5query))
 			{
 			    if ($query->sql == $sql)
 			    {
+				// Проверяем флаг сброса
 				if ($resetflag = $this->cache->get('sql_globalresetcache'))
 				{
+				    // Если время сброса раньше чем время текущего запроса - все нормально
 				    if ($resetflag <= $query->time)
 				    {
 					$this->cachedquery = $query;

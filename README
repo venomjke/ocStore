@@ -3,10 +3,16 @@ Description: Russian Project to optimize OpenCart for Russian realities and for 
 Please, visit http://opencartforum.ru for help ;)
 ========
 TODO: заполнить :)
-=======
+========
 Если хотите включить поддержку Memcache, добавьте в config.php:
 
 define('CACHE_DRIVER', 'memcached');
 define('MEMCACHE_HOSTNAME', 'localhost');
 define('MEMCACHE_PORT', '11211');
 define('MEMCACHE_NAMESPACE', 'opencart_test');
+========
+Mysql cached:
+define('DB_DRIVER', 'mysql_cached');
+define('DB_CACHED_EXPIRE', 120);
+Для сброса всего SQL кеша можно поместить текущее время time() в кеш с ключом "sql_globalresetcache".
+========
