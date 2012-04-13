@@ -1,0 +1,41 @@
+Оригинальное руководство:
+===============================================
+Для установки на действующий магазин:
+
+1. Залейте на хостинг только файлы
+
+jscroller-0.4.js
+и
+running_line.js
+
+в папку catalog/view/javascript/
+
+
+2. Подключите в header.tpl файлы
+
+<script type="text/javascript" src="catalog/view/javascript/jscroller-0.4.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/running_line.js"></script>
+
+
+3.В header.tpl разместите где вам нужно вывести бегущую строку
+
+<div id="scroller_container"><div id="scroller">
+Текст бегущей строки…
+</div></div>
+
+
+4. В stylesheet.css добавьте стили
+
+#scroller_container {
+position: relative;
+width: 100%;
+height: 30px;
+overflow: hidden;
+}
+#scroller {
+white-space: nowrap;
+font-size: 14px;
+font-weight: bold;
+}
+====================================================
+TODO: Переделать в нормальный модуль.

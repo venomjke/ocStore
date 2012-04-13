@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 28
+/svn/!svn/ver/69/trunk/vqmod
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/22/trunk/vqmod/readme.txt
+END
+.htaccess
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/62/trunk/vqmod/.htaccess
+END
+vqmod.php
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/69/trunk/vqmod/vqmod.php
+END
