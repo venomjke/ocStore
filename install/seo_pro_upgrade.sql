@@ -22,6 +22,7 @@ INSERT INTO oc_url_alias (query, keyword) VALUES ('account/register', 'create-ac
 INSERT INTO oc_url_alias (query, keyword) VALUES ('product/compare', 'compare-products');
 INSERT INTO oc_url_alias (query, keyword) VALUES ('product/search', 'search');
 INSERT INTO oc_url_alias (query, keyword) VALUES ('account/edit', 'edit-account');
+INSERT INTO oc_url_alias (query, keyword) VALUES ('account/voucher', 'vouchers');
 INSERT INTO oc_url_alias (query, keyword) VALUES ('account/password', 'change-password');
 INSERT INTO oc_url_alias (query, keyword) VALUES ('account/address', 'address-book');
 INSERT INTO oc_url_alias (query, keyword) VALUES ('account/reward', 'reward-points');

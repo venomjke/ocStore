@@ -38,6 +38,11 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_price; ?>"><?php echo $column_price; ?></a>
                 <?php } ?></td>
+			  <td class="left"><?php if ($sort == 'p2c.category_id') { ?>
+				<a href="<?php echo $sort_category; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_category; ?></a>
+				<?php } else { ?>
+				<a href="<?php echo $sort_category; ?>"><?php echo $column_category; ?></a>
+			  <?php } ?></td>
               <td class="right"><?php if ($sort == 'p.quantity') { ?>
                 <a href="<?php echo $sort_quantity; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_quantity; ?></a>
                 <?php } else { ?>
@@ -58,6 +63,16 @@
               <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" /></td>
               <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" /></td>
               <td align="left"><input type="text" name="filter_price" value="<?php echo $filter_price; ?>" size="8"/></td>
+			  <td ><select name="filter_category" style="width: 18em;" >
+              <option value="*"></option>
+              <?php foreach ($categories as $category) { ?>
+                <?php if ($category['category_id']==$filter_category) { ?>
+                  <option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
+                <?php } else { ?>
+                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option> 
+                <?php } ?>
+              <?php } ?>
+              </td>
               <td align="right"><input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" style="text-align: right;" /></td>
               <td><select name="filter_status">
                   <option value="*"></option>
@@ -91,6 +106,13 @@
                 <?php } else { ?>
                 <?php echo $product['price']; ?>
                 <?php } ?></td>
+			   <td class="left">
+                <?php foreach ($categories as $category) { ?>
+                <?php if (in_array($category['category_id'], $product['category'])) { ?>
+                <?php echo $category['name'];?><br>
+                <?php } ?> <?php } ?>
+            
+              </td>
               <td class="right"><?php if ($product['quantity'] <= 0) { ?>
                 <span style="color: #FF0000;"><?php echo $product['quantity']; ?></span>
                 <?php } elseif ($product['quantity'] <= 5) { ?>
@@ -136,6 +158,12 @@ function filter() {
 	
 	if (filter_price) {
 		url += '&filter_price=' + encodeURIComponent(filter_price);
+	}
+	
+	var filter_category = $('select[name=\'filter_category\']').attr('value');
+    
+    if (filter_category != '*') {
+		url += '&filter_category=' + encodeURIComponent(filter_category);
 	}
 	
 	var filter_quantity = $('input[name=\'filter_quantity\']').attr('value');
