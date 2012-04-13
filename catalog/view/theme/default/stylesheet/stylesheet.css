@@ -147,9 +147,9 @@ label {
 	padding-left: 14px;
 	padding-right: 14px;
 	border-top: 1px solid #FFFFFF;
-	border-left: 1px solid #FFFFFF;
+	border-left: 1px solid transparent;
 	border-right: 1px solid #EEEEEE;
-	background: #FFF;
+	background: transparent;
 	position: relative;
 	z-index: 1;
 }
