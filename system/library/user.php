@@ -10,7 +10,8 @@ class User {
 	// Возможно её можно как-то применить с меньшим оверхедом, так что
 	// если кто знает — милости просим :)
 	// @mva
-	$_SERVER['REMOTE_ADDR']=str_replace("::ffff:","",$_SERVER['REMOTE_ADDR']);
+	//// Закомментировал т.к. на некоторых инсталляциях сие генерит ошибку. Реквестирую лучший путь для лечения сего недуга.
+	// $_SERVER['REMOTE_ADDR']=str_replace("::ffff:","",$_SERVER['REMOTE_ADDR']);
 
   	public function __construct($registry) {
 		$this->db = $registry->get('db');
