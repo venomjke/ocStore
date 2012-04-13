@@ -17,4 +17,10 @@
 			<add><![CDATA[<link rel="stylesheet" type="text/css" href="catalog/view/additional/scroller_stylesheet.css" />]]></add>
 		</operation>
 	</file>
+	<file name="catalog/view/theme/*/template/common/content_top.tpl">
+		<operation>
+			<search position="top"></search>
+			<add><![CDATA[<?php if(isset($scroller_text)){echo '<div id="scroller_container"><div id="scroller">'.$scroller_text.'</div></div>';} ?>]]></add>
+		</operation>
+	</file>
 </modification>
