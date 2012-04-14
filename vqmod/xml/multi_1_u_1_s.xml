@@ -1,0 +1,34 @@
+<modification>
+    <id>Мультишоп. 1 пользователь в одном магазине.</id>
+    <version>1.5.1</version>
+    <vqmver>1.0/04.09.2011</vqmver>
+    <author>Vladzimir</author>
+    <file name="catalog/model/account/customer.php">
+        <operation>
+            <search position="replace">
+                <![CDATA[$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE email = '" . $this->db->escape($email) . "'");]]>
+            </search>
+            <add>
+                <![CDATA[$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer WHERE email = '" . $this->db->escape($email) . "' AND store_id='".(int)$this->config->get('config_store_id')."'");]]>
+            </add>
+        </operation>
+    </file>
+    <file name="system/library/customer.php">
+        <operation>
+            <search position="replace">
+                <![CDATA[$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(strtolower($email)) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1'");]]>
+            </search>
+            <add>
+                <![CDATA[$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(strtolower($email)) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1' AND store_id='".(int)$this->config->get('config_store_id')."'");]]>
+            </add>
+        </operation>
+        <operation>
+            <search position="replace">
+                <![CDATA[$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(strtolower($email)) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1' AND approved = '1'");]]>
+            </search>
+            <add>
+                <![CDATA[$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE LOWER(email) = '" . $this->db->escape(strtolower($email)) . "' AND password = '" . $this->db->escape(md5($password)) . "' AND status = '1' AND approved = '1' AND store_id='".(int)$this->config->get('config_store_id')."'");]]>
+            </add>
+        </operation>
+    </file>
+</modification>
