@@ -82,6 +82,7 @@ class ControllerCommonContentTop extends Controller {
 			$this->template = 'default/template/common/content_top.tpl';
 		}
 
+		$this->data['scroller_text'] = $this->config->get('scroller_text');
 		$this->render();
 	}
 }
