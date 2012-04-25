@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']                	= 'Панель управления';
+$_['heading_title']                	= 'Обзор';
 
 // Text
 $_['text_overview']                	= 'Краткий обзор';

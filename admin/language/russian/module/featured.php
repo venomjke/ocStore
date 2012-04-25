@@ -11,10 +11,10 @@ $_['text_column_left']    = 'Левая колонка';
 $_['text_column_right']   = 'Правая колонка';
 
 // Entry
-$_['entry_product']       = 'Товары:';
+$_['entry_product']       = 'Товары:<br /><span class="help">(Автодополнение)</span>';
 $_['entry_limit']         = 'Limit:';
 $_['entry_image']         = 'Изображение (Ширина x Высота):';
-$_['entry_layout']        = 'Схема:';
+$_['entry_layout']        = 'Страница:';
 $_['entry_position']      = 'Расположение:';
 $_['entry_status']        = 'Статус:';
 $_['entry_sort_order']    = 'Порядок сортировки:';

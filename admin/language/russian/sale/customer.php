@@ -8,15 +8,15 @@ $_['text_default']            = 'По умолчанию';
 $_['text_approved']           = 'Вы активировали %s аккаунт!';
 $_['text_wait']               = 'Подождите!';
 $_['text_balance']            = 'Баланс:';
-$_['text_add_blacklist']      = 'Добавить IP в Черный список';
-$_['text_remove_blacklist']   = 'Удалить IP из Черного списка';
+$_['text_add_blacklist']    = 'Добавить в  Blacklist';
+$_['text_remove_blacklist'] = 'Удалить из Blacklist';
 
 // Column
 $_['column_name']             = 'Имя покупателя';
 $_['column_email']            = 'E-Mail';
 $_['column_customer_group']   = 'Группа клиентов';
 $_['column_status']           = 'Статус';
-$_['column_login']            = 'Войти в магазин';
+$_['column_login']            = 'Залогиниться в магазине';
 $_['column_approved']         = 'Активирован';
 $_['column_date_added']       = 'Дата добавления';
 $_['column_description']      = 'Описание';
@@ -38,6 +38,8 @@ $_['entry_status']            = 'Статус:';
 $_['entry_password']          = 'Пароль:';
 $_['entry_confirm']           = 'Подтверждение:';
 $_['entry_company']           = 'Компания:';
+$_['entry_company_id']        = 'Регистрационный номер:';
+$_['entry_tax_id']            = 'Налоговый номер компании:';
 $_['entry_address_1']         = 'Адрес 1:';
 $_['entry_address_2']         = 'Адрес 2:';
 $_['entry_city']              = 'Город:';

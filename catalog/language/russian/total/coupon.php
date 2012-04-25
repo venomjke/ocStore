@@ -1,4 +1,4 @@
 <?php
 // Text
-$_['text_coupon']   = 'Купон (%s):';
+$_['text_coupon'] = 'Купон (%s):';
 ?>

@@ -11,7 +11,7 @@ $_['text_column_left']    = 'Левая колонка';
 $_['text_column_right']   = 'Правая колонка';
 
 // Entry
-$_['entry_layout']        = 'Схема:';
+$_['entry_layout']        = 'Страница:';
 $_['entry_position']      = 'Расположение:';
 $_['entry_count']    	  = 'Product Count:';
 $_['entry_status']        = 'Статус:';
