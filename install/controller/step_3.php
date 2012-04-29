@@ -10,33 +10,34 @@ class ControllerStep3 extends Controller {
 
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
-			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n";
-			$output .= 'define(\'HTTP_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n";
-			$output .= 'define(\'HTTP_ADMIN\', \'' . HTTP_OPENCART . 'admin/\');' . "\n\n";
+			$output .= 'define("HTTP_SERVER", "' . HTTP_OPENCART . '");' . "\n";
+			$output .= 'define("HTTP_IMAGE", "' . HTTP_OPENCART . 'image/");' . "\n";
+			$output .= 'define("HTTP_ADMIN", "' . HTTP_OPENCART . 'admin/");' . "\n\n";
 
 			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . '\');' . "\n";
-			$output .= 'define(\'HTTPS_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
+			$output .= 'define("HTTPS_SERVER", "' . HTTP_OPENCART . '");' . "\n";
+			$output .= 'define("HTTPS_IMAGE", "' . HTTP_OPENCART . 'image/");' . "\n\n";
 
 			$output .= '// DIR' . "\n";
-			$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
-			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART. 'system/\');' . "\n";
-			$output .= 'define(\'DIR_DATABASE\', \'' . DIR_OPENCART . 'system/database/\');' . "\n";
-			$output .= 'define(\'DIR_LANGUAGE\', \'' . DIR_OPENCART . 'catalog/language/\');' . "\n";
-			$output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_OPENCART . 'catalog/view/theme/\');' . "\n";
-			$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
-			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
-			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
-			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
-			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
+			$output .= 'define("DIR_APPLICATION", "' . DIR_OPENCART . 'catalog/");' . "\n";
+			$output .= 'define("DIR_SYSTEM", "' . DIR_OPENCART. 'system/");' . "\n";
+			$output .= 'define("DIR_DATABASE", "' . DIR_OPENCART . 'system/database/");' . "\n";
+			$output .= 'define("DIR_LANGUAGE", "' . DIR_OPENCART . 'catalog/language/");' . "\n";
+			$output .= 'define("DIR_TEMPLATE", "' . DIR_OPENCART . 'catalog/view/theme/");' . "\n";
+			$output .= 'define("DIR_CONFIG", "' . DIR_OPENCART . 'system/config/");' . "\n";
+			$output .= 'define("DIR_IMAGE", "' . DIR_OPENCART . 'image/");' . "\n";
+			$output .= 'define("DIR_CACHE", "' . DIR_OPENCART . 'system/cache/");' . "\n";
+			$output .= 'define("DIR_DOWNLOAD", "' . DIR_OPENCART . 'download/");' . "\n";
+			$output .= 'define("DIR_LOGS", "' . DIR_OPENCART . 'system/logs/");' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_host']) . '\');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_user']) . '\');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
-			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_name']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . addslashes(strtolower($this->request->post['db_prefix'])) . '\');' . "\n";
+			$output .= 'define("DB_DRIVER", "' . addslashes($this->request->post['db_driver']) . '");' . "\n";
+			$output .= 'define("DB_HOSTNAME", "' . addslashes($this->request->post['db_host']) . '");' . "\n";
+			$output .= 'define("DB_USERNAME", "' . addslashes($this->request->post['db_user']) . '");' . "\n";
+			$output .= 'define("DB_PASSWORD", "' . addslashes($this->request->post['db_password']) . '");' . "\n";
+			$output .= 'define("DB_DATABASE", "' . addslashes($this->request->post['db_name']) . '");' . "\n";
+			$output .= 'define("DB_PREFIX", "' . addslashes(strtolower($this->request->post['db_prefix'])) . '");' . "\n";
+			$output .= 'define("CACHE_DRIVER", "none");' . "\n";
 			$output .= '?>';
 
 			$file = fopen(DIR_OPENCART . 'config.php', 'w');
@@ -47,35 +48,35 @@ class ControllerStep3 extends Controller {
 
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
-			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
-			$output .= 'define(\'HTTP_CATALOG\', \'' . HTTP_OPENCART . '\');' . "\n";
-			$output .= 'define(\'HTTP_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
+			$output .= 'define("HTTP_SERVER", "' . HTTP_OPENCART . 'admin/");' . "\n";
+			$output .= 'define("HTTP_CATALOG", "' . HTTP_OPENCART . '");' . "\n";
+			$output .= 'define("HTTP_IMAGE", "' . HTTP_OPENCART . 'image/");' . "\n\n";
 
 			$output .= '// HTTPS' . "\n";
-			$output .= 'define(\'HTTPS_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";
-			$output .= 'define(\'HTTPS_IMAGE\', \'' . HTTP_OPENCART . 'image/\');' . "\n\n";
+			$output .= 'define("HTTPS_SERVER", "' . HTTP_OPENCART . 'admin/");' . "\n";
+			$output .= 'define("HTTPS_IMAGE", "' . HTTP_OPENCART . 'image/");' . "\n\n";
 
 			$output .= '// DIR' . "\n";
 
-			$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'admin/\');' . "\n";
-			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART . 'system/\');' . "\n";
-			$output .= 'define(\'DIR_DATABASE\', \'' . DIR_OPENCART . 'system/database/\');' . "\n";
-			$output .= 'define(\'DIR_LANGUAGE\', \'' . DIR_OPENCART . 'admin/language/\');' . "\n";
-			$output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_OPENCART . 'admin/view/template/\');' . "\n";
-			$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
-			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
-			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
-			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
-			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n";
-			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
+			$output .= 'define("DIR_APPLICATION", "' . DIR_OPENCART . 'admin/");' . "\n";
+			$output .= 'define("DIR_SYSTEM", "' . DIR_OPENCART . 'system/");' . "\n";
+			$output .= 'define("DIR_DATABASE", "' . DIR_OPENCART . 'system/database/");' . "\n";
+			$output .= 'define("DIR_LANGUAGE", "' . DIR_OPENCART . 'admin/language/");' . "\n";
+			$output .= 'define("DIR_TEMPLATE", "' . DIR_OPENCART . 'admin/view/template/");' . "\n";
+			$output .= 'define("DIR_CONFIG", "' . DIR_OPENCART . 'system/config/");' . "\n";
+			$output .= 'define("DIR_IMAGE", "' . DIR_OPENCART . 'image/");' . "\n";
+			$output .= 'define("DIR_CACHE", "' . DIR_OPENCART . 'system/cache/");' . "\n";
+			$output .= 'define("DIR_DOWNLOAD", "' . DIR_OPENCART . 'download/");' . "\n";
+			$output .= 'define("DIR_LOGS", "' . DIR_OPENCART . 'system/logs/");' . "\n";
+			$output .= 'define("DIR_CATALOG", "' . DIR_OPENCART . 'catalog/");' . "\n\n";
 
 			$output .= '// DB' . "\n";
-			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
-			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_host']) . '\');' . "\n";
-			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_user']) . '\');' . "\n";
-			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
-			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_name']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . addslashes(strtolower($this->request->post['db_prefix'])) . '\');' . "\n";
+			$output .= 'define("DB_DRIVER", "' . addslashes($this->request->post['db_driver']) . '");' . "\n";
+			$output .= 'define("DB_HOSTNAME", "' . addslashes($this->request->post['db_host']) . '");' . "\n";
+			$output .= 'define("DB_USERNAME", "' . addslashes($this->request->post['db_user']) . '");' . "\n";
+			$output .= 'define("DB_PASSWORD", "' . addslashes($this->request->post['db_password']) . '");' . "\n";
+			$output .= 'define("DB_DATABASE", "' . addslashes($this->request->post['db_name']) . '");' . "\n";
+			$output .= 'define("DB_PREFIX", "' . addslashes(strtolower($this->request->post['db_prefix'])) . '");' . "\n";
 			$output .= '?>';
 
 			$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');

@@ -7,7 +7,7 @@ final class Cache {
   	public function __construct($exp = 3600) {
   		$this->expire = $exp;
 
-  		if (CACHE_DRIVER == 'memcached')
+  		if (defined("CACHE_DRIVER") && CACHE_DRIVER == "memcache")
   		{
 		    $mc = new Memcache;
 		    if ($mc->pconnect(MEMCACHE_HOSTNAME, MEMCACHE_PORT))
@@ -36,7 +36,7 @@ final class Cache {
   	}
 
 	public function get($key) {
-	    if ((CACHE_DRIVER == 'memcached') && $this->ismemcache)
+	    if ((defined("CACHE_DRIVER") && CACHE_DRIVER == "memcache") && $this->ismemcache)
 	    {
 		return($this->memcache->get(MEMCACHE_NAMESPACE . $key, 0));
 	    }
@@ -63,7 +63,7 @@ final class Cache {
   	}
 
   	public function set($key, $value) {
-	    if ((CACHE_DRIVER == 'memcached') && $this->ismemcache)
+	    if ((defined("CACHE_DRIVER") && CACHE_DRIVER == "memcache") && $this->ismemcache)
 	    {
 		$this->memcache->set(MEMCACHE_NAMESPACE . $key, $value, 0, $this->expire);
 	    }
@@ -83,7 +83,7 @@ final class Cache {
   	}
 
   	public function delete($key) {
-	    if ((CACHE_DRIVER == 'memcached') && $this->ismemcache)
+	    if ((defined("CACHE_DRIVER") && CACHE_DRIVER == "memcache") && $this->ismemcache)
 	    {
 		$this->memcache->delete(MEMCACHE_NAMESPACE . $key);
 	    }
