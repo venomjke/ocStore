@@ -39,7 +39,7 @@
 			if ($this->config->get('config_review_status')) {
 			]]></search>
             <add trim="true"><![CDATA[
-				if ((float)$result['quantity']) { $quantity = (int)$result['quantity'];	} 
+				if (!empty($result) && (float)$result['quantity']) { $quantity = (int)$result['quantity'];	} 
 				else { $quantity = false; }
 				]]></add>
         </operation>
@@ -102,7 +102,7 @@
 			if ($this->config->get('config_review_status')) {
 			]]></search>
             <add trim="true"><![CDATA[
-				if ((float)$result['quantity']) {
+				if (!empty($result) && (float)$result['quantity']) {
 					$quantity = (int)$result['quantity'];
 				} else {
 					$quantity = false;
@@ -212,7 +212,7 @@
 			if ($this->config->get('config_review_status')) {
 			]]></search>
             <add trim="true"><![CDATA[
-	if ((float)$result['quantity']) {
+	if (!empty($result) && (float)$result['quantity']) {
 					$quantity = (int)$result['quantity'];
 				} else {
 					$quantity = false;
@@ -256,7 +256,7 @@
 			if ($this->config->get('config_review_status')) {
 			]]></search>
             <add trim="true"><![CDATA[
-	if ((float)$result['quantity']) {
+	if (!empty($result) && (float)$result['quantity']) {
 					$quantity = (int)$result['quantity'];
 				} else {
 					$quantity = false;
@@ -340,7 +340,7 @@
 		<operation error="log"><!-- v15x -->
             <search position="before"><![CDATA[ if ($this->config->get('config_review_status')) { ]]></search>
             <add trim="true"><![CDATA[
-				if ((float)$result['quantity']) {
+				if (!empty($result) && (float)$result['quantity']) {
 					$quantity = (int)$result['quantity'];
 				} else {
 					$quantity = false;
@@ -379,7 +379,7 @@
 		<operation error="log"><!-- v15x -->
             <search position="before"><![CDATA[ if ($this->config->get('config_review_status')) { ]]></search>
             <add trim="true"><![CDATA[
-				if ((float)$result['quantity']) {
+				if (!empty($result) && (float)$result['quantity']) {
 					$quantity = (int)$result['quantity'];
 				} else {
 					$quantity = false;
@@ -420,7 +420,7 @@
 			if ($this->config->get('config_review_status')) {
 			]]></search>
             <add trim="true"><![CDATA[
-				if ((float)$result['quantity']) {
+				if (!empty($result) && (float)$result['quantity']) {
 					$quantity = (int)$result['quantity'];
 				} else {
 					$quantity = false;
