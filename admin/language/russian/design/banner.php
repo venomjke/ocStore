@@ -5,9 +5,9 @@ $_['heading_title']      = 'Баннеры';
 // Text
 $_['text_success']       = 'Баннеры успешно обновлены!';
 $_['text_default']       = 'По умолчанию';
-$_['text_image_manager'] = 'Управление изображениями';
-$_['text_browse']        = 'Просмотр файлов';
-$_['text_clear']         = 'Убрать изображение';
+$_['text_image_manager'] = 'Менеджер изображений';
+$_['text_browse']        = 'Обзор';
+$_['text_clear']         = 'Очистить';
 
 // Column
 $_['column_name']        = 'Название баннера';

@@ -14,7 +14,7 @@ $_['column_date_added'] = 'Добавлено';
 $_['column_action']     = 'Действие';
 
 // Entry
-$_['entry_product']     = 'Товар:<br/><span class="help">(Автодополнение)</span>';
+$_['entry_product']     = 'Товар:';
 $_['entry_author']      = 'Автор:';
 $_['entry_rating']      = 'Рейтинг:';
 $_['entry_status']      = 'Статус:';

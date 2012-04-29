@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      	= 'Webmoney WME';
 
-// Text
+// Text 
 $_['text_payment']      	= 'Оплаты';
 $_['text_success']       	= 'Настройки модуля обновлены!';
 $_['text_webmoney_wme'] 		= '<a onclick="window.open(\'http://webmoney.ru\');"><img src="/image/payment/webmoney_wme.gif" alt="Webmoney" title="Webmoney" style="border: 1px solid #EEEEEE;" height="25px" /></a>';

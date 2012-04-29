@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']  = 'Связаться с нами';
 
-// Text
+// Text 
 $_['text_location']  = 'Наше местонахождение';
 $_['text_contact']   = 'Написать нам';
 $_['text_address']   = 'Адрес:';
