@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']                	= 'Панель управления';
+$_['heading_title']                	= 'Обзор';
 
 // Text
 $_['text_overview']                	= 'Краткий обзор';
@@ -21,7 +21,7 @@ $_['text_year']                    	= 'Последний год';
 $_['text_order']                   	= 'Всего заказов';
 $_['text_customer']                	= 'Всего покупателей';
 
-// Column 
+// Column
 $_['column_order']                 	= '№ заказа';
 $_['column_customer']              	= 'Покупатель';
 $_['column_status']                	= 'Статус';

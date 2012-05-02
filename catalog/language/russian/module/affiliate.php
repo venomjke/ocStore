@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']    = 'Партнерский раздел';
 
 // Text
@@ -13,3 +13,4 @@ $_['text_password']    = 'Пароль';
 $_['text_payment']     = 'Способы оплаты';
 $_['text_tracking']    = 'Реферальный код';
 $_['text_transaction'] = 'Операции';
+?>

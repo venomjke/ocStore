@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']  = 'Смена пароля';
 
 // Text
@@ -9,7 +9,7 @@ $_['text_success']   = 'Ваш пароль успешно изменен!';
 
 // Entry
 $_['entry_password'] = 'Пароль:';
-$_['entry_confirm']  = 'Повторите пароль:';
+$_['entry_confirm']  = 'Подтверждение пароля:';
 
 // Error
 $_['error_password'] = 'Пароль должен быть от 4 до 20 символов!';

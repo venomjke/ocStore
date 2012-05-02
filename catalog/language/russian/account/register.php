@@ -13,7 +13,7 @@ $_['text_your_password']   = 'Ваш пароль';
 $_['text_agree']           = 'Я прочитал <a class="colorbox" href="%s" alt="%s"><b>%s</b></a> и согласен с условиями';
 
 // Entry
-$_['entry_firstname']      = 'Имя,Отчество:';
+$_['entry_firstname']      = 'Имя:';
 $_['entry_lastname']       = 'Фамилия:';
 $_['entry_email']          = 'E-Mail:';
 $_['entry_telephone']      = 'Телефон:';
@@ -27,7 +27,7 @@ $_['entry_country']        = 'Страна:';
 $_['entry_zone']           = 'Регион / Область:';
 $_['entry_newsletter']     = 'Подписка на новости:';
 $_['entry_password']       = 'Пароль:';
-$_['entry_confirm']        = 'Повторите пароль:';
+$_['entry_confirm']        = 'Подтверждение пароля:';
 
 // Error
 $_['error_exists']         = 'Этот E-Mail уже зарегистрирован!';

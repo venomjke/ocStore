@@ -2,11 +2,11 @@
 // Heading
 $_['heading_title']      = 'LIQPAY';
 
-// Text 
+// Text
 $_['text_payment']       = 'Оплата';
-$_['text_success']       = 'Настройки модуля обновлены!';   
+$_['text_success']       = 'Настройки модуля обновлены!';
 $_['text_pay']           = 'LIQPAY';
-$_['text_card']          = 'Credit Card';
+$_['text_card']          = 'Номер кредитной карты';
 
 // Entry
 $_['entry_merchant']     = 'Merchant ID:';
