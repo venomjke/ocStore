@@ -32,8 +32,8 @@ $_['entry_fax']					= 'Факс:';
 $_['entry_title']                               = 'Заголовок:';
 $_['entry_meta_keyword']		        = 'META Keywords:<br/><span class="help">Мета-тег "Ключевые слова"</span>';
 $_['entry_meta_description']    		= 'META Description:<br/><span class="help">Мета-тег "Описание"</span>';
-$_['entry_seo_title']          = 'SEO Title:<br/><span class="help">Переназначение заголовка страницы для SEO</span>';
-$_['entry_seo_h1']             = 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
+$_['entry_seo_title']          			= 'SEO Title:<br/><span class="help">Переназначение заголовка страницы для SEO</span>';
+$_['entry_seo_h1']             			= 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
 $_['entry_layout']				= 'Страница по умолчанию:';
 $_['entry_template']				= 'Шаблон:';
 $_['entry_country']				= 'Страна:';
@@ -45,6 +45,7 @@ $_['entry_tax']					= 'Отображать цены с налогом:';
 $_['entry_tax_default']         		= 'Использовать налоговый адрес магазина:<br /><span class="help">Использовать адрес магазина для подсчёта налогов, если клиент не авторизовался. Можно выбрать адрес магазина или адрес платежа для доставки товара клиенту.</span>';
 $_['entry_tax_customer']        		= 'Использовать налоговый адрес покупателя:<br /><span class="help">Использовать заданный по умолчанию адрес клиента для подсчёта налогов. Можно выбрать заданный по умолчанию адрес клиента или адрес платежа для доставки товара клиенту.</span>';
 $_['entry_customer_group']			= 'Группа покупателей:<br /><span class="help">Группа покупателей по умолчанию.</span>';
+$_['entry_registred_group']    = 'Группа зарегистрированных:<br /><span class="help">Назначается при регистрации.</span>';
 $_['entry_customer_price']			= 'Не показывать цены гостям:<br /><span class="help">Показывать цены только зарегистрированнным клиентам.</span>';
 $_['entry_customer_approval']			= 'Активация новых пользователей:<br /><span class="help">Не позволять входить новым клиентам под своим логином и паролем до одобрения аккаунта.</span>';
 // !!!!
