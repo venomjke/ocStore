@@ -25,8 +25,8 @@ $_['entry_sort_order']   = 'Порядок сортировки:';
 $_['entry_type']         = 'Тип:';
 $_['entry_meta_keyword']        = 'META Keywords:<br/><span class="help">Мета-тег "Ключевые слова"</span>';
 $_['entry_meta_description']    = 'META Description:<br/><span class="help">Мета-тег "Описание"</span>';
-$_['entry_meta_title']          = 'META Title:<br/><span class="help">Мета-тег "Заголовок"</span>';
-$_['entry_meta_h1']             = 'META H1:<br/><span class="help">Мета-тег "Заголовок1"</span>';
+$_['entry_seo_title']          = 'SEO Title:<br/><span class="help">Переназначение заголовка страницы для SEO</span>';
+$_['entry_seo_h1']             = 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
 
 // Error
 $_['error_permission']   = 'У Вас нет прав для изменения производителей!';

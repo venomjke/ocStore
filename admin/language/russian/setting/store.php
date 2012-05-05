@@ -32,8 +32,8 @@ $_['entry_fax']					= 'Факс:';
 $_['entry_title']                               = 'Заголовок:';
 $_['entry_meta_keyword']		        = 'META Keywords:<br/><span class="help">Мета-тег "Ключевые слова"</span>';
 $_['entry_meta_description']    		= 'META Description:<br/><span class="help">Мета-тег "Описание"</span>';
-$_['entry_meta_title']          		= 'META Title:<br/><span class="help">Мета-тег "Заголовок"</span>';
-$_['entry_meta_h1']                             = 'META H1:<br/><span class="help">Мета-тег "Заголовок1"</span>'
+$_['entry_seo_title']          = 'SEO Title:<br/><span class="help">Переназначение заголовка страницы для SEO</span>';
+$_['entry_seo_h1']             = 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
 $_['entry_layout']				= 'Страница по умолчанию:';
 $_['entry_template']				= 'Шаблон:';
 $_['entry_country']				= 'Страна:';
