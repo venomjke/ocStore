@@ -84,7 +84,7 @@ class ControllerAffiliateTracking extends Controller {
 			}
 		}
 
-		$this->response->setOutput(json::encode($json));
+		$this->response->setOutput(json_encode($json));
 	}
 }
 ?>
