@@ -81,7 +81,7 @@ CREATE TABLE `oc_affiliate` (
   `bank_swift_code` varchar(64) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `bank_account_name` varchar(64) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `bank_account_number` varchar(64) COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL,
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL,
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
@@ -957,7 +957,7 @@ CREATE TABLE `oc_customer` (
   `newsletter` tinyint(1) NOT NULL default '0',
   `address_id` int(11) NOT NULL default '0',
   `customer_group_id` int(11) NOT NULL,
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   `token` varchar(255) COLLATE utf8_general_ci NOT NULL,
@@ -1001,7 +1001,7 @@ DROP TABLE IF EXISTS `oc_customer_ip`;
 CREATE TABLE `oc_customer_ip` (
   `customer_ip_id` int(11) NOT NULL auto_increment,
   `customer_id` int(11) NOT NULL,
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL,
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY  (`customer_ip_id`),
   KEY `ip` (`ip`)
@@ -1020,7 +1020,7 @@ CREATE TABLE `oc_customer_ip` (
 DROP TABLE IF EXISTS `oc_customer_ip_blacklist`;
 CREATE TABLE `oc_customer_ip_blacklist` (
   `customer_ip_blacklist_id` int(11) NOT NULL auto_increment,
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL,
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY  (`customer_ip_blacklist_id`),
   KEY `ip` (`ip`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1707,8 +1707,8 @@ CREATE TABLE `oc_order` (
   `currency_id` int(11) NOT NULL,
   `currency_code` varchar(3) COLLATE utf8_general_ci NOT NULL,
   `currency_value` decimal(15,8) NOT NULL,
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL,
-  `forwarded_ip` varchar(15) COLLATE utf8_general_ci NOT NULL,
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL,
+  `forwarded_ip` varchar(40) COLLATE utf8_general_ci NOT NULL,
   `user_agent` varchar(255) COLLATE utf8_general_ci NOT NULL,
   `accept_language` varchar(255) COLLATE utf8_general_ci NOT NULL,
   `date_added` datetime NOT NULL,
@@ -3108,7 +3108,7 @@ CREATE TABLE `oc_user` (
   `lastname` varchar(32) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `email` varchar(96) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `code` varchar(32) COLLATE utf8_general_ci NOT NULL,
-  `ip` varchar(15) COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`user_id`)

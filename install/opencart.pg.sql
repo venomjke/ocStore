@@ -541,7 +541,7 @@ CREATE TABLE "oc_customer" (
   "status" smallint NOT NULL,
   "approved" smallint NOT NULL DEFAULT '0',
   "customer_group_id" bigint NOT NULL,
-  "ip" varchar(15) NOT NULL DEFAULT '0',
+  "ip" varchar(40) NOT NULL DEFAULT '0',
   "date_added" timestamp NOT NULL DEFAULT '0001-01-01 00:00:00',
   PRIMARY KEY ("customer_id")
 );
@@ -922,7 +922,7 @@ CREATE TABLE "oc_order" (
   "coupon_id" bigint NOT NULL,
   "date_modified" timestamp NOT NULL DEFAULT '0001-01-01 00:00:00',
   "date_added" timestamp NOT NULL DEFAULT '0001-01-01 00:00:00',
-  "ip" varchar(15) NOT NULL DEFAULT '',
+  "ip" varchar(40) NOT NULL DEFAULT '',
   PRIMARY KEY ("order_id")
 );
 
@@ -1958,7 +1958,7 @@ CREATE TABLE "oc_user" (
   "lastname" varchar(32) NOT NULL DEFAULT '',
   "email" varchar(96) NOT NULL DEFAULT '',
   "status" smallint NOT NULL,
-  "ip" varchar(15) NOT NULL DEFAULT '',
+  "ip" varchar(40) NOT NULL DEFAULT '',
   "date_added" timestamp NOT NULL DEFAULT '0001-01-01 00:00:00',
   PRIMARY KEY ("user_id")
 );
