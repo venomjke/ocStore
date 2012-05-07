@@ -1,3 +1,6 @@
 \.*~
 vq/
 vqgen/
+image/data
+image/cache
+config.php
