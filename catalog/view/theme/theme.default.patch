@@ -1,0 +1,807 @@
+diff --git a/catalog/view/theme/default/template/account/wishlist.tpl b/catalog/view/theme/default/template/account/wishlist.tpl
+index dda7efa..45bcfa8 100644
+--- a/catalog/view/theme/default/template/account/wishlist.tpl
++++ b/catalog/view/theme/default/template/account/wishlist.tpl
+@@ -41,7 +41,16 @@
+               <?php } ?>
+             </div>
+             <?php } ?></td>
+-          <td class="action"><img src="catalog/view/theme/default/image/cart-add.png" alt="<?php echo $button_cart; ?>" title="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" />&nbsp;&nbsp;<a href="<?php echo $product['remove']; ?>"><img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
++          <td class="action">
++            <?php if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++			<img src="catalog/view/theme/default/image/cart-add.png" alt="<?php echo  $this->language->get('button_out_of_stock'); ?>" title="<?php echo  $this->language->get('button_out_of_stock'); ?>" onclick="return;" />
++	    <?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
++			<img src="catalog/view/theme/default/image/cart-add.png" alt="<?php echo $this->language->get('button_pre_order'); ?>" title="<?php echo $this->language->get('button_pre_order'); ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" />
++	    <?php } else { ?>
++			<img src="catalog/view/theme/default/image/cart-add.png" alt="<?php echo $button_cart; ?>" title="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" />
++	    <?php } ?>
++	&nbsp;&nbsp;<a href="<?php echo $product['remove']; ?>">
++	<img src="catalog/view/theme/default/image/remove.png" alt="<?php echo $button_remove; ?>" title="<?php echo $button_remove; ?>" /></a></td>
+         </tr>
+       </tbody>
+       <?php } ?>
+@@ -57,4 +66,4 @@
+   </div>
+   <?php } ?>
+   <?php echo $content_bottom; ?></div>
+-<?php echo $footer; ?>
+\ No newline at end of file
++<?php echo $footer; ?>
+diff --git a/catalog/view/theme/default/template/common/content_top.tpl b/catalog/view/theme/default/template/common/content_top.tpl
+index 4e548e9..1bf6172 100644
+--- a/catalog/view/theme/default/template/common/content_top.tpl
++++ b/catalog/view/theme/default/template/common/content_top.tpl
+@@ -1,3 +1,9 @@
+-<?php foreach ($modules as $module) { ?>
+-<?php echo $module; ?>
+-<?php } ?>
+\ No newline at end of file
++<?php
++if(isset($scroller_text)) {
++	echo '<div id="scroller_container"><div id="scroller">'.$scroller_text.'</div></div>';
++}
++
++foreach ($modules as $module) {
++	echo $module;
++}
++?>
+diff --git a/catalog/view/theme/default/template/common/header.tpl b/catalog/view/theme/default/template/common/header.tpl
+index 1d99dc1..63ea950 100644
+--- a/catalog/view/theme/default/template/common/header.tpl
++++ b/catalog/view/theme/default/template/common/header.tpl
+@@ -42,6 +42,9 @@ DD_belatedPNG.fix('#logo img');
+ </script>
+ <![endif]-->
+ <?php echo $google_analytics; ?>
++<script type="text/javascript" src="catalog/view/javascript/jscroller-0.4.js"></script>
++<script type="text/javascript" src="catalog/view/javascript/running_line.js"></script>
++<link rel="stylesheet" type="text/css" href="catalog/view/additional/scroller_stylesheet.css" />
+ </head>
+ <body>
+ <div id="container">
+diff --git a/catalog/view/theme/default/template/module/featured.tpl b/catalog/view/theme/default/template/module/featured.tpl
+index 81672fa..b464897 100644
+--- a/catalog/view/theme/default/template/module/featured.tpl
++++ b/catalog/view/theme/default/template/module/featured.tpl
+@@ -19,8 +19,15 @@
+         <?php } ?>
+         <?php if ($product['rating']) { ?>
+         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+-        <?php } ?>
+-        <div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++        <?php }
++	    if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++        	<div class="cart"><input type="button" disabled="disabled" value="<?php echo $this->language->get('button_out_of_stock'); ?>" onclick="return;" class="button" /></div>
++	  <?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout') ) { ?>
++        	<div class="cart"><input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++	  <?php } else { ?>
++        	<div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++	  <?php } ?>
++
+       </div>
+       <?php } ?>
+     </div>
+diff --git a/catalog/view/theme/default/template/module/latest.tpl b/catalog/view/theme/default/template/module/latest.tpl
+index 81672fa..048ad60 100644
+--- a/catalog/view/theme/default/template/module/latest.tpl
++++ b/catalog/view/theme/default/template/module/latest.tpl
+@@ -19,8 +19,14 @@
+         <?php } ?>
+         <?php if ($product['rating']) { ?>
+         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+-        <?php } ?>
+-        <div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++        <?php }
++	    if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++		<div class="cart"><input type="button" disabled="disabled" value="<?php echo$this->language->get('button_out_of_stock'); ?>" onclick="return;" class="button" /></div>
++	    <?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout') ) { ?>
++		<div class="cart"><input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++	    <?php } else { ?>
++		<div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++	    <?php } ?>
+       </div>
+       <?php } ?>
+     </div>
+diff --git a/catalog/view/theme/default/template/module/special.tpl b/catalog/view/theme/default/template/module/special.tpl
+index 81672fa..10c5054 100644
+--- a/catalog/view/theme/default/template/module/special.tpl
++++ b/catalog/view/theme/default/template/module/special.tpl
+@@ -19,8 +19,14 @@
+         <?php } ?>
+         <?php if ($product['rating']) { ?>
+         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+-        <?php } ?>
+-        <div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++        <?php }
++	if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++		<div class="cart"><input type="button" disabled="disabled" value="<?php echo $this->language->get('button_out_of_stock'); ?>" onclick="return;" class="button" /></div>
++	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout') ) { ?>
++		<div class="cart"><input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++	<?php } else { ?>
++		<div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++	<?php } ?>
+       </div>
+       <?php } ?>
+     </div>
+diff --git a/catalog/view/theme/default/template/product/category.tpl b/catalog/view/theme/default/template/product/category.tpl
+index 48b7bdc..c25b756 100644
+--- a/catalog/view/theme/default/template/product/category.tpl
++++ b/catalog/view/theme/default/template/product/category.tpl
+@@ -91,7 +91,13 @@
+       <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+       <?php } ?>
+       <div class="cart">
+-        <input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" />
++	<?php if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++			<input type="button" disabled="disabled" value="<?php echo $this->language->get('button_out_of_stock'); ?>" onclick="return;" class="button" />
++	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout') ) { ?>
++			<input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" />
++	<?php } else { ?>
++			<input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" />
++	<?php } ?>
+       </div>
+       <div class="wishlist"><a onclick="addToWishList('<?php echo $product['product_id']; ?>');"><?php echo $button_wishlist; ?></a></div>
+       <div class="compare"><a onclick="addToCompare('<?php echo $product['product_id']; ?>');"><?php echo $button_compare; ?></a></div>
+@@ -111,82 +117,82 @@
+ function display(view) {
+ 	if (view == 'list') {
+ 		$('.product-grid').attr('class', 'product-list');
+-		
++
+ 		$('.product-list > div').each(function(index, element) {
+ 			html  = '<div class="right">';
+ 			html += '  <div class="cart">' + $(element).find('.cart').html() + '</div>';
+ 			html += '  <div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
+ 			html += '  <div class="compare">' + $(element).find('.compare').html() + '</div>';
+-			html += '</div>';			
+-			
++			html += '</div>';
++
+ 			html += '<div class="left">';
+-			
++
+ 			var image = $(element).find('.image').html();
+-			
+-			if (image != null) { 
++
++			if (image != null) {
+ 				html += '<div class="image">' + image + '</div>';
+ 			}
+-			
++
+ 			var price = $(element).find('.price').html();
+-			
++
+ 			if (price != null) {
+ 				html += '<div class="price">' + price  + '</div>';
+ 			}
+-					
++
+ 			html += '  <div class="name">' + $(element).find('.name').html() + '</div>';
+ 			html += '  <div class="description">' + $(element).find('.description').html() + '</div>';
+-			
++
+ 			var rating = $(element).find('.rating').html();
+-			
++
+ 			if (rating != null) {
+ 				html += '<div class="rating">' + rating + '</div>';
+ 			}
+-				
++
+ 			html += '</div>';
+ 
+-						
++
+ 			$(element).html(html);
+-		});		
+-		
++		});
++
+ 		$('.display').html('<b><?php echo $text_display; ?></b> <?php echo $text_list; ?> <b>/</b> <a onclick="display(\'grid\');"><?php echo $text_grid; ?></a>');
+-		
+-		$.cookie('display', 'list'); 
++
++		$.cookie('display', 'list');
+ 	} else {
+ 		$('.product-list').attr('class', 'product-grid');
+-		
++
+ 		$('.product-grid > div').each(function(index, element) {
+ 			html = '';
+-			
++
+ 			var image = $(element).find('.image').html();
+-			
++
+ 			if (image != null) {
+ 				html += '<div class="image">' + image + '</div>';
+ 			}
+-			
++
+ 			html += '<div class="name">' + $(element).find('.name').html() + '</div>';
+ 			html += '<div class="description">' + $(element).find('.description').html() + '</div>';
+-			
++
+ 			var price = $(element).find('.price').html();
+-			
++
+ 			if (price != null) {
+ 				html += '<div class="price">' + price  + '</div>';
+ 			}
+-			
++
+ 			var rating = $(element).find('.rating').html();
+-			
++
+ 			if (rating != null) {
+ 				html += '<div class="rating">' + rating + '</div>';
+ 			}
+-						
++
+ 			html += '<div class="cart">' + $(element).find('.cart').html() + '</div>';
+ 			html += '<div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
+ 			html += '<div class="compare">' + $(element).find('.compare').html() + '</div>';
+-			
++
+ 			$(element).html(html);
+-		});	
+-					
++		});
++
+ 		$('.display').html('<b><?php echo $text_display; ?></b> <a onclick="display(\'list\');"><?php echo $text_list; ?></a> <b>/</b> <?php echo $text_grid; ?>');
+-		
++
+ 		$.cookie('display', 'grid');
+ 	}
+ }
+@@ -198,5 +204,5 @@ if (view) {
+ } else {
+ 	display('list');
+ }
+-//--></script> 
++//--></script>
+ <?php echo $footer; ?>
+\ No newline at end of file
+diff --git a/catalog/view/theme/default/template/product/compare.tpl b/catalog/view/theme/default/template/product/compare.tpl
+index d37ce65..fd0951b 100644
+--- a/catalog/view/theme/default/template/product/compare.tpl
++++ b/catalog/view/theme/default/template/product/compare.tpl
+@@ -111,9 +111,15 @@
+     <?php } ?>
+     <tr>
+       <td></td>
+-      <?php foreach ($products as $product) { ?>
+-      <td><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></td>
+-      <?php } ?>
++      <?php foreach ($products as $product) {
++	if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++		<td><input onclick="return;" class="button" value="<?php echo $this->language->get('button_out_of_stock'); ?>" /></td>
++	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
++		<td><input onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" value="<?php echo $this->language->get('button_pre_order'); ?>" /></td>
++	<?php } else { ?>
++		<td><input onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" value="<?php echo $button_cart; ?>" /></td>
++	<?php }
++       } ?>
+     </tr>
+     <tr>
+       <td></td>
+@@ -132,4 +138,4 @@
+   </div>
+   <?php } ?>
+   <?php echo $content_bottom; ?></div>
+-<?php echo $footer; ?>
+\ No newline at end of file
++<?php echo $footer; ?>
+diff --git a/catalog/view/theme/default/template/product/manufacturer_info.tpl b/catalog/view/theme/default/template/product/manufacturer_info.tpl
+index 8085926..35a3c39 100644
+--- a/catalog/view/theme/default/template/product/manufacturer_info.tpl
++++ b/catalog/view/theme/default/template/product/manufacturer_info.tpl
+@@ -57,7 +57,13 @@
+       <?php if ($product['rating']) { ?>
+       <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+       <?php } ?>
+-      <div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++	<?php if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++		<div class="cart"><input onclick="return;" class="button" value="<?php echo $this->language->get('button_out_of_stock'); ?>"></div>
++	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
++		<div class="cart"><input onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" value="<?php echo $this->language->get('button_pre_order'); ?>"></div>
++	<?php } else { ?>
++		<div class="cart"><input onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" value="<?php echo $button_cart; ?>"></div>
++	<?php } ?>
+       <div class="wishlist"><a onclick="addToWishList('<?php echo $product['product_id']; ?>');"><?php echo $button_wishlist; ?></a></div>
+       <div class="compare"><a onclick="addToCompare('<?php echo $product['product_id']; ?>');"><?php echo $button_compare; ?></a></div>
+     </div>
+@@ -166,4 +172,4 @@ if (view) {
+ 	display('list');
+ }
+ //--></script>
+-<?php echo $footer; ?>
+\ No newline at end of file
++<?php echo $footer; ?>
+diff --git a/catalog/view/theme/default/template/product/product.tpl b/catalog/view/theme/default/template/product/product.tpl
+index 32c4e6d..348de6c 100644
+--- a/catalog/view/theme/default/template/product/product.tpl
++++ b/catalog/view/theme/default/template/product/product.tpl
+@@ -205,7 +205,13 @@
+         <div><?php echo $text_qty; ?>
+           <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
+           <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
+-          &nbsp;<input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
++		<?php if ($product_info['quantity'] == 0 || ($product_info['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++          		&nbsp;<input onclick="return;" disabled="disabled" type="button" value="<?php echo $this->language->get('button_out_of_stock'); ?>" id="button-cart" class="button" />
++		<?php } elseif ($product_info['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
++          		&nbsp;<input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" id="button-cart" class="button" />
++		<?php } else { ?>
++          		&nbsp;<input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
++		<?php } ?>
+           </div>
+         <div><span>&nbsp;&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;&nbsp;</span></div>
+         <div><a onclick="addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a><br />
+@@ -219,8 +225,8 @@
+         <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a></div>
+         <div class="share"><!-- AddThis Button BEGIN -->
+           <div class="addthis_default_style"><a class="addthis_button_compact"><?php echo $text_share; ?></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
+-          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script> 
+-          <!-- AddThis Button END --> 
++          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script>
++          <!-- AddThis Button END -->
+         </div>
+       </div>
+       <?php } ?>
+@@ -313,8 +319,14 @@
+         <?php } ?>
+         <?php if ($product['rating']) { ?>
+         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+-        <?php } ?>
+-        <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a></div>
++        <?php }
++	if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++		<a onclick="return;" class="button"><?php echo $this->language->get('button_out_of_stock'); ?></a></div>
++	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
++		<a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $this->language->get('button_pre_order'); ?></a></div>
++	<?php } else { ?>
++		<a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a></div>
++	<?php } ?>
+       <?php } ?>
+     </div>
+   </div>
+@@ -332,7 +344,7 @@ $('.colorbox').colorbox({
+ 	overlayClose: true,
+ 	opacity: 0.5
+ });
+-//--></script> 
++//--></script>
+ <script type="text/javascript"><!--
+ $('#button-cart').bind('click', function() {
+ 	$.ajax({
+@@ -342,24 +354,24 @@ $('#button-cart').bind('click', function() {
+ 		dataType: 'json',
+ 		success: function(json) {
+ 			$('.success, .warning, .attention, information, .error').remove();
+-			
++
+ 			if (json['error']) {
+ 				if (json['error']['option']) {
+ 					for (i in json['error']['option']) {
+ 						$('#option-' + i).after('<span class="error">' + json['error']['option'][i] + '</span>');
+ 					}
+ 				}
+-			} 
+-			
++			}
++
+ 			if (json['success']) {
+ 				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+-					
++
+ 				$('.success').fadeIn('slow');
+-					
++
+ 				$('#cart-total').html(json['total']);
+-				
+-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+-			}	
++
++				$('html, body').animate({ scrollTop: 0 }, 'slow');
++			}
+ 		}
+ 	});
+ });
+@@ -379,18 +391,18 @@ new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
+ 	},
+ 	onComplete: function(file, json) {
+ 		$('.error').remove();
+-		
++
+ 		if (json.success) {
+ 			alert(json.success);
+-			
++
+ 			$('input[name=\'option[<?php echo $option['product_option_id']; ?>]\']').attr('value', json.file);
+ 		}
+-		
++
+ 		if (json.error) {
+ 			$('#option-<?php echo $option['product_option_id']; ?>').after('<span class="error">' + json.error + '</span>');
+ 		}
+-		
+-		$('.loading').remove();	
++
++		$('.loading').remove();
+ 	}
+ });
+ //--></script>
+@@ -400,13 +412,13 @@ new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
+ <script type="text/javascript"><!--
+ $('#review .pagination a').live('click', function() {
+ 	$('#review').slideUp('slow');
+-		
++
+ 	$('#review').load(this.href);
+-	
++
+ 	$('#review').slideDown('slow');
+-	
++
+ 	return false;
+-});			
++});
+ 
+ $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
+ 
+@@ -429,10 +441,10 @@ $('#button-review').bind('click', function() {
+ 			if (data.error) {
+ 				$('#review-title').after('<div class="warning">' + data.error + '</div>');
+ 			}
+-			
++
+ 			if (data.success) {
+ 				$('#review-title').after('<div class="success">' + data.success + '</div>');
+-								
++
+ 				$('input[name=\'name\']').val('');
+ 				$('textarea[name=\'text\']').val('');
+ 				$('input[name=\'rating\']:checked').attr('checked', '');
+@@ -441,11 +453,11 @@ $('#button-review').bind('click', function() {
+ 		}
+ 	});
+ });
+-//--></script> 
++//--></script>
+ <script type="text/javascript"><!--
+ $('#tabs a').tabs();
+-//--></script> 
+-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
++//--></script>
++<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script>
+ <script type="text/javascript"><!--
+ if ($.browser.msie && $.browser.version == 6) {
+ 	$('.date, .datetime, .time').bgIframe();
+@@ -457,5 +469,5 @@ $('.datetime').datetimepicker({
+ 	timeFormat: 'h:m'
+ });
+ $('.time').timepicker({timeFormat: 'h:m'});
+-//--></script> 
+-<?php echo $footer; ?>
+\ No newline at end of file
++//--></script>
++<?php echo $footer; ?>
+diff --git a/catalog/view/theme/default/template/product/search.tpl b/catalog/view/theme/default/template/product/search.tpl
+index da31785..7f363b2 100644
+--- a/catalog/view/theme/default/template/product/search.tpl
++++ b/catalog/view/theme/default/template/product/search.tpl
+@@ -107,7 +107,13 @@
+       <?php if ($product['rating']) { ?>
+       <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+       <?php } ?>
+-      <div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++      <?php if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++			<div class="cart"><input type="button" disabled="disabled" value="<?php echo $this->language->get('button_out_of_stock'); ?>" onclick="return;" class="button" /></div>
++			<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
++			<div class="cart"><input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++			<?php } else { ?>
++			<div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++			<?php } ?>
+       <div class="wishlist"><a onclick="addToWishList('<?php echo $product['product_id']; ?>');"><?php echo $button_wishlist; ?></a></div>
+       <div class="compare"><a onclick="addToCompare('<?php echo $product['product_id']; ?>');"><?php echo $button_compare; ?></a></div>
+     </div>
+@@ -127,27 +133,27 @@ $('#content input[name=\'filter_name\']').keydown(function(e) {
+ 
+ $('#button-search').bind('click', function() {
+ 	url = 'index.php?route=product/search';
+-	
++
+ 	var filter_name = $('#content input[name=\'filter_name\']').attr('value');
+-	
++
+ 	if (filter_name) {
+ 		url += '&filter_name=' + encodeURIComponent(filter_name);
+ 	}
+ 
+ 	var filter_category_id = $('#content select[name=\'filter_category_id\']').attr('value');
+-	
++
+ 	if (filter_category_id > 0) {
+ 		url += '&filter_category_id=' + encodeURIComponent(filter_category_id);
+ 	}
+-	
++
+ 	var filter_sub_category = $('#content input[name=\'filter_sub_category\']:checked').attr('value');
+-	
++
+ 	if (filter_sub_category) {
+ 		url += '&filter_sub_category=true';
+ 	}
+-		
++
+ 	var filter_description = $('#content input[name=\'filter_description\']:checked').attr('value');
+-	
++
+ 	if (filter_description) {
+ 		url += '&filter_description=true';
+ 	}
+@@ -158,82 +164,82 @@ $('#button-search').bind('click', function() {
+ function display(view) {
+ 	if (view == 'list') {
+ 		$('.product-grid').attr('class', 'product-list');
+-		
++
+ 		$('.product-list > div').each(function(index, element) {
+ 			html  = '<div class="right">';
+ 			html += '  <div class="cart">' + $(element).find('.cart').html() + '</div>';
+ 			html += '  <div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
+ 			html += '  <div class="compare">' + $(element).find('.compare').html() + '</div>';
+-			html += '</div>';			
+-			
++			html += '</div>';
++
+ 			html += '<div class="left">';
+-			
++
+ 			var image = $(element).find('.image').html();
+-			
+-			if (image != null) { 
++
++			if (image != null) {
+ 				html += '<div class="image">' + image + '</div>';
+ 			}
+-			
++
+ 			var price = $(element).find('.price').html();
+-			
++
+ 			if (price != null) {
+ 				html += '<div class="price">' + price  + '</div>';
+ 			}
+-						
++
+ 			html += '  <div class="name">' + $(element).find('.name').html() + '</div>';
+ 			html += '  <div class="description">' + $(element).find('.description').html() + '</div>';
+-			
++
+ 			var rating = $(element).find('.rating').html();
+-			
++
+ 			if (rating != null) {
+ 				html += '<div class="rating">' + rating + '</div>';
+ 			}
+-				
++
+ 			html += '</div>';
+ 
+-						
++
+ 			$(element).html(html);
+-		});		
+-		
++		});
++
+ 		$('.display').html('<b><?php echo $text_display; ?></b> <?php echo $text_list; ?> <b>/</b> <a onclick="display(\'grid\');"><?php echo $text_grid; ?></a>');
+-		
+-		$.cookie('display', 'list'); 
++
++		$.cookie('display', 'list');
+ 	} else {
+ 		$('.product-list').attr('class', 'product-grid');
+-		
++
+ 		$('.product-grid > div').each(function(index, element) {
+ 			html = '';
+-			
++
+ 			var image = $(element).find('.image').html();
+-			
++
+ 			if (image != null) {
+ 				html += '<div class="image">' + image + '</div>';
+ 			}
+-			
++
+ 			html += '<div class="name">' + $(element).find('.name').html() + '</div>';
+ 			html += '<div class="description">' + $(element).find('.description').html() + '</div>';
+-			
++
+ 			var price = $(element).find('.price').html();
+-			
++
+ 			if (price != null) {
+ 				html += '<div class="price">' + price  + '</div>';
+-			}	
+-					
++			}
++
+ 			var rating = $(element).find('.rating').html();
+-			
++
+ 			if (rating != null) {
+ 				html += '<div class="rating">' + rating + '</div>';
+ 			}
+-						
++
+ 			html += '<div class="cart">' + $(element).find('.cart').html() + '</div>';
+ 			html += '<div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
+ 			html += '<div class="compare">' + $(element).find('.compare').html() + '</div>';
+-			
++
+ 			$(element).html(html);
+-		});	
+-					
++		});
++
+ 		$('.display').html('<b><?php echo $text_display; ?></b> <a onclick="display(\'list\');"><?php echo $text_list; ?></a> <b>/</b> <?php echo $text_grid; ?>');
+-		
++
+ 		$.cookie('display', 'grid');
+ 	}
+ }
+@@ -245,5 +251,5 @@ if (view) {
+ } else {
+ 	display('list');
+ }
+-//--></script> 
++//--></script>
+ <?php echo $footer; ?>
+\ No newline at end of file
+diff --git a/catalog/view/theme/default/template/product/special.tpl b/catalog/view/theme/default/template/product/special.tpl
+index 7edb87e..a59f6cf 100644
+--- a/catalog/view/theme/default/template/product/special.tpl
++++ b/catalog/view/theme/default/template/product/special.tpl
+@@ -56,8 +56,14 @@
+       <?php } ?>
+       <?php if ($product['rating']) { ?>
+       <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+-      <?php } ?>
+-      <div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++      <?php }
++	        if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
++			<div class="cart"><input type="button" disabled="disabled" value="<?php echo $this->language->get('button_out_of_stock'); ?>" onclick="return;" class="button" /></div>
++		<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout') ) { ?>
++			<div class="cart"><input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++		<?php } else { ?>
++			<div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
++		<?php } ?>
+       <div class="wishlist"><a onclick="addToWishList('<?php echo $product['product_id']; ?>');"><?php echo $button_wishlist; ?></a></div>
+       <div class="compare"><a onclick="addToCompare('<?php echo $product['product_id']; ?>');"><?php echo $button_compare; ?></a></div>
+     </div>
+@@ -72,82 +78,82 @@
+ function display(view) {
+ 	if (view == 'list') {
+ 		$('.product-grid').attr('class', 'product-list');
+-		
++
+ 		$('.product-list > div').each(function(index, element) {
+ 			html  = '<div class="right">';
+ 			html += '  <div class="cart">' + $(element).find('.cart').html() + '</div>';
+ 			html += '  <div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
+ 			html += '  <div class="compare">' + $(element).find('.compare').html() + '</div>';
+-			html += '</div>';			
+-			
++			html += '</div>';
++
+ 			html += '<div class="left">';
+-			
++
+ 			var image = $(element).find('.image').html();
+-			
+-			if (image != null) { 
++
++			if (image != null) {
+ 				html += '<div class="image">' + image + '</div>';
+ 			}
+-			
++
+ 			var price = $(element).find('.price').html();
+-			
++
+ 			if (price != null) {
+ 				html += '<div class="price">' + price  + '</div>';
+ 			}
+-					
++
+ 			html += '  <div class="name">' + $(element).find('.name').html() + '</div>';
+ 			html += '  <div class="description">' + $(element).find('.description').html() + '</div>';
+-			
++
+ 			var rating = $(element).find('.rating').html();
+-			
++
+ 			if (rating != null) {
+ 				html += '<div class="rating">' + rating + '</div>';
+ 			}
+-				
++
+ 			html += '</div>';
+ 
+-						
++
+ 			$(element).html(html);
+-		});		
+-		
++		});
++
+ 		$('.display').html('<b><?php echo $text_display; ?></b> <?php echo $text_list; ?> <b>/</b> <a onclick="display(\'grid\');"><?php echo $text_grid; ?></a>');
+-		
+-		$.cookie('display', 'list'); 
++
++		$.cookie('display', 'list');
+ 	} else {
+ 		$('.product-list').attr('class', 'product-grid');
+-		
++
+ 		$('.product-grid > div').each(function(index, element) {
+ 			html = '';
+-			
++
+ 			var image = $(element).find('.image').html();
+-			
++
+ 			if (image != null) {
+ 				html += '<div class="image">' + image + '</div>';
+ 			}
+-			
++
+ 			html += '<div class="name">' + $(element).find('.name').html() + '</div>';
+ 			html += '<div class="description">' + $(element).find('.description').html() + '</div>';
+-			
++
+ 			var price = $(element).find('.price').html();
+-			
++
+ 			if (price != null) {
+ 				html += '<div class="price">' + price  + '</div>';
+ 			}
+-						
++
+ 			var rating = $(element).find('.rating').html();
+-			
++
+ 			if (rating != null) {
+ 				html += '<div class="rating">' + rating + '</div>';
+ 			}
+-						
++
+ 			html += '<div class="cart">' + $(element).find('.cart').html() + '</div>';
+ 			html += '<div class="wishlist">' + $(element).find('.wishlist').html() + '</div>';
+ 			html += '<div class="compare">' + $(element).find('.compare').html() + '</div>';
+-			
++
+ 			$(element).html(html);
+-		});	
+-					
++		});
++
+ 		$('.display').html('<b><?php echo $text_display; ?></b> <a onclick="display(\'list\');"><?php echo $text_list; ?></a> <b>/</b> <?php echo $text_grid; ?>');
+-		
++
+ 		$.cookie('display', 'grid');
+ 	}
+ }
+@@ -159,5 +165,5 @@ if (view) {
+ } else {
+ 	display('list');
+ }
+-//--></script> 
++//--></script>
+ <?php echo $footer; ?>
+\ No newline at end of file

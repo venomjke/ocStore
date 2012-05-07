@@ -107,15 +107,16 @@ class ControllerAccountWishList extends Controller {
 				}
 																			
 				$this->data['products'][] = array(
-					'product_id' => $product_info['product_id'],
-					'thumb'      => $image,
-					'name'       => $product_info['name'],
-					'model'      => $product_info['model'],
-					'stock'      => $stock,
-					'price'      => $price,		
-					'special'    => $special,
-					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
-					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
+					'quantity'	=> $product_info['quantity'],
+					'product_id'	=> $product_info['product_id'],
+					'thumb'		=> $image,
+					'name'		=> $product_info['name'],
+					'model'		=> $product_info['model'],
+					'stock'		=> $stock,
+					'price'		=> $price,
+					'special'	=> $special,
+					'href'		=> $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
+					'remove'	=> $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
 				);
 			} else {
 				unset($this->session->data['wishlist'][$key]);

@@ -18,9 +18,9 @@ class ControllerModuleFeatured extends Controller {
 		if (empty($setting['limit'])) {
 			$setting['limit'] = 5;
 		}
-		
+
 		$products = array_slice($products, 0, (int)$setting['limit']);
-		
+
 		foreach ($products as $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 
@@ -43,6 +43,12 @@ class ControllerModuleFeatured extends Controller {
 					$special = false;
 				}
 
+				if ((float)$product_info['quantity']) {
+					$quantity = (int)$product_info['quantity'];
+				} else {
+					$quantity = false;
+				}
+
 				if ($this->config->get('config_review_status')) {
 					$rating = $product_info['rating'];
 				} else {
@@ -57,6 +63,7 @@ class ControllerModuleFeatured extends Controller {
 					'special' 	 => $special,
 					'rating'     => $rating,
 					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']),
+					'quantity' => $quantity,
 					'href'    	 => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
 				);
 			}

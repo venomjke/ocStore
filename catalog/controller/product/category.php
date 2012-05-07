@@ -135,9 +135,9 @@ class ControllerProductCategory extends Controller {
 			foreach ($results as $result) {
 				$data = array(
 					'filter_category_id'  => $result['category_id'],
-					'filter_sub_category' => true	
+					'filter_sub_category' => true
 				);
-							
+
 				$product_total = $this->model_catalog_product->getTotalProducts($data);
 
 				$this->data['categories'][] = array(
@@ -184,7 +184,11 @@ class ControllerProductCategory extends Controller {
 				} else {
 					$tax = false;
 				}
-
+				if (!empty($result) && (float)$result['quantity']) {
+					$quantity = (int)$result['quantity'];
+				} else {
+					$quantity = false;
+				}
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
@@ -201,6 +205,7 @@ class ControllerProductCategory extends Controller {
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
 					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+					'quantity'	  => $quantity,
 					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'])
 				);
 			}
@@ -248,8 +253,8 @@ class ControllerProductCategory extends Controller {
 					'text'  => $this->language->get('text_rating_desc'),
 					'value' => 'rating-DESC',
 					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=DESC' . $url)
-				); 
-				
+				);
+
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_asc'),
 					'value' => 'rating-ASC',

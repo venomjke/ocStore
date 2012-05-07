@@ -41,6 +41,12 @@ class ControllerModuleSpecial extends Controller {
 				$special = false;
 			}
 
+			if (!empty($result) && (float)$result['quantity']) {
+				$quantity = (int)$result['quantity'];
+			} else {
+				$quantity = false;
+			}
+
 			if ($this->config->get('config_review_status')) {
 				$rating = $result['rating'];
 			} else {
@@ -55,6 +61,7 @@ class ControllerModuleSpecial extends Controller {
 				'special' 	 => $special,
 				'rating'     => $rating,
 				'reviews'    => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+				'quantity'   => $quantity,
 				'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id']),
 			);
 		}

@@ -42,6 +42,9 @@ DD_belatedPNG.fix('#logo img');
 </script>
 <![endif]-->
 <?php echo $google_analytics; ?>
+<script type="text/javascript" src="catalog/view/javascript/jscroller-0.4.js"></script>
+<script type="text/javascript" src="catalog/view/javascript/running_line.js"></script>
+<link rel="stylesheet" type="text/css" href="catalog/view/additional/scroller_stylesheet.css" />
 </head>
 <body>
 <div id="container">

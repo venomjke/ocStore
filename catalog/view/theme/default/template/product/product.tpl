@@ -205,7 +205,13 @@
         <div><?php echo $text_qty; ?>
           <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
           <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
-          &nbsp;<input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
+		<?php if ($product_info['quantity'] == 0 || ($product_info['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
+          		&nbsp;<input onclick="return;" disabled="disabled" type="button" value="<?php echo $this->language->get('button_out_of_stock'); ?>" id="button-cart" class="button" />
+		<?php } elseif ($product_info['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
+          		&nbsp;<input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" id="button-cart" class="button" />
+		<?php } else { ?>
+          		&nbsp;<input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
+		<?php } ?>
           </div>
         <div><span>&nbsp;&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;&nbsp;</span></div>
         <div><a onclick="addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a><br />
@@ -219,8 +225,8 @@
         <div><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" />&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $reviews; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo $text_write; ?></a></div>
         <div class="share"><!-- AddThis Button BEGIN -->
           <div class="addthis_default_style"><a class="addthis_button_compact"><?php echo $text_share; ?></a> <a class="addthis_button_email"></a><a class="addthis_button_print"></a> <a class="addthis_button_facebook"></a> <a class="addthis_button_twitter"></a></div>
-          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script> 
-          <!-- AddThis Button END --> 
+          <script type="text/javascript" src="//s7.addthis.com/js/250/addthis_widget.js"></script>
+          <!-- AddThis Button END -->
         </div>
       </div>
       <?php } ?>
@@ -313,8 +319,14 @@
         <?php } ?>
         <?php if ($product['rating']) { ?>
         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
-        <?php } ?>
-        <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a></div>
+        <?php }
+	if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
+		<a onclick="return;" class="button"><?php echo $this->language->get('button_out_of_stock'); ?></a></div>
+	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
+		<a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $this->language->get('button_pre_order'); ?></a></div>
+	<?php } else { ?>
+		<a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a></div>
+	<?php } ?>
       <?php } ?>
     </div>
   </div>
@@ -332,7 +344,7 @@ $('.colorbox').colorbox({
 	overlayClose: true,
 	opacity: 0.5
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#button-cart').bind('click', function() {
 	$.ajax({
@@ -342,24 +354,24 @@ $('#button-cart').bind('click', function() {
 		dataType: 'json',
 		success: function(json) {
 			$('.success, .warning, .attention, information, .error').remove();
-			
+
 			if (json['error']) {
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
 						$('#option-' + i).after('<span class="error">' + json['error']['option'][i] + '</span>');
 					}
 				}
-			} 
-			
+			}
+
 			if (json['success']) {
 				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
+
 				$('.success').fadeIn('slow');
-					
+
 				$('#cart-total').html(json['total']);
-				
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
-			}	
+
+				$('html, body').animate({ scrollTop: 0 }, 'slow');
+			}
 		}
 	});
 });
@@ -379,18 +391,18 @@ new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
 	},
 	onComplete: function(file, json) {
 		$('.error').remove();
-		
+
 		if (json.success) {
 			alert(json.success);
-			
+
 			$('input[name=\'option[<?php echo $option['product_option_id']; ?>]\']').attr('value', json.file);
 		}
-		
+
 		if (json.error) {
 			$('#option-<?php echo $option['product_option_id']; ?>').after('<span class="error">' + json.error + '</span>');
 		}
-		
-		$('.loading').remove();	
+
+		$('.loading').remove();
 	}
 });
 //--></script>
@@ -400,13 +412,13 @@ new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
 <script type="text/javascript"><!--
 $('#review .pagination a').live('click', function() {
 	$('#review').slideUp('slow');
-		
+
 	$('#review').load(this.href);
-	
+
 	$('#review').slideDown('slow');
-	
+
 	return false;
-});			
+});
 
 $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
 
@@ -429,10 +441,10 @@ $('#button-review').bind('click', function() {
 			if (data.error) {
 				$('#review-title').after('<div class="warning">' + data.error + '</div>');
 			}
-			
+
 			if (data.success) {
 				$('#review-title').after('<div class="success">' + data.success + '</div>');
-								
+
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');
 				$('input[name=\'rating\']:checked').attr('checked', '');
@@ -441,11 +453,11 @@ $('#button-review').bind('click', function() {
 		}
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#tabs a').tabs();
-//--></script> 
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
+//--></script>
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript"><!--
 if ($.browser.msie && $.browser.version == 6) {
 	$('.date, .datetime, .time').bgIframe();
@@ -457,5 +469,5 @@ $('.datetime').datetimepicker({
 	timeFormat: 'h:m'
 });
 $('.time').timepicker({timeFormat: 'h:m'});
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

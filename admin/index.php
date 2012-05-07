@@ -10,7 +10,7 @@ if (!defined('DIR_APPLICATION')) {
 	header('Location: ../install/index.php');
 	exit;
 }
-
+/* Uncomment this (and comment original require block) to enable vQmod
 // vQmod
 require_once('../vqmod/vqmod.php');
 $vqmod = new VQMod();
@@ -23,6 +23,16 @@ require_once($vqmod->modCheck(DIR_SYSTEM . 'library/currency.php'));
 require_once($vqmod->modCheck(DIR_SYSTEM . 'library/user.php'));
 require_once($vqmod->modCheck(DIR_SYSTEM . 'library/weight.php'));
 require_once($vqmod->modCheck(DIR_SYSTEM . 'library/length.php'));
+*/
+
+// Startup
+require_once(DIR_SYSTEM . 'startup.php');
+
+// Application Classes
+require_once(DIR_SYSTEM . 'library/currency.php');
+require_once(DIR_SYSTEM . 'library/user.php');
+require_once(DIR_SYSTEM . 'library/weight.php');
+require_once(DIR_SYSTEM . 'library/length.php');
 
 // Registry
 $registry = new Registry();

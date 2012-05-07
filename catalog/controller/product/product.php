@@ -331,6 +331,12 @@ class ControllerProductProduct extends Controller {
 					$special = false;
 				}
 
+				if (!empty($result) && (float)$result['quantity']) {
+					$quantity = (int)$result['quantity'];
+				} else {
+					$quantity = false;
+				}
+
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
@@ -339,13 +345,14 @@ class ControllerProductProduct extends Controller {
 
 				$this->data['products'][] = array(
 					'product_id' => $result['product_id'],
-					'thumb'   	 => $image,
-					'name'    	 => $result['name'],
-					'price'   	 => $price,
-					'special' 	 => $special,
-					'rating'     => $rating,
-					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-					'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'thumb'   	=> $image,
+					'name'    	=> $result['name'],
+					'price'   	=> $price,
+					'special' 	=> $special,
+					'rating'	=> $rating,
+					'reviews'	=> sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+					'quantity'	=> $quantity,
+					'href'    	=> $this->url->link('product/product', 'product_id=' . $result['product_id']),
 				);
 			}
 

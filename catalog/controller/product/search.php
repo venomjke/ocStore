@@ -4,9 +4,9 @@ class ControllerProductSearch extends Controller {
     	$this->language->load('product/search');
 
 		$this->load->model('catalog/category');
-		
+
 		$this->load->model('catalog/product');
-		
+
 		$this->load->model('tool/image');
 
 		if (isset($this->request->get['filter_name'])) {
@@ -236,6 +236,12 @@ class ControllerProductSearch extends Controller {
 					$tax = false;
 				}
 
+				if (!empty($result) && (float)$result['quantity']) {
+					$quantity = (int)$result['quantity'];
+				} else {
+					$quantity = false;
+				}
+
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
@@ -252,6 +258,7 @@ class ControllerProductSearch extends Controller {
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
 					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+					'quantity'	  => $quantity,
 					'href'        => $this->url->link('product/product', $url . '&product_id=' . $result['product_id'])
 				);
 			}
@@ -319,8 +326,8 @@ class ControllerProductSearch extends Controller {
 					'text'  => $this->language->get('text_rating_desc'),
 					'value' => 'rating-DESC',
 					'href'  => $this->url->link('product/search', 'sort=rating&order=DESC' . $url)
-				); 
-				
+				);
+
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_asc'),
 					'value' => 'rating-ASC',

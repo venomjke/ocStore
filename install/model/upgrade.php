@@ -3,7 +3,7 @@ class ModelUpgrade extends Model {
 	public function mysql($data, $sqlfile) {
 		ini_set('display_errors', 1);
 		error_reporting(E_ALL);
-		
+
 		$connection = mysql_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD);
 
 		mysql_select_db(DB_DATABASE, $connection);

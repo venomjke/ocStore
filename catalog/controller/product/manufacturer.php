@@ -226,6 +226,12 @@ class ControllerProductManufacturer extends Controller {
 					$tax = false;
 				}
 
+				if (!empty($result) && (float)$result['quantity']) {
+					$quantity = (int)$result['quantity'];
+				} else {
+					$quantity = false;
+				}
+
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
@@ -233,16 +239,17 @@ class ControllerProductManufacturer extends Controller {
 				}
 
 				$this->data['products'][] = array(
-					'product_id'  => $result['product_id'],
-					'thumb'       => $image,
-					'name'        => $result['name'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
-					'price'       => $price,
-					'special'     => $special,
-					'tax'         => $tax,
-					'rating'      => $result['rating'],
-					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-					'href'        => $this->url->link('product/product', $url . '&manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'])
+					'product_id'	=> $result['product_id'],
+					'thumb'		=> $image,
+					'name'		=> $result['name'],
+					'description'	=> utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
+					'price'		=> $price,
+					'special'	=> $special,
+					'tax'		=> $tax,
+					'rating'	=> $result['rating'],
+					'reviews'	=> sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+					'quantity'	=> $quantity,
+					'href'		=> $this->url->link('product/product', $url . '&manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'])
 				);
 			}
 
