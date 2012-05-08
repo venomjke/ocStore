@@ -1,0 +1,53 @@
+---------------------------
+CR2 HTML Module
+version 1.5c
+written by Cryout Creations 
+---------------------------
+
+Support: http://www.riotreactions.eu/html-module/
+Demo: http://oc.cryoutcreations.eu/moduledemo/
+
+Features:
+
+- the ability to add your own HTML code anywhere in the shop.
+- custom title support (which can be completely disabled)
+- borderless design support (the wrapping html for the module can be completely turned off)
+- custom css class support (the module div can be customized using the user chosen css classname)
+- support for 3 different html areas (although these 3 areas can be displayed multiple times througout the shop)
+
+
+Installation:
+
+- Extract the downloaded archive
+- Connect using a FTP program to your hosting/server account and browse the root of your OpenCart installation folder. 
+- Upload the two folders extracted folders, "admin" and "catalog" to OpenCart's root folder. You should not get any file replacement warnings. If you do, double check to make sure you are not replacing any critical files (if you had an older version of the modules already installed, you will need to replace the old files).
+- Enter OpenCart's administration menu, Extensions > Modules and "Install" the module
+- Configure the module to include the desired HTML code and title, then add the areas on which you want it to appear.
+
+
+Compatibility:
+
+version 1.5c is compatible with OpenCart 1.5.1 to 1.5.1.3
+Version 1.5a is compatible with OpenCart 1.5.0 to 1.5.0.5
+
+
+Non-English users:
+
+This modules does not require translations for the frontend (shop side). You only need to copy and edit the translation file if you use a non-english admin side. The english translation file is located at "admin/language/english/module/cr2htmlmodule.php"
+
+
+Custom themes:
+
+You will need to copy the included template files:
+   "OC_FOLDER/catalog/view/theme/default/template/module/cr2htmlmodule.tpl"
+for your custom theme's module folder:
+   "OC_FOLDER/catalog/view/theme/YOUR_THEME/template/module/cr2htmlmodule.tpl"
+and edit it to fit your theme.
+
+
+Version history:
+
+1.5c (20111102) - code cleanup; added PRO info tab
+1.5b (20110728) - compatibility update for OC 1.5.1
+1.5a (20110620) - minor bugfix
+1.5 (20110614) - initial release

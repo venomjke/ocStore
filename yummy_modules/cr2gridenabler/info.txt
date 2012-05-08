@@ -1,0 +1,51 @@
+---------------------------
+CR2 Grid Enabler
+version 0.5.1
+written by Cryout Creations 
+---------------------------
+
+Support: http://www.riotreactions.eu/cat/opencart-modules/grid-enabler
+Demo: no demo available; just install and use
+Terms and Conditions: http://www.riotreactions.eu/terms-and-conditions/
+
+Features:
+Enable Grid view to be the default product list view on shop pages. The specific pages (routes/layouts) are configurable.
+Also offers the option to completely hide the List/Grid selector, so the Grid view is the only one available.
+This module works only on themes that use the same layout and javascript code as the default theme.
+
+
+Important notes:
+1. Some themes, due to their highly customized nature and lack of developer interest in compatibility, do not load modules on all but some of the pages (routes/layouts), and as a result the module may or may not work.
+2. The module relies on OpenCart's Layouts feature to load itself on specific pages of the shop. If (some or all of) the layouts are deleted, the module will not be able to trigger the Grid view on those pages that do not have a layout defined.
+
+
+Installation:
+
+- Extract the downloaded archive
+- Connect using a FTP program to your hosting/server account and browse the root of your OpenCart installation folder. 
+- Upload the two extracted folders, "admin" and "catalog" to OpenCart's root folder. You should not get any file replacement warnings. If you do, double check to make sure you are not replacing any critical files (if you had an older version of the modules already installed, you will need to replace the old files).
+- Enter OpenCart's administration menu, Extensions > Modules and "Install" the module
+- Select the layouts on which you want Grid mode to be enabled (Category and Manufacturers by default), save, then refresh the shop page to see the changes.
+
+
+Compatibility:
+
+compatible with OpenCart 1.5.1 to 1.5.1.2.
+This module has not been tested on 1.5.0, but it probably does not work due to the different module system.
+
+
+Non-English users:
+
+This modules does not require translations for the frontend (shop side). You only need to copy and edit the translation file if you use a non-english admin interface. The english translation file is located at "admin/language/english/module/cr2gridenabler.php"
+
+
+Custom themes:
+
+The module should work right away with most themes without to need to copy/edit the template file.
+The module is safe to use no matter which theme you are using. No permanent changes are performed to the themes. If Grid mode is not enabled on the selected pages, then the theme is too customized and the module does not work with it.
+
+
+Version history:
+
+0.5.1 (20110919) - added list/grid selector hide option
+0.5 (20110908) - initial release;
