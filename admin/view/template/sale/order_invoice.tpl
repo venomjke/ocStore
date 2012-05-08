@@ -13,7 +13,7 @@
   <table class="store">
     <tr>
       <td><?php echo $order['store_name']; ?><br />
-        <?php echo $order['store_address']; ?><br />
+        <?php echo htmlspecialchars_decode($order['store_address']); ?><br />
         <?php echo $text_telephone; ?> <?php echo $order['store_telephone']; ?><br />
         <?php if ($order['store_fax']) { ?>
         <?php echo $text_fax; ?> <?php echo $order['store_fax']; ?><br />
