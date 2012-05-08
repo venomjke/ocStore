@@ -2,5 +2,6 @@
 vq/
 vqgen/
 config.php
-*log*
+logs
+\.log
 *cache*
