@@ -3,7 +3,7 @@
 $_['heading_title']                  = 'Оформление заказа';
 
 // Text
-$_['text_cart']                      = 'Корзина покупок';
+$_['text_cart']                      = 'Корзина';
 $_['text_checkout_option']           = 'Шаг 1: Способ оформления заказа';
 $_['text_checkout_account']          = 'Шаг 2: Профиль &amp; Платежная информация';
 $_['text_checkout_payment_address']  = 'Шаг 2: Платежная информация';
