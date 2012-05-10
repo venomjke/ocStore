@@ -1,13 +1,4 @@
 <?php
-
-/**
-@ EMS Почта России (автоматизированный) - 5.0
-@ + с расширенной админ-панелью + международный
-@ Разработчик: Эльхан Исаев
-@ ICQ: 27-27-27-27
-@ Сайт: http://7777777.pro
-**/
-
 class ModelShippingEms extends Model {
 	function getQuote($address)
 	{
@@ -60,10 +51,6 @@ class ModelShippingEms extends Model {
 		{
 		if($product['price']<'50000') $product_total_obl += $product['quantity'];
 		}
-		//*****//
-
-
-
 			$url = 'http://emspost.ru/api/rest/?method=ems.calculate&from=' . $city_from . '&to=' . $city_to . '&weight=' . number_format($this->cart->getWeight(), 1, '.', '').$dops;
 
 			//----------------
@@ -156,8 +143,7 @@ class ModelShippingEms extends Model {
 		return $method_data;
 	}
 
-
-/*Города в нужном формате*/
+/* Города в нужном формате */
 function transl($str)
 {
     $tr = array
@@ -250,6 +236,5 @@ $listc = json_decode($outc, TRUE);
 
 }
 /**Города в нужном формате**/
-
 }
 ?>
