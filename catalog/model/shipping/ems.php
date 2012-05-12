@@ -49,7 +49,7 @@ class ModelShippingEms extends Model {
 		$products = $this->cart->getProducts();
 	    foreach ($products as $product)
 		{
-		if($product['price']<'50000') $product_total_obl += $product['quantity'];
+		if($product['price']<'50000') $product_total_obl += $product['price'];
 		}
 			$url = 'http://emspost.ru/api/rest/?method=ems.calculate&from=' . $city_from . '&to=' . $city_to . '&weight=' . number_format($this->cart->getWeight(), 1, '.', '').$dops;
 
