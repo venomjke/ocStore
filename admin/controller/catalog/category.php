@@ -207,12 +207,12 @@ class ControllerCatalogCategory extends Controller {
 
 		$this->data['cancel'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL');
 
-		$this->data['token'] = $this->session->data['token'];
-
 		if (isset($this->request->get['category_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$category_info = $this->model_catalog_category->getCategory($this->request->get['category_id']);
     	}
 
+		$this->data['token'] = $this->session->data['token'];
+		
 		$this->load->model('localisation/language');
 
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();

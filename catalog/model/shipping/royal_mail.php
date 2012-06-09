@@ -433,7 +433,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 
 			// Airmail
-			if ($this->config->get('royal_mail_airmail_status')) {
+			if ($this->config->get('royal_mail_airmail_status') && $address['iso_code_2'] != 'GB') {
 				$cost = 0;
 
 				$countries = explode(',', 'AL,AD,AM,AT,AZ,BY,BE,BA,BG,HR,CY,CZ,DK,EE,FO,FI,FR,GE,DE,GI,GR,GL,HU,IS,IE,IT,KZ,KG,LV,LI,LT,LU,MK,MT,MD,MC,NL,NO,PL,PT,RO,RU,SM,SK,SI,ES,SE,CH,TJ,TR,TM,UA,UZ,VA');
@@ -538,7 +538,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 
 			// Airsure
-			if ($this->config->get('royal_mail_airsure_status')) {
+			if ($this->config->get('royal_mail_airsure_status') && $address['iso_code_2'] != 'GB') {
 				$cost = 0;
 				$insurance = 0;
 
@@ -617,7 +617,7 @@ class ModelShippingRoyalMail extends Model {
 			}
 
 			// Surface
-			if ($this->config->get('royal_mail_surface_status')) {
+			if ($this->config->get('royal_mail_surface_status') && $address['iso_code_2'] != 'GB') {
 				$cost = 0;
 				$insurance = 0;
 
@@ -646,7 +646,7 @@ class ModelShippingRoyalMail extends Model {
 						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
 					}
 
-					$quote_data['airsure'] = array(
+					$quote_data['surface'] = array(
 						'code'         => 'royal_mail.surface',
 						'title'        => $title,
 						'cost'         => $cost,

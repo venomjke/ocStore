@@ -39,8 +39,6 @@ class ControllerModuleWelcome extends Controller {
 
 		$this->data['tab_module'] = $this->language->get('tab_module');
 
-		$this->data['token'] = $this->session->data['token'];
-
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -70,6 +68,8 @@ class ControllerModuleWelcome extends Controller {
 		$this->data['action'] = $this->url->link('module/welcome', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+		
+		$this->data['token'] = $this->session->data['token'];
 
 		$this->data['modules'] = array();
 

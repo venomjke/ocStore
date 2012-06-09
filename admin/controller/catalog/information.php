@@ -287,8 +287,6 @@ class ControllerCatalogInformation extends Controller {
     	$this->data['tab_data'] = $this->language->get('tab_data');
 		$this->data['tab_design'] = $this->language->get('tab_design');
 
-		$this->data['token'] = $this->session->data['token'];
-
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -347,6 +345,8 @@ class ControllerCatalogInformation extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
 		}
 
+		$this->data['token'] = $this->session->data['token'];
+		
 		$this->load->model('localisation/language');
 
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
