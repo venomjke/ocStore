@@ -58,8 +58,8 @@ class ControllerAccountAddress extends Controller {
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
                 $this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
 
+			// Default Shipping Address
                         if (isset($this->session->data['shipping_address_id']) && ($this->request->get['address_id'] == $this->session->data['shipping_address_id'])) {
-				// Default Shipping Address
 				$this->session->data['shipping_country_id'] = $this->request->post['country_id'];
 				$this->session->data['shipping_zone_id'] = $this->request->post['zone_id'];
 				$this->session->data['shipping_postcode'] = $this->request->post['postcode'];
@@ -67,13 +67,13 @@ class ControllerAccountAddress extends Controller {
 				unset($this->session->data['shipping_method']);
                                 unset($this->session->data['shipping_methods']);
                         }
-
+			
+			// Default Payment Address
                         if (isset($this->session->data['payment_address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address_id'])) {
-				// Default Payment Address
 				$this->session->data['payment_country_id'] = $this->request->post['country_id'];
 				$this->session->data['payment_zone_id'] = $this->request->post['zone_id'];
-
-                                unset($this->session->data['payment_method']);
+	  			
+				unset($this->session->data['payment_method']);
                                 unset($this->session->data['payment_methods']);
                         }
 
@@ -101,25 +101,21 @@ class ControllerAccountAddress extends Controller {
         if (isset($this->request->get['address_id']) && $this->validateDelete()) {
                         $this->model_account_address->deleteAddress($this->request->get['address_id']);
 
+			// Default Shipping Address
                         if (isset($this->session->data['shipping_address_id']) && ($this->request->get['address_id'] == $this->session->data['shipping_address_id'])) {
 				unset($this->session->data['shipping_address_id']);
-
-				// Default Shipping Address
 				unset($this->session->data['shipping_country_id']);
 				unset($this->session->data['shipping_zone_id']);
 				unset($this->session->data['shipping_postcode']);
-
                                 unset($this->session->data['shipping_method']);
                                 unset($this->session->data['shipping_methods']);
                         }
-
+			
+			// Default Payment Address
                         if (isset($this->session->data['payment_address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address_id'])) {
 				unset($this->session->data['payment_address_id']);
-
-				// Default Payment Address
 				unset($this->session->data['payment_country_id']);
 				unset($this->session->data['payment_zone_id']);
-
                                 unset($this->session->data['payment_method']);
                                 unset($this->session->data['payment_methods']);
                         }
@@ -281,6 +277,7 @@ class ControllerAccountAddress extends Controller {
         $this->data['text_yes'] = $this->language->get('text_yes');
         $this->data['text_no'] = $this->language->get('text_no');
                 $this->data['text_select'] = $this->language->get('text_select');
+		$this->data['text_none'] = $this->language->get('text_none');
 
         $this->data['entry_firstname'] = $this->language->get('entry_firstname');
         $this->data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -315,7 +312,13 @@ class ControllerAccountAddress extends Controller {
 		} else {
 			$this->data['error_company_id'] = '';
 		}
-				
+		
+  		if (isset($this->error['tax_id'])) {
+			$this->data['error_tax_id'] = $this->error['tax_id'];
+		} else {
+			$this->data['error_tax_id'] = '';
+		}
+										
                 if (isset($this->error['address_1'])) {
                 $this->data['error_address_1'] = $this->error['address_1'];
                 } else {
@@ -515,6 +518,13 @@ class ControllerAccountAddress extends Controller {
 
                 if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2) || (utf8_strlen($this->request->post['postcode']) > 10)) {
                         $this->error['postcode'] = $this->language->get('error_postcode');
+		
+			// VAT Validation
+			$this->load->helper('vat');
+			
+			if ($this->config->get('config_vat') && $this->request->post['tax_id'] && vat_validation($country_info['iso_code_2'], $this->request->post['tax_id'])) {
+				$this->error['vat'] = $this->language->get('error_vat');
+			}		
                 }
 
         if ($this->request->post['country_id'] == '') {
@@ -533,7 +543,7 @@ class ControllerAccountAddress extends Controller {
         }
 
         private function validateDelete() {
-        if ($this->model_account_address->getTotalAddresses() == 1) {
+    	if ($this->model_account_address->getTotalAddresses()) {
                 $this->error['warning'] = $this->language->get('error_delete');
         }
 
@@ -548,28 +558,29 @@ class ControllerAccountAddress extends Controller {
         }
         }
 
-        public function zone() {
-                $output = '<option value="">' . $this->language->get('text_select') . '</option>';
+	public function country() {
+		$json = array();
+		
+		$this->load->model('localisation/country');
 
-                $this->load->model('localisation/zone');
+    	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+		
+		if ($country_info) {
+			$this->load->model('localisation/zone');
 
-        $results = $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']);
+			$json = array(
+				'country_id'        => $country_info['country_id'],
+				'name'              => $country_info['name'],
+				'iso_code_2'        => $country_info['iso_code_2'],
+				'iso_code_3'        => $country_info['iso_code_3'],
+				'address_format'    => $country_info['address_format'],
+				'postcode_required' => $country_info['postcode_required'],
+				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+				'status'            => $country_info['status']		
+			);
+		}
 
-        foreach ($results as $result) {
-                $output .= '<option value="' . $result['zone_id'] . '"';
-
-                if (isset($this->request->get['zone_id']) && ($this->request->get['zone_id'] == $result['zone_id'])) {
-                        $output .= ' selected="selected"';
-                }
-
-                $output .= '>' . $result['name'] . '</option>';
-        }
-
-                if (!$results) {
-                        $output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
-        }
-
-                $this->response->setOutput($output);
-        }
+		$this->response->setOutput(json_encode($json));
+	}
 }
 ?>

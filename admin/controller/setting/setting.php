@@ -25,7 +25,8 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
@@ -76,6 +77,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_tax_customer'] = $this->language->get('entry_tax_customer');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_customer_group_display'] = $this->language->get('entry_customer_group_display');
+		$this->data['entry_vat'] = $this->language->get('entry_vat');
 		$this->data['entry_customer_price'] = $this->language->get('entry_customer_price');
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
@@ -536,7 +538,13 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_customer_group_display'] = array();			
 		}
-						
+		
+		if (isset($this->request->post['config_vat'])) {
+			$this->data['config_vat'] = $this->request->post['config_vat'];
+		} else {
+			$this->data['config_vat'] = $this->config->get('config_vat');			
+		}
+								
 		if (isset($this->request->post['config_customer_price'])) {
 			$this->data['config_customer_price'] = $this->request->post['config_customer_price'];
 		} else {
@@ -1124,28 +1132,29 @@ class ControllerSettingSetting extends Controller {
 		$this->response->setOutput('<img src="' . $image . '" alt="" title="" style="border: 1px solid #EEEEEE;" />');
 	}
 
-	public function zone() {
-		$output = '';
+	public function country() {
+		$json = array();
 
-		$this->load->model('localisation/zone');
+		$this->load->model('localisation/country');
 
-		$results = $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']);
+    	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
 
-		foreach ($results as $result) {
-			$output .= '<option value="' . $result['zone_id'] . '"';
+		if ($country_info) {
+			$this->load->model('localisation/zone');
 
-			if (isset($this->request->get['zone_id']) && ($this->request->get['zone_id'] == $result['zone_id'])) {
-				$output .= ' selected="selected"';
-			}
-
-			$output .= '>' . $result['name'] . '</option>';
+			$json = array(
+				'country_id'        => $country_info['country_id'],
+				'name'              => $country_info['name'],
+				'iso_code_2'        => $country_info['iso_code_2'],
+				'iso_code_3'        => $country_info['iso_code_3'],
+				'address_format'    => $country_info['address_format'],
+				'postcode_required' => $country_info['postcode_required'],
+				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+				'status'            => $country_info['status']		
+			);
 		}
-
-		if (!$results) {
-			$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
-		}
-
-		$this->response->setOutput($output);
+		
+		$this->response->setOutput(json_encode($json));
 	}
 }
 ?>

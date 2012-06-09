@@ -599,6 +599,7 @@ class ControllerSaleCustomer extends Controller {
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_select'] = $this->language->get('text_select');
+		$this->data['text_none'] = $this->language->get('text_none');
     	$this->data['text_wait'] = $this->language->get('text_wait');
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		$this->data['text_add_blacklist'] = $this->language->get('text_add_blacklist');
@@ -1097,30 +1098,6 @@ class ControllerSaleCustomer extends Controller {
 		}
 	}
 
-	public function zone() {
-		$output = '<option value="">' . $this->language->get('text_select') . '</option>';
-
-		$this->load->model('localisation/zone');
-
-		$results = $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']);
-
-		foreach ($results as $result) {
-			$output .= '<option value="' . $result['zone_id'] . '"';
-
-			if (isset($this->request->get['zone_id']) && ($this->request->get['zone_id'] == $result['zone_id'])) {
-				$output .= ' selected="selected"';
-			}
-
-			$output .= '>' . $result['name'] . '</option>';
-		}
-
-		if (!$results) {
-			$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
-		}
-
-		$this->response->setOutput($output);
-	}
-
 	public function transaction() {
     	$this->language->load('sale/customer');
 
@@ -1301,15 +1278,16 @@ class ControllerSaleCustomer extends Controller {
 
 			foreach ($results as $result) {
 				$json[] = array(
-					'customer_id'    => $result['customer_id'],
-					'name'           => html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),
-					'customer_group' => $result['customer_group'],
-					'firstname'      => $result['firstname'],
-					'lastname'       => $result['lastname'],
-					'email'          => $result['email'],
-					'telephone'      => $result['telephone'],
-					'fax'            => $result['fax'],
-					'address'        => $this->model_sale_customer->getAddresses($result['customer_id'])
+					'customer_id'       => $result['customer_id'], 
+					'customer_group_id' => $result['customer_group_id'],
+					'name'              => html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),
+					'customer_group'    => $result['customer_group'],
+					'firstname'         => $result['firstname'],
+					'lastname'          => $result['lastname'],
+					'email'             => $result['email'],
+					'telephone'         => $result['telephone'],
+					'fax'               => $result['fax'],
+					'address'           => $this->model_sale_customer->getAddresses($result['customer_id'])
 				);
 			}
 		}
@@ -1325,6 +1303,45 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function customer_group() {
+		$json = array();
+		
+		$this->load->model('sale/customer_group');
+
+    	$customer_group_info = $this->model_sale_customer_group->getCustomerGroup($this->request->get['customer_group_id']);
+		
+		if ($customer_group_info) {
+			$json = $customer_group_info;
+		}
+		
+		$this->response->setOutput(json_encode($json));
+	}
+		
+	public function country() {
+		$json = array();
+		
+		$this->load->model('localisation/country');
+
+    	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+		
+		if ($country_info) {
+			$this->load->model('localisation/zone');
+
+			$json = array(
+				'country_id'        => $country_info['country_id'],
+				'name'              => $country_info['name'],
+				'iso_code_2'        => $country_info['iso_code_2'],
+				'iso_code_3'        => $country_info['iso_code_3'],
+				'address_format'    => $country_info['address_format'],
+				'postcode_required' => $country_info['postcode_required'],
+				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+				'status'            => $country_info['status']		
+			);
+		}
+		
+		$this->response->setOutput(json_encode($json));
+	}
+		
 	public function address() {
 		$json = array();
 

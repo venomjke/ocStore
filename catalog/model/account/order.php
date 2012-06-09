@@ -4,24 +4,6 @@ class ModelAccountOrder extends Model {
 		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND order_status_id > '0'");
 
 		if ($order_query->num_rows) {
-			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['shipping_country_id'] . "'");
-
-			if ($country_query->num_rows) {
-				$shipping_iso_code_2 = $country_query->row['iso_code_2'];
-				$shipping_iso_code_3 = $country_query->row['iso_code_3'];
-			} else {
-				$shipping_iso_code_2 = '';
-				$shipping_iso_code_3 = '';
-			}
-
-			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['shipping_zone_id'] . "'");
-
-			if ($zone_query->num_rows) {
-				$shipping_zone_code = $zone_query->row['code'];
-			} else {
-				$shipping_zone_code = '';
-			}
-
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['payment_country_id'] . "'");
 
 			if ($country_query->num_rows) {
@@ -29,7 +11,7 @@ class ModelAccountOrder extends Model {
 				$payment_iso_code_3 = $country_query->row['iso_code_3'];
 			} else {
 				$payment_iso_code_2 = '';
-				$payment_iso_code_3 = '';
+				$payment_iso_code_3 = '';				
 			}
 
 			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['payment_zone_id'] . "'");
@@ -38,6 +20,24 @@ class ModelAccountOrder extends Model {
 				$payment_zone_code = $zone_query->row['code'];
 			} else {
 				$payment_zone_code = '';
+			}
+
+			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['shipping_country_id'] . "'");
+
+			if ($country_query->num_rows) {
+				$shipping_iso_code_2 = $country_query->row['iso_code_2'];
+				$shipping_iso_code_3 = $country_query->row['iso_code_3'];
+			} else {
+				$shipping_iso_code_2 = '';
+				$shipping_iso_code_3 = '';				
+			}
+
+			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['shipping_zone_id'] . "'");
+
+			if ($zone_query->num_rows) {
+				$shipping_zone_code = $zone_query->row['code'];
+			} else {
+				$shipping_zone_code = '';
 			}
 
 			return array(
@@ -53,6 +53,22 @@ class ModelAccountOrder extends Model {
 				'telephone'               => $order_query->row['telephone'],
 				'fax'                     => $order_query->row['fax'],
 				'email'                   => $order_query->row['email'],
+				'payment_firstname'       => $order_query->row['payment_firstname'],
+				'payment_lastname'        => $order_query->row['payment_lastname'],				
+				'payment_company'         => $order_query->row['payment_company'],
+				'payment_address_1'       => $order_query->row['payment_address_1'],
+				'payment_address_2'       => $order_query->row['payment_address_2'],
+				'payment_postcode'        => $order_query->row['payment_postcode'],
+				'payment_city'            => $order_query->row['payment_city'],
+				'payment_zone_id'         => $order_query->row['payment_zone_id'],
+				'payment_zone'            => $order_query->row['payment_zone'],
+				'payment_zone_code'       => $payment_zone_code,
+				'payment_country_id'      => $order_query->row['payment_country_id'],
+				'payment_country'         => $order_query->row['payment_country'],	
+				'payment_iso_code_2'      => $payment_iso_code_2,
+				'payment_iso_code_3'      => $payment_iso_code_3,
+				'payment_address_format'  => $order_query->row['payment_address_format'],
+				'payment_method'          => $order_query->row['payment_method'],
 				'shipping_firstname'      => $order_query->row['shipping_firstname'],
 				'shipping_lastname'       => $order_query->row['shipping_lastname'],
 				'shipping_company'        => $order_query->row['shipping_company'],
@@ -69,22 +85,6 @@ class ModelAccountOrder extends Model {
 				'shipping_iso_code_3'     => $shipping_iso_code_3,
 				'shipping_address_format' => $order_query->row['shipping_address_format'],
 				'shipping_method'         => $order_query->row['shipping_method'],
-				'payment_firstname'       => $order_query->row['payment_firstname'],
-				'payment_lastname'        => $order_query->row['payment_lastname'],
-				'payment_company'         => $order_query->row['payment_company'],
-				'payment_address_1'       => $order_query->row['payment_address_1'],
-				'payment_address_2'       => $order_query->row['payment_address_2'],
-				'payment_postcode'        => $order_query->row['payment_postcode'],
-				'payment_city'            => $order_query->row['payment_city'],
-				'payment_zone_id'         => $order_query->row['payment_zone_id'],
-				'payment_zone'            => $order_query->row['payment_zone'],
-				'payment_zone_code'       => $payment_zone_code,
-				'payment_country_id'      => $order_query->row['payment_country_id'],
-				'payment_country'         => $order_query->row['payment_country'],
-				'payment_iso_code_2'      => $payment_iso_code_2,
-				'payment_iso_code_3'      => $payment_iso_code_3,
-				'payment_address_format'  => $order_query->row['payment_address_format'],
-				'payment_method'          => $order_query->row['payment_method'],
 				'comment'                 => $order_query->row['comment'],
 				'total'                   => $order_query->row['total'],
 				'order_status_id'         => $order_query->row['order_status_id'],

@@ -13,8 +13,6 @@ class ControllerAccountRegister extends Controller {
 
 		$this->load->model('account/customer');
 
-		$this->load->model('account/customer_group');
-		
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_account_customer->addCustomer($this->request->post);
 
@@ -59,24 +57,24 @@ class ControllerAccountRegister extends Controller {
       	);
 
     	$this->data['heading_title'] = $this->language->get('heading_title');
-
-		$this->data['text_yes'] = $this->language->get('text_yes');
-		$this->data['text_no'] = $this->language->get('text_no');
-		$this->data['text_select'] = $this->language->get('text_select');
-    	$this->data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('account/login', '', 'SSL'));
+		
+		$this->data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('account/login', '', 'SSL'));
 		$this->data['text_your_details'] = $this->language->get('text_your_details');
-		$this->data['text_your_account'] = $this->language->get('text_your_account');
     	$this->data['text_your_address'] = $this->language->get('text_your_address');
     	$this->data['text_your_password'] = $this->language->get('text_your_password');
 		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
-
+		$this->data['text_yes'] = $this->language->get('text_yes');
+		$this->data['text_no'] = $this->language->get('text_no');
+		$this->data['text_select'] = $this->language->get('text_select');
+		$this->data['text_none'] = $this->language->get('text_none');
+						
     	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
     	$this->data['entry_email'] = $this->language->get('entry_email');
     	$this->data['entry_telephone'] = $this->language->get('entry_telephone');
     	$this->data['entry_fax'] = $this->language->get('entry_fax');
-    	$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_company'] = $this->language->get('entry_company');
+		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
 		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');
     	$this->data['entry_address_1'] = $this->language->get('entry_address_1');
@@ -144,7 +142,7 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$this->data['error_tax_id'] = '';
 		}
-						
+								
   		if (isset($this->error['address_1'])) {
 			$this->data['error_address_1'] = $this->error['address_1'];
 		} else {
@@ -176,38 +174,6 @@ class ControllerAccountRegister extends Controller {
 		}
 
     	$this->data['action'] = $this->url->link('account/register', '', 'SSL');
-
-		$customer_group_data = array();
-		
-		if (is_array($this->config->get('config_customer_group_display'))) {
-			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
-			
-			foreach ($customer_groups  as $customer_group) {
-				if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-					$customer_group_data[] = array(
-						'customer_group_id'   => $customer_group['customer_group_id'],
-						'name'                => $customer_group['name'],
-						'description'         => $customer_group['description'],
-						'company_id_display'  => $customer_group['company_id_display'],
-						'company_id_required' => $customer_group['company_id_required'],
-						'tax_id_display'      => $customer_group['tax_id_display'],
-						'tax_id_required'     => $customer_group['tax_id_required']
-					);
-				}
-			}
-		}
-		
-		if (count($customer_group_data) > 1) {
-			$this->data['customer_groups'] = $customer_group_data;
-		} else {
-			$this->data['customer_groups'] = array();
-		}
-		
-		if (isset($this->request->post['customer_group_id'])) {
-    		$this->data['customer_group_id'] = $this->request->post['customer_group_id'];
-		} else {
-			$this->data['customer_group_id'] = $this->config->get('config_customer_group_id');
-		}
 		
 		if (isset($this->request->post['firstname'])) {
     		$this->data['firstname'] = $this->request->post['firstname'];
@@ -245,16 +211,74 @@ class ControllerAccountRegister extends Controller {
 			$this->data['company'] = '';
 		}
 
+		$this->load->model('account/customer_group');
+
+		$customer_group_data = array();
+		
+		if (is_array($this->config->get('config_customer_group_display'))) {
+			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
+			
+			foreach ($customer_groups  as $customer_group) {
+				if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+					$customer_group_data[] = array(
+						'customer_group_id' => $customer_group['customer_group_id'],
+						'name'              => $customer_group['name'],
+						'description'       => $customer_group['description']
+					);
+				}
+			}
+		}
+		
+		if (count($customer_group_data) > 1) {
+			$this->data['customer_groups'] = $customer_group_data;
+		} else {
+			$this->data['customer_groups'] = array();
+		}
+		
+		if (isset($this->request->post['customer_group_id'])) {
+    		$this->data['customer_group_id'] = $this->request->post['customer_group_id'];
+		} else {
+			$this->data['customer_group_id'] = $this->config->get('config_customer_group_id');
+		}
+		
+		// Company ID
 		if (isset($this->request->post['company_id'])) {
     		$this->data['company_id'] = $this->request->post['company_id'];
 		} else {
 			$this->data['company_id'] = '';
 		}
+				
+		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->config->get('config_customer_group_id'));
 		
+		if ($customer_group_info) {
+			$this->data['company_id_display'] = $customer_group_info['company_id_display'];
+		} else {
+			$this->data['company_id_display'] = '';
+		}
+		
+		if ($customer_group_info) {
+			$this->data['company_id_required'] = $customer_group_info['company_id_required'];
+		} else {
+			$this->data['company_id_required'] = '';
+		}
+		
+		// Tax ID
 		if (isset($this->request->post['tax_id'])) {
     		$this->data['tax_id'] = $this->request->post['tax_id'];
 		} else {
 			$this->data['tax_id'] = '';
+		}				
+				
+		if ($customer_group_info) {
+			$this->data['tax_id_display'] = $customer_group_info['tax_id_display'];
+		} else {
+			$this->data['tax_id_display'] = '';
+		}
+		
+		if ($customer_group_info) {
+			$this->data['tax_id_required'] = $customer_group_info['tax_id_required'];
+		} else {
+			$this->data['tax_id_required'] = '';
 		}
 						
 		if (isset($this->request->post['address_1'])) {
@@ -381,6 +405,8 @@ class ControllerAccountRegister extends Controller {
     	}
 		
 		// Customer Group
+		$this->load->model('account/customer_group');
+		
 		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->post['customer_group_id'];
 		} else {
@@ -390,10 +416,12 @@ class ControllerAccountRegister extends Controller {
 		$customer_group = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
 			
 		if ($customer_group) {	
+			// Company ID
 			if ($customer_group['company_id_display'] && $customer_group['company_id_required'] && !$this->request->post['company_id']) {
 				$this->error['company_id'] = $this->language->get('error_company_id');
 			}
 			
+			// Tax ID 
 			if ($customer_group['tax_id_display'] && $customer_group['tax_id_required'] && !$this->request->post['tax_id']) {
 				$this->error['tax_id'] = $this->language->get('error_tax_id');
 			}						
@@ -413,6 +441,13 @@ class ControllerAccountRegister extends Controller {
 
 		if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2) || (utf8_strlen($this->request->post['postcode']) > 10)) {
  			$this->error['postcode'] = $this->language->get('error_postcode');
+			
+			// VAT Validation
+			$this->load->helper('vat');
+			
+			if ($this->config->get('config_vat') && $this->request->post['tax_id'] && vat_validation($country_info['iso_code_2'], $this->request->post['tax_id'])) {
+				$this->error['tax_id'] = $this->language->get('error_vat');
+			}
 		}
 
     	if ($this->request->post['country_id'] == '') {
@@ -447,29 +482,44 @@ class ControllerAccountRegister extends Controller {
       		return false;
     	}
   	}
-	 
-  	public function zone() {
-		$output = '<option value="">' . $this->language->get('text_select') . '</option>';
+	
+	public function customer_group() {
+		$json = array();
 
-		$this->load->model('localisation/zone');
+		$this->load->model('account/customer_group');
 
-    	$results = $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']);
-
-      	foreach ($results as $result) {
-        	$output .= '<option value="' . $result['zone_id'] . '"';
-
-	    	if (isset($this->request->get['zone_id']) && ($this->request->get['zone_id'] == $result['zone_id'])) {
-	      		$output .= ' selected="selected"';
-	    	}
-
-	    	$output .= '>' . $result['name'] . '</option>';
-    	}
-
-		if (!$results) {
-		  	$output .= '<option value="0">' . $this->language->get('text_none') . '</option>';
+    	$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->request->get['customer_group_id']);
+		
+		if ($customer_group_info) {
+			$json = $customer_group_info;
 		}
+		
+		$this->response->setOutput(json_encode($json));
+	}
 
-		$this->response->setOutput($output);
-  	}
+	public function country() {
+		$json = array();
+
+		$this->load->model('localisation/country');
+
+    	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+		
+		if ($country_info) {
+			$this->load->model('localisation/zone');
+
+			$json = array(
+				'country_id'        => $country_info['country_id'],
+				'name'              => $country_info['name'],
+				'iso_code_2'        => $country_info['iso_code_2'],
+				'iso_code_3'        => $country_info['iso_code_3'],
+				'address_format'    => $country_info['address_format'],
+				'postcode_required' => $country_info['postcode_required'],
+				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+				'status'            => $country_info['status']		
+			);
+		}
+		
+		$this->response->setOutput(json_encode($json));
+	}	
 }
 ?>

@@ -19,7 +19,7 @@
   <?php echo $entry_fax; ?><br />
   <input type="text" name="fax" value="<?php echo $fax; ?>" class="large-field" />
   <br />
-  <br />
+  <br /> 
 </div>
 <div class="right">
   <h2><?php echo $text_your_address; ?></h2>
@@ -27,6 +27,30 @@
   <input type="text" name="company" value="<?php echo $company; ?>" class="large-field" />
   <br />
   <br />
+  <?php if ($customer_groups) { ?>
+  <?php echo $entry_account; ?><br />
+  <select name="customer_group_id" class="large-field">
+    <?php foreach ($customer_groups as $customer_group) { ?>
+    <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+    <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+    <?php } else { ?>
+    <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+    <?php } ?>
+    <?php } ?>
+  </select>
+  <br />
+  <br />
+  <?php } ?>   
+  <div id="company-id-display"><span id="company-id-required" class="required">*</span> <?php echo $entry_company_id; ?><br />
+    <input type="text" name="company_id" value="<?php echo $company_id; ?>" class="large-field" />
+    <br />
+    <br />
+  </div>
+  <div id="tax-id-display"><span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?><br />
+    <input type="text" name="tax_id" value="<?php echo $tax_id; ?>" class="large-field" />
+    <br />
+    <br />
+  </div>  
   <span class="required">*</span> <?php echo $entry_address_1; ?><br />
   <input type="text" name="address_1" value="<?php echo $address_1; ?>" class="large-field" />
   <br />
@@ -79,26 +103,90 @@
 <div class="buttons">
   <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="button" /></div>
 </div>
-<?php 
-$postcode_required_data = array(); 
+<script type="text/javascript"><!--
+$('#payment-address select[name=\'customer_group_id\']').bind('change', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/checkout/customer_group&customer_group_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('#payment-address select[name=\'customer_group_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},		
+		complete: function() {
+			$('.wait').remove();
+		},			
+		success: function(json) {
+			if (json['company_id_display'] == '1') {
+				$('#company-id-display').show();
+			} else {
+				$('#company-id-display').hide();
+			}
+			
+			if (json['company_id_required'] == '1') {
+				$('#company-id-required').show();
+			} else {
+				$('#company-id-required').hide();
+			}
+			
+			if (json['tax_id_display'] == '1') {
+				$('#tax-id-display').show();
+			} else {
+				$('#tax-id-display').hide();
+			}
+			
+			if (json['tax_id_required'] == '1') {
+				$('#tax-id-required').show();
+			} else {
+				$('#tax-id-required').hide();
+			}						
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 
-foreach ($countries as $country) {
-	if ($country['postcode_required']) {
-		$postcode_required_data[] = '\'' . $country['country_id'] . '\'';
-	} 
-} 
-?>
+$('select[name=\'customer_group_id\']').trigger('change');
+//--></script> 
 <script type="text/javascript"><!--
 $('#payment-address select[name=\'country_id\']').bind('change', function() {
-	var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+	$.ajax({
+		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('#payment-address select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},
+		complete: function() {
+			$('.wait').remove();
+		},			
+		success: function(json) {
+			if (json['postcode_required'] == '1') {
+				$('#payment-postcode-required').show();
+			} else {
+				$('#payment-postcode-required').hide();
+			}
+			
+			html = '<option value=""><?php echo $text_select; ?></option>';
+			
+			if (json['zone'] != '') {
+				for (i = 0; i < json['zone'].length; i++) {
+        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+	    			
+					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
+	      				html += ' selected="selected"';
+	    			}
 	
-	if ($.inArray(this.value, postcode_required) >= 0) {
-		$('#payment-postcode-required').show();
-	} else {
-		$('#payment-postcode-required').hide();
-	}
-	
-	$('#payment-address select[name=\'country_id\']').load('index.php?route=checkout/guest/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');
+	    			html += '>' + json['zone'][i]['name'] + '</option>';
+				}
+			} else {
+				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+			}
+			
+			$('#payment-address select[name=\'zone_id\']').html(html);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 $('#payment-address select[name=\'country_id\']').trigger('change');
