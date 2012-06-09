@@ -9,9 +9,16 @@
         <input type="radio" name="gender" value="F" id="female" />
         <label for="female"><?php echo $text_female; ?></label></td>
     </tr>
-    <tr style="display: <?php echo ($iso_code_2 == 'SE' ? 'table-row' : 'none'); ?>;">
-      <td><?php echo $entry_dob; ?></td>
-      <td><input type="text" name="dob" value="" /></td>
+    <tr>
+      <td><?php if ($iso_code_2 == 'SE') { ?>
+        <div class="required">*</div>
+        <?php } ?>
+        <?php echo $entry_pno; ?></td>
+      <td><input type="text" name="pno" value="" /></td>
+    </tr>
+    <tr>
+      <td><?php echo $entry_cellno; ?></td>
+      <td><input type="text" name="cellno" value="" /></td>
     </tr>
     <tr>
       <td><?php echo $entry_house_no; ?></td>
@@ -33,8 +40,8 @@ $('#button-confirm').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/klarna_invoice/send',
 		type: 'post',
-		data: $('#payment :input, #payment select'),
-		dataType: 'html',
+		data: $('#payment input[type=\'text\'], #payment input[type=\'password\'], #payment input[type=\'checkbox\']:checked, #payment input[type=\'radio\']:checked, #payment input[type=\'hidden\'], #payment select'),
+		dataType: 'json',		
 		beforeSend: function() {
 			$('#button-confirm').attr('disabled', true);
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
@@ -44,19 +51,15 @@ $('#button-confirm').bind('click', function() {
 			$('.attention').remove();
 		},		
 		success: function(json) {
-			alert(json);
-		
-			if (json['error']) {
-
-			}
-
-
-			/*
+			$('.warning, .error').remove();
 			
-			if (json['success']) {
-				location = json['success'];
+			if (json['error']) {
+				$('#payment').prepend('<div class="warning">' + json['error'] + '</div>');
 			}
-			*/
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
 		}
 	});
 });

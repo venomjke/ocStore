@@ -15,6 +15,7 @@ $_['entry_secret']        = 'Klarna Secret:<br /><span class="help">Секрет
 $_['entry_server']        = 'Сервер:';
 $_['entry_total']        = 'Минимальная сумма заказа:<br /><span class="help">Сумма заказа, после достижения которой данный способ станет доступен.</span>';
 $_['entry_order_status'] = 'Статус заказа:';
+$_['entry_geo_zone']     = 'Географическая зона:';
 $_['entry_status']       = 'Статус:';
 $_['entry_sort_order']	 = 'Порядок сортировки:';
 
