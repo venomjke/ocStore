@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentKlarnaInvoice extends Controller {
+class ControllerPaymentKlarnaPP extends Controller {
 	protected function index() {
 		$this->language->load('payment/klarna_invoice');
 		
@@ -12,6 +12,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 		$this->data['entry_house_no'] = $this->language->get('entry_house_no');
 		$this->data['entry_house_ext'] = $this->language->get('entry_house_ext');
 
+		    	
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
 
 		$this->load->model('checkout/order');

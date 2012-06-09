@@ -3,11 +3,11 @@ class ControllerAccountLogin extends Controller {
 	private $error = array();
 
 	public function index() {
+		$this->load->model('account/customer');
+
 		// Login override for admin users
 		if (!empty($this->request->get['token'])) {
 			$this->customer->logout();
-
-			$this->load->model('account/customer');
 
 			$customer_info = $this->model_account_customer->getCustomerByToken($this->request->get['token']);
 
@@ -181,6 +181,12 @@ class ControllerAccountLogin extends Controller {
     	if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
       		$this->error['warning'] = $this->language->get('error_login');
     	}
+
+		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+
+	if ($customer_info && !$customer_info['approved']) {
+		$this->error['warning'] = $this->language->get('error_approved');
+	}		
 
     	if (!$this->error) {
       		return true;
