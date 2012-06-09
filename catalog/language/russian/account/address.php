@@ -14,8 +14,8 @@ $_['text_delete']       = 'Ваш адрес был успешно удален'
 $_['entry_firstname']   = 'Имя, Отчество:';
 $_['entry_lastname']    = 'Фамилия:';
 $_['entry_company']     = 'Компания:';
-$_['entry_company_id']  = 'Регистрационный номер компании:';
-$_['entry_tax_id']      = 'Налоговый номер компании:';
+$_['entry_company_no']  = 'Company No.:';
+$_['entry_company_tax'] = 'Company Tax.:';
 $_['entry_address_1']   = 'Адрес:';
 $_['entry_address_2']   = 'Адрес (продолжение):';
 $_['entry_postcode']    = 'Почтовый индекс:';
@@ -23,6 +23,8 @@ $_['entry_city']        = 'Город:';
 $_['entry_country']     = 'Страна:';
 $_['entry_zone']        = 'Регион / Область:';
 $_['entry_default']     = 'Основной адрес:';
+$_['entry_company_id']  = 'Регистрационный номер компании:';
+$_['entry_tax_id']      = 'Налоговый номер компании:';
 
 // Error
 $_['error_delete']      = 'У Вас должно быть не менее 1 адреса!';

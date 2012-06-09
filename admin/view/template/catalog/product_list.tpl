@@ -209,7 +209,10 @@ $('input[name=\'filter_name\']').autocomplete({
 		$('input[name=\'filter_name\']').val(ui.item.label);
 						
 		return false;
-	}
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
 });
 
 $('input[name=\'filter_model\']').autocomplete({
@@ -232,7 +235,10 @@ $('input[name=\'filter_model\']').autocomplete({
 		$('input[name=\'filter_model\']').val(ui.item.label);
 						
 		return false;
-	}
+	},
+	focus: function(event, ui) {
+      	return false;
+   	}
 });
 //--></script> 
 <?php echo $footer; ?>

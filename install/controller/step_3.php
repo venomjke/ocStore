@@ -16,6 +16,8 @@ class ControllerStep3 extends Controller {
 
 			$output .= '// HTTPS' . "\n";
 			$output .= 'define("HTTPS_SERVER", "' . HTTP_OPENCART . '");' . "\n";
+
+			$output .= 'define("HTTPS_CATALOG", "' . HTTP_OPENCART . '");' . "\n";
 			$output .= 'define("HTTPS_IMAGE", "' . HTTP_OPENCART . 'image/");' . "\n\n";
 
 			$output .= '// DIR' . "\n";

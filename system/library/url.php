@@ -9,6 +9,10 @@ class Url {
 		$this->ssl = $ssl;
 	}
 
+	public function addRewrite($rewrite) {
+		$this->rewrite[] = $rewrite;
+	}
+
 	public function link($route, $args = '', $connection = 'NONSSL') {
 		if ($connection ==  'NONSSL') {
 			$url = $this->url;
@@ -25,12 +29,8 @@ class Url {
 		foreach ($this->rewrite as $rewrite) {
 			$url = $rewrite->rewrite($url);
 		}
-				
-		return $url;
-	}
 
-	public function addRewrite($rewrite) {
-		$this->rewrite[] = $rewrite;
+		return $url;
 	}
 }
 ?>

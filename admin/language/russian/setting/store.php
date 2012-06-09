@@ -45,15 +45,13 @@ $_['entry_tax']					= 'Отображать цены с налогом:';
 $_['entry_tax_default']         		= 'Использовать налоговый адрес магазина:<br /><span class="help">Использовать адрес магазина для подсчёта налогов, если клиент не авторизовался. Можно выбрать адрес магазина или адрес платежа для доставки товара клиенту.</span>';
 $_['entry_tax_customer']        		= 'Использовать налоговый адрес покупателя:<br /><span class="help">Использовать заданный по умолчанию адрес клиента для подсчёта налогов. Можно выбрать заданный по умолчанию адрес клиента или адрес платежа для доставки товара клиенту.</span>';
 $_['entry_customer_group']			= 'Группа покупателей:<br /><span class="help">Группа покупателей по умолчанию.</span>';
-$_['entry_registred_group']    = 'Группа зарегистрированных:<br /><span class="help">Назначается при регистрации.</span>';
+$_['entry_registred_group']    			= 'Группа зарегистрированных:<br /><span class="help">Назначается при регистрации.</span>';
 $_['entry_customer_price']			= 'Не показывать цены гостям:<br /><span class="help">Показывать цены только зарегистрированнным клиентам.</span>';
 $_['entry_customer_approval']			= 'Активация новых пользователей:<br /><span class="help">Не позволять входить новым клиентам под своим логином и паролем до одобрения аккаунта.</span>';
-// !!!!
-$_['entry_company_id_display']  		= 'Display Company No.:<br /><span class="help">Display a company No. field for billing addresses.</span>';
-$_['entry_company_id_required'] 		= 'Force Company No.:<br /><span class="help">Force customers to enter a their company no. for billing addresses.</span>';
-$_['entry_tax_id_display']      		= 'Display Company No.:<br /><span class="help">Display a company No. field for billing addresses.</span>';
-$_['entry_tax_id_required']     		= 'Force Company No.:<br /><span class="help">Force customers to enter a their company no. for billing addresses.</span>';
-// !!!!
+$_['entry_company_no_display']   		= 'Display Company No.:<br /><span class="help">Display a company No. field for billing addresses.</span>';
+$_['entry_company_no_required']  		= 'Force Company No.:<br /><span class="help">Force customers to enter a their company no. for billing addresses.</span>';
+$_['entry_company_tax_display']  		= 'Display Company No.:<br /><span class="help">Display a company No. field for billing addresses.</span>';
+$_['entry_company_tax_required'] 		= 'Force Company No.:<br /><span class="help">Force customers to enter a their company no. for billing addresses.</span>';
 $_['entry_account']				= 'Подтверждение при регистрации:<br /><span class="help">Требовать подтверждение согласия с правилами при регистрации аккаунта.</span>';
 $_['entry_checkout']				= 'Подтверждение при заказе:<br /><span class="help">Требовать подтверждение согласия с правилами при оформлении заказа.</span>';
 $_['entry_order_status']			= 'Статус заказа:<br /><span class="help">Статус заказа по умолчанию.</span>';

@@ -15,6 +15,10 @@ class ModelPaymentPPStandard extends Model {
 			$status = false;
 		}	
 
+		if (!$this->cart->hasShipping()) {
+			$status = false;
+		}
+
 		$currencies = array(
 			'AUD',
 			'CAD',
@@ -44,8 +48,8 @@ class ModelPaymentPPStandard extends Model {
 		
 		if (!in_array(strtoupper($this->currency->getCode()), $currencies)) {
 			$status = false;
-		}			
-					
+		}
+
 		$method_data = array();
 	
 		if ($status) {  

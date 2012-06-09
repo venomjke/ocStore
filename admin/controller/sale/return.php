@@ -35,15 +35,15 @@ class ControllerSaleReturn extends Controller {
 			}
 
 			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . $this->request->get['filter_customer'];
+				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . $this->request->get['filter_product'];
+				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 			}
-			
+
 			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . $this->request->get['filter_model'];
+				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_return_status_id'])) {
@@ -99,15 +99,15 @@ class ControllerSaleReturn extends Controller {
 			}
 
 			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . $this->request->get['filter_customer'];
+				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . $this->request->get['filter_product'];
+				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 			}
-			
+
 			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . $this->request->get['filter_model'];
+				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_return_status_id'])) {
@@ -165,15 +165,15 @@ class ControllerSaleReturn extends Controller {
 			}
 
 			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . $this->request->get['filter_customer'];
+				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . $this->request->get['filter_product'];
+				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 			}
-			
+
 			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . $this->request->get['filter_model'];
+				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_return_status_id'])) {
@@ -236,7 +236,7 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$filter_model = null;
 		}
-		
+
 		if (isset($this->request->get['filter_return_status_id'])) {
 			$filter_return_status_id = $this->request->get['filter_return_status_id'];
 		} else {
@@ -284,17 +284,17 @@ class ControllerSaleReturn extends Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . $this->request->get['filter_customer'];
+			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . $this->request->get['filter_product'];
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 		}
-		
+
 		if (isset($this->request->get['filter_model'])) {
-			$url .= '&filter_model=' . $this->request->get['filter_model'];
+			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 		}
-													
+
 		if (isset($this->request->get['filter_return_status_id'])) {
 			$url .= '&filter_return_status_id=' . $this->request->get['filter_return_status_id'];
 		}
@@ -342,8 +342,8 @@ class ControllerSaleReturn extends Controller {
 			'filter_return_id'        => $filter_return_id,
 			'filter_order_id'         => $filter_order_id,
 			'filter_customer'         => $filter_customer,
-			'filter_product'          => $filter_product, 
-			'filter_model'            => $filter_model, 
+			'filter_product'          => $filter_product,
+			'filter_model'            => $filter_model,
 			'filter_return_status_id' => $filter_return_status_id,
 			'filter_date_added'       => $filter_date_added,
 			'filter_date_modified'    => $filter_date_modified,
@@ -433,15 +433,15 @@ class ControllerSaleReturn extends Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . $this->request->get['filter_customer'];
+			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . $this->request->get['filter_product'];
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 		}
-		
+
 		if (isset($this->request->get['filter_model'])) {
-			$url .= '&filter_model=' . $this->request->get['filter_model'];
+			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_return_status_id'])) {
@@ -486,15 +486,15 @@ class ControllerSaleReturn extends Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . $this->request->get['filter_customer'];
+			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . $this->request->get['filter_product'];
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 		}
-		
+
 		if (isset($this->request->get['filter_model'])) {
-			$url .= '&filter_model=' . $this->request->get['filter_model'];
+			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_return_status_id'])) {
@@ -537,7 +537,7 @@ class ControllerSaleReturn extends Controller {
 
 		$this->load->model('localisation/return_status');
 
-    	$this->data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
+	    	$this->data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
 
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -575,7 +575,7 @@ class ControllerSaleReturn extends Controller {
 		$this->data['entry_action'] = $this->language->get('entry_action');
 
 		$this->data['button_save'] = $this->language->get('button_save');
-    	$this->data['button_cancel'] = $this->language->get('button_cancel');
+    		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_return'] = $this->language->get('tab_return');
 		$this->data['tab_product'] = $this->language->get('tab_product');
@@ -617,19 +617,19 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$this->data['error_telephone'] = '';
 		}
-		
+
 		if (isset($this->error['product'])) {
 			$this->data['error_product'] = $this->error['product'];
 		} else {
 			$this->data['error_product'] = '';
 		}
-		
+
 		if (isset($this->error['model'])) {
 			$this->data['error_model'] = $this->error['model'];
 		} else {
 			$this->data['error_model'] = '';
 		}
-								
+
 		$url = '';
 
 		if (isset($this->request->get['filter_return_id'])) {
@@ -641,15 +641,15 @@ class ControllerSaleReturn extends Controller {
 		}
 
 		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . $this->request->get['filter_customer'];
+			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_product'])) {
-			$url .= '&filter_product=' . $this->request->get['filter_product'];
+			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 		}
-		
+
 		if (isset($this->request->get['filter_model'])) {
-			$url .= '&filter_model=' . $this->request->get['filter_model'];
+			$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_return_status_id'])) {
@@ -704,7 +704,7 @@ class ControllerSaleReturn extends Controller {
 
     	if (isset($this->request->post['order_id'])) {
       		$this->data['order_id'] = $this->request->post['order_id'];
-		} elseif (!empty($return_info)) { 
+		} elseif (!empty($return_info)) {
 			$this->data['order_id'] = $return_info['order_id'];
 		} else {
       		$this->data['order_id'] = '';
@@ -712,7 +712,7 @@ class ControllerSaleReturn extends Controller {
 
     	if (isset($this->request->post['date_ordered'])) {
       		$this->data['date_ordered'] = $this->request->post['date_ordered'];
-		} elseif (!empty($return_info)) { 
+		} elseif (!empty($return_info)) {
 			$this->data['date_ordered'] = $return_info['date_ordered'];
 		} else {
       		$this->data['date_ordered'] = '';
@@ -733,10 +733,10 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$this->data['customer_id'] = '';
 		}
-			
+
     	if (isset($this->request->post['firstname'])) {
       		$this->data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($return_info)) { 
+		} elseif (!empty($return_info)) {
 			$this->data['firstname'] = $return_info['firstname'];
 		} else {
       		$this->data['firstname'] = '';
@@ -744,7 +744,7 @@ class ControllerSaleReturn extends Controller {
 
     	if (isset($this->request->post['lastname'])) {
       		$this->data['lastname'] = $this->request->post['lastname'];
-		} elseif (!empty($return_info)) { 
+		} elseif (!empty($return_info)) {
 			$this->data['lastname'] = $return_info['lastname'];
 		} else {
       		$this->data['lastname'] = '';
@@ -752,7 +752,7 @@ class ControllerSaleReturn extends Controller {
 
     	if (isset($this->request->post['email'])) {
       		$this->data['email'] = $this->request->post['email'];
-		} elseif (!empty($return_info)) { 
+		} elseif (!empty($return_info)) {
 			$this->data['email'] = $return_info['email'];
 		} else {
       		$this->data['email'] = '';
@@ -760,7 +760,7 @@ class ControllerSaleReturn extends Controller {
 
     	if (isset($this->request->post['telephone'])) {
       		$this->data['telephone'] = $this->request->post['telephone'];
-		} elseif (!empty($return_info)) { 
+		} elseif (!empty($return_info)) {
 			$this->data['telephone'] = $return_info['telephone'];
 		} else {
       		$this->data['telephone'] = '';
@@ -772,16 +772,16 @@ class ControllerSaleReturn extends Controller {
 			$this->data['product'] = $return_info['product'];
 		} else {
 			$this->data['product'] = '';
-		}	
-			
+		}
+
 		if (isset($this->request->post['product_id'])) {
 			$this->data['product_id'] = $this->request->post['product_id'];
 		} elseif (!empty($return_info)) {
 			$this->data['product_id'] = $return_info['product_id'];
 		} else {
 			$this->data['product_id'] = '';
-		}	
-		
+		}
+
 		if (isset($this->request->post['model'])) {
 			$this->data['model'] = $this->request->post['model'];
 		} elseif (!empty($return_info)) {
@@ -805,7 +805,7 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$this->data['opened'] = '';
 		}
-		
+
 		if (isset($this->request->post['return_reason_id'])) {
 			$this->data['return_reason_id'] = $this->request->post['return_reason_id'];
 		} elseif (!empty($return_info)) {
@@ -813,18 +813,18 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$this->data['return_reason_id'] = '';
 		}
-							
+
 		$this->load->model('localisation/return_reason');
 
 		$this->data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
-	
+
 		if (isset($this->request->post['return_action_id'])) {
 			$this->data['return_action_id'] = $this->request->post['return_action_id'];
 		} elseif (!empty($return_info)) {
 			$this->data['return_action_id'] = $return_info['return_action_id'];
 		} else {
 			$this->data['return_action_id'] = '';
-		}				
+		}
 
 		$this->load->model('localisation/return_action');
 
@@ -837,7 +837,7 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$this->data['comment'] = '';
 		}
-						
+
 		if (isset($this->request->post['return_status_id'])) {
 			$this->data['return_status_id'] = $this->request->post['return_status_id'];
 		} elseif (!empty($return_info)) {
@@ -847,9 +847,9 @@ class ControllerSaleReturn extends Controller {
 		}
 
 		$this->load->model('localisation/return_status');
-		
+
 		$this->data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
-						
+
 		$this->template = 'sale/return_form.tpl';
 		$this->children = array(
 			'common/header',
@@ -885,13 +885,13 @@ class ControllerSaleReturn extends Controller {
 			$this->data['text_email'] = $this->language->get('text_email');
 			$this->data['text_telephone'] = $this->language->get('text_telephone');
 			$this->data['text_return_status'] = $this->language->get('text_return_status');
-			$this->data['text_date_added'] = $this->language->get('text_date_added');	
-			$this->data['text_date_modified'] = $this->language->get('text_date_modified');				
+			$this->data['text_date_added'] = $this->language->get('text_date_added');
+			$this->data['text_date_modified'] = $this->language->get('text_date_modified');
 			$this->data['text_product'] = $this->language->get('text_product');
 			$this->data['text_model'] = $this->language->get('text_model');
 			$this->data['text_quantity'] = $this->language->get('text_quantity');
 			$this->data['text_return_reason'] = $this->language->get('text_return_reason');
-			$this->data['text_opened'] = $this->language->get('text_opened');		
+			$this->data['text_opened'] = $this->language->get('text_opened');
 			$this->data['text_comment'] = $this->language->get('text_comment');
 			$this->data['text_return_action'] = $this->language->get('text_return_action');
 
@@ -920,15 +920,15 @@ class ControllerSaleReturn extends Controller {
 			}
 
 			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . $this->request->get['filter_customer'];
+				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_product'])) {
-				$url .= '&filter_product=' . $this->request->get['filter_product'];
+				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 			}
-			
+
 			if (isset($this->request->get['filter_model'])) {
-				$url .= '&filter_model=' . $this->request->get['filter_model'];
+				$url .= '&filter_model=' . urlencode(html_entity_decode($this->request->get['filter_model'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_return_status_id'])) {
@@ -1005,14 +1005,14 @@ class ControllerSaleReturn extends Controller {
 				$this->data['return_status'] = $return_status_info['name'];
 			} else {
 				$this->data['return_status'] = '';
-			}		
-						
+			}
+
 			$this->data['date_added'] = date($this->language->get('date_format_short'), strtotime($return_info['date_added']));
 			$this->data['date_modified'] = date($this->language->get('date_format_short'), strtotime($return_info['date_modified']));
 			$this->data['product'] = $return_info['product'];
 			$this->data['model'] = $return_info['model'];
 			$this->data['quantity'] = $return_info['quantity'];
-			
+
 			$this->load->model('localisation/return_reason');
 
 			$return_reason_info = $this->model_localisation_return_reason->getReturnReason($return_info['return_reason_id']);
@@ -1021,19 +1021,19 @@ class ControllerSaleReturn extends Controller {
 				$this->data['return_reason'] = $return_reason_info['name'];
 			} else {
 				$this->data['return_reason'] = '';
-			}			
+			}
 
 			$this->data['opened'] = $return_info['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no');
 			$this->data['comment'] = nl2br($return_info['comment']);
-			
+
 			$this->load->model('localisation/return_action');
 
 			$this->data['return_actions'] = $this->model_localisation_return_action->getReturnActions();
 
 			$this->data['return_action_id'] = $return_info['return_action_id'];
 
-			$this->data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();				
-			
+			$this->data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
+
 			$this->data['return_status_id'] = $return_info['return_status_id'];
 
 			$this->template = 'sale/return_info.tpl';
@@ -1099,16 +1099,16 @@ class ControllerSaleReturn extends Controller {
 
 		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
 			$this->error['product'] = $this->language->get('error_product');
-		}	
-		
+		}
+
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');
-		}							
+		}
 
 		if (empty($this->request->post['return_reason_id'])) {
 			$this->error['reason'] = $this->language->get('error_reason');
-		}	
-				
+		}
+
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
@@ -1138,41 +1138,39 @@ class ControllerSaleReturn extends Controller {
 		$json = array();
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			
 			if (!$this->user->hasPermission('modify', 'sale/return')) {
 				$json['error'] = $this->language->get('error_permission');
 			}
 
-			if (!$json) { 
-			
+			if (!$json) {
 				$this->load->model('sale/return');
-			
+
 				$json['success'] = $this->language->get('text_success');
-				
+
 				$this->model_sale_return->editReturnAction($this->request->get['return_id'], $this->request->post['return_action_id']);
 			}
 		}
 
-		$this->response->setOutput(json_encode($json));	
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function history() {
     	$this->language->load('sale/return');
 
+		$this->data['error'] = '';
+		$this->data['success'] = '';
+
 		$this->load->model('sale/return');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/return')) {
-			$this->model_sale_return->addReturnHistory($this->request->get['return_id'], $this->request->post);
+		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+			if (!$this->user->hasPermission('modify', 'sale/return')) {
+				$this->data['error'] = $this->language->get('error_permission');
+			}
 
-			$this->data['success'] = $this->language->get('text_success');
-		} else {
-			$this->data['success'] = '';
-		}
+			if (!$this->data['error']) {
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !$this->user->hasPermission('modify', 'sale/return')) {
-			$this->data['error_warning'] = $this->language->get('error_permission');
-		} else {
-			$this->data['error_warning'] = '';
+				$this->data['success'] = $this->language->get('text_success');
+			}
 		}
 
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
