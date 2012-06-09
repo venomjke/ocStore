@@ -42,12 +42,8 @@ $_['entry_tax']                  = 'Display Prices With Tax:';
 $_['entry_tax_default']          = 'Use Store Tax Address:<br /><span class="help">Use the store address to calculate taxes if no one is logged in. You can choose to use the store address for the customers shipping or payment address.</span>';
 $_['entry_tax_customer']         = 'Use Customer Tax Address:<br /><span class="help">Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customers shipping or payment address.</span>';
 $_['entry_customer_group']       = 'Customer Group:<br /><span class="help">Default customer group.</span>';
+$_['entry_customer_group_display'] = 'Customer Groups:<br /><span class="help">Display customer groups that new customers can select to use such as wholesale and business when signing up.</span>';
 $_['entry_customer_price']       = 'Login Display Prices:<br /><span class="help">Only show prices when a customer is logged in.</span>';
-$_['entry_customer_approval']    = 'Approve New Customers:<br /><span class="help">Don\'t allow new customer to login until their account has been approved.</span>';
-$_['entry_company_no_display']   = 'Display Company No.:<br /><span class="help">Display a company No. field for billing addresses.</span>';
-$_['entry_company_no_required']  = 'Force Company No.:<br /><span class="help">Force customers to enter a their company no. for billing addresses.</span>';
-$_['entry_company_tax_display']  = 'Display Company No.:<br /><span class="help">Display a company No. field for billing addresses.</span>';
-$_['entry_company_tax_required'] = 'Force Company No.:<br /><span class="help">Force customers to enter a their company no. for billing addresses.</span>';
 $_['entry_account']              = 'Account Terms:<br /><span class="help">Forces people to agree to terms before an account can be created.</span>';
 $_['entry_cart_weight']          = 'Display Weight on Cart Page:';
 $_['entry_guest_checkout']       = 'Guest Checkout:<br /><span class="help">Allow customers to checkout without creating an account. This will not be available when a downloadable product is in the shopping cart.</span>';
@@ -67,7 +63,7 @@ $_['entry_image_compare']        = 'Compare Image Size:';
 $_['entry_image_wishlist']       = 'Wish List Image Size:';
 $_['entry_image_cart']           = 'Cart Image Size:';
 $_['entry_use_ssl']              = 'Use SSL:<br /><span class="help">To use SSL check with your host if a SSL certificate is installed.</span>';
-$_['entry_registred_group']      = 'Р“СЂСѓРїРїР° Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅРЅС‹С…:<br /><span class="help">РќР°Р·РЅР°С‡Р°РµС‚СЃСЏ РїСЂРё СЂРµРіРёСЃС‚СЂР°С†РёРё.</span>';
+$_['entry_registred_group']      = 'Группа зарегистрированных:<br /><span class="help">Назначается при регистрации.</span>';
 
 // Error
 $_['error_warning']              = 'Warning: Please check the form carefully for errors!';
@@ -80,6 +76,7 @@ $_['error_telephone']            = 'Telephone must be between 3 and 32 character
 $_['error_url']                  = 'Store URL required!';
 $_['error_title']                = 'Title must be between 3 and 32 characters!';
 $_['error_limit']         	   = 'Limit required!';
+$_['error_customer_group_display'] = 'You must include the default customer group if you are going to use this feature!';
 $_['error_image_thumb']          = 'Product Image Thumb Size dimensions required!';
 $_['error_image_popup']          = 'Product Image Popup Size dimensions required!';
 $_['error_image_product']        = 'Product List Size dimensions required!';

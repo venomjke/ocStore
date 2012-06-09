@@ -5,7 +5,7 @@ class ModelAccountAddress extends Model {
 
 		$address_id = $this->db->getLastId();
 
-		if (isset($data['default']) && $data['default'] == '1') {
+		if (!empty($data['default'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 		}
 
@@ -15,7 +15,7 @@ class ModelAccountAddress extends Model {
 	public function editAddress($address_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "address SET company = '" . $this->db->escape($data['company']) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', city = '" . $this->db->escape($data['city']) . "', zone_id = '" . (int)$data['zone_id'] . "', country_id = '" . (int)$data['country_id'] . "' WHERE address_id  = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
 
-		if (isset($data['default']) && $data['default'] == '1') {
+		if (!empty($data['default'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 		}
 	}
@@ -46,25 +46,23 @@ class ModelAccountAddress extends Model {
 
 			if ($zone_query->num_rows) {
 				$zone = $zone_query->row['name'];
-				$code = $zone_query->row['code'];
+				$zone_code = $zone_query->row['code'];
 			} else {
 				$zone = '';
-				$code = '';
+				$zone_code = '';
 			}
 
 			$address_data = array(
 				'firstname'      => $address_query->row['firstname'],
 				'lastname'       => $address_query->row['lastname'],
 				'company'        => $address_query->row['company'],
-				'company_no'     => $address_query->row['company_no'],
-				'company_tax'    => $address_query->row['company_tax'],
 				'address_1'      => $address_query->row['address_1'],
 				'address_2'      => $address_query->row['address_2'],
 				'postcode'       => $address_query->row['postcode'],
 				'city'           => $address_query->row['city'],
 				'zone_id'        => $address_query->row['zone_id'],
 				'zone'           => $zone,
-				'zone_code'      => $code,
+				'zone_code'      => $zone_code,
 				'country_id'     => $address_query->row['country_id'],
 				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
@@ -102,10 +100,10 @@ class ModelAccountAddress extends Model {
 
 			if ($zone_query->num_rows) {
 				$zone = $zone_query->row['name'];
-				$code = $zone_query->row['code'];
+				$zone_code = $zone_query->row['code'];
 			} else {
 				$zone = '';
-				$code = '';
+				$zone_code = '';
 			}
 
 			$address_data[] = array(
@@ -119,7 +117,7 @@ class ModelAccountAddress extends Model {
 				'city'           => $result['city'],
 				'zone_id'        => $result['zone_id'],
 				'zone'           => $zone,
-				'zone_code'      => $code,
+				'zone_code'      => $zone_code,
 				'country_id'     => $result['country_id'],
 				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
