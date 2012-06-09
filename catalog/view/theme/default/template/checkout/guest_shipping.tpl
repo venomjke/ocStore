@@ -24,12 +24,12 @@
     <td><input type="text" name="city" value="<?php echo $city; ?>" class="large-field" /></td>
   </tr>
   <tr>
-    <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
+    <td><span id="shipping-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
     <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" class="large-field" /></td>
   </tr>
   <tr>
     <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-    <td><select name="country_id" class="large-field" onchange="$('#shipping-address select[name=\'zone_id\']').load('index.php?route=checkout/guest_shipping/zone&country_id=' + this.value);">
+    <td><select name="country_id" class="large-field">
         <option value=""><?php echo $text_select; ?></option>
         <?php foreach ($countries as $country) { ?>
         <?php if ($country['country_id'] == $country_id) { ?>
@@ -50,6 +50,27 @@
 <div class="buttons">
   <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="button" /></div>
 </div>
+<?php 
+$postcode_required_data = array(); 
+
+foreach ($countries as $country) {
+	if ($country['postcode_required']) {
+		$postcode_required_data[] = '\'' . $country['country_id'] . '\'';
+	} 
+} 
+?>
 <script type="text/javascript"><!--
-$('#shipping-address select[name=\'zone_id\']').load('index.php?route=checkout/guest_shipping/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
+$('#shipping-address select[name=\'country_id\']').bind('change', function() {
+	var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+	
+	if ($.inArray(this.value, postcode_required) >= 0) {
+		$('#shipping-postcode-required').show();
+	} else {
+		$('#shipping-postcode-required').hide();
+	}
+	
+	$('#shipping-address select[name=\'zone_id\']').load('index.php?route=checkout/guest_shipping/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');
+});
+
+$('#shipping-address select[name=\'country_id\']').trigger('change');
 //--></script> 

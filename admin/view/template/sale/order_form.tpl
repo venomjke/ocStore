@@ -119,7 +119,7 @@
                 <?php } ?></td>
             </tr>
             <tr>
-              <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
+              <td><span id="payment-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
               <td><input type="text" name="payment_postcode" value="<?php echo $payment_postcode; ?>" />
                 <?php if ($error_payment_postcode) { ?>
                 <span class="error"><?php echo $error_payment_postcode; ?></span>
@@ -127,7 +127,7 @@
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-              <td><select name="payment_country_id" onchange="$('select[name=\'payment_zone_id\']').load('index.php?route=sale/customer/zone&token=<?php echo $token; ?>&country_id=' + this.value + '&zone_id=<?php echo $payment_zone_id; ?>');">
+              <td><select name="payment_country_id">
                   <option value=""><?php echo $text_select; ?></option>
                   <?php foreach ($countries as $country) { ?>
                   <?php if ($country['country_id'] == $payment_country_id) { ?>
@@ -196,7 +196,7 @@
               <td><input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" /></td>
             </tr>
             <tr>
-              <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
+              <td><span id="shipping-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
               <td><input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" />
                 <?php if ($error_shipping_postcode) { ?>
                 <span class="error"><?php echo $error_shipping_postcode; ?></span>
@@ -204,7 +204,7 @@
             </tr>
             <tr>
               <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-              <td><select name="shipping_country_id" onchange="$('select[name=\'shipping_zone_id\']').load('index.php?route=sale/customer/zone&token=<?php echo $token; ?>&country_id=' + this.value + '&zone_id=<?php echo $shipping_zone_id; ?>');">
+              <td><select name="shipping_country_id">
                   <option value=""><?php echo $text_select; ?></option>
                   <?php foreach ($countries as $country) { ?>
                   <?php if ($country['country_id'] == $shipping_country_id) { ?>
@@ -632,6 +632,30 @@ $('input[name=\'affiliate\']').autocomplete({
 	}
 });
 
+<?php 
+$postcode_required_data = array(); 
+
+foreach ($countries as $country) {
+	if ($country['postcode_required']) {
+		$postcode_required_data[] = '\'' . $country['country_id'] . '\'';
+	} 
+} 
+?>
+
+$('select[name=\'payment_country_id\']').bind('change', function() {
+	var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+	
+	if ($.inArray(this.value, postcode_required) >= 0) {
+		$('#payment-postcode-required').show();
+	} else {
+		$('#payment-postcode-required').hide();
+	}
+	
+	$('select[name=\'payment_zone_id\']').load('index.php?route=sale/order/zone&token=<?php echo $token; ?>&country_id=' + this.value + '&zone_id=<?php echo $payment_zone_id; ?>');
+});
+
+$('select[name=\'payment_country_id\']').trigger('change');
+
 $('select[name=\'payment_address\']').bind('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
@@ -647,12 +671,32 @@ $('select[name=\'payment_address\']').bind('change', function() {
 				$('input[name=\'payment_postcode\']').attr('value', json['postcode']);
 				$('select[name=\'payment_country_id\']').attr('value', json['country_id']);
 				$('select[name=\'payment_zone_id\']').load('index.php?route=sale/order/zone&token=<?php echo $token; ?>&country_id=' + json['country_id'] + '&zone_id=' + json['zone_id']);
+				
+				var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+				
+				if ($.inArray(json['country_id'], postcode_required) >= 0) {
+					$('#payment-postcode-required').show();
+				} else {
+					$('#payment-postcode-required').hide();
+				}
 			}
 		}
 	});	
 });
 
-$('select[name=\'payment_zone_id\']').load('index.php?route=sale/order/zone&token=<?php echo $token; ?>&country_id=<?php echo $payment_country_id; ?>&zone_id=<?php echo $payment_zone_id; ?>');
+$('select[name=\'shipping_country_id\']').bind('change', function() {
+	var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+	
+	if ($.inArray(this.value, postcode_required) >= 0) {
+		$('#shipping-postcode-required').show();
+	} else {
+		$('#shipping-postcode-required').hide();
+	}
+	
+	$('select[name=\'shipping_zone_id\']').load('index.php?route=sale/order/zone&token=<?php echo $token; ?>&country_id=' + this.value + '&zone_id=<?php echo $shipping_zone_id; ?>');
+});
+
+$('select[name=\'shipping_country_id\']').trigger('change');
 
 $('select[name=\'shipping_address\']').bind('change', function() {
 	$.ajax({
@@ -669,12 +713,18 @@ $('select[name=\'shipping_address\']').bind('change', function() {
 				$('input[name=\'shipping_postcode\']').attr('value', json['postcode']);
 				$('select[name=\'shipping_country_id\']').attr('value', json['country_id']);
 				$('select[name=\'shipping_zone_id\']').load('index.php?route=sale/order/zone&token=<?php echo $token; ?>&country_id=' + json['country_id'] + '&zone_id=' + json['zone_id']);
+				
+				var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+				
+				if ($.inArray(json['country_id'], postcode_required) >= 0) {
+					$('#shipping-postcode-required').show();
+				} else {
+					$('#shipping-postcode-required').hide();
+				}
 			}
 		}
 	});	
 });
-
-$('select[name=\'shipping_zone_id\']').load('index.php?route=sale/order/zone&token=<?php echo $token; ?>&country_id=<?php echo $shipping_country_id; ?>&zone_id=<?php echo $shipping_zone_id; ?>');
 //--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({

@@ -39,12 +39,12 @@
   <input type="text" name="city" value="<?php echo $city; ?>" class="large-field" />
   <br />
   <br />
-  <span class="required">*</span> <?php echo $entry_postcode; ?><br />
+  <span id="payment-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?><br />
   <input type="text" name="postcode" value="<?php echo $postcode; ?>" class="large-field" />
   <br />
   <br />
   <span class="required">*</span> <?php echo $entry_country; ?><br />
-  <select name="country_id" class="large-field" onchange="$('#payment-address select[name=\'zone_id\']').load('index.php?route=checkout/guest/zone&country_id=' + this.value);">
+  <select name="country_id" class="large-field">
     <option value=""><?php echo $text_select; ?></option>
     <?php foreach ($countries as $country) { ?>
     <?php if ($country['country_id'] == $country_id) { ?>
@@ -79,6 +79,27 @@
 <div class="buttons">
   <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="button" /></div>
 </div>
+<?php 
+$postcode_required_data = array(); 
+
+foreach ($countries as $country) {
+	if ($country['postcode_required']) {
+		$postcode_required_data[] = '\'' . $country['country_id'] . '\'';
+	} 
+} 
+?>
 <script type="text/javascript"><!--
-$('#payment-address select[name=\'zone_id\']').load('index.php?route=checkout/guest/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
-//--></script> 
+$('#payment-address select[name=\'country_id\']').bind('change', function() {
+	var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+	
+	if ($.inArray(this.value, postcode_required) >= 0) {
+		$('#payment-postcode-required').show();
+	} else {
+		$('#payment-postcode-required').hide();
+	}
+	
+	$('#payment-address select[name=\'country_id\']').load('index.php?route=checkout/guest/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');
+});
+
+$('#payment-address select[name=\'country_id\']').trigger('change');
+//--></script>

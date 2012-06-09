@@ -20,6 +20,21 @@
   <input type="text" name="fax" value="" class="large-field" />
   <br />
   <br />
+  <?php if ($customer_groups) { ?>
+  <h2><?php echo $text_your_account; ?></h2>
+  <?php echo $entry_account; ?><br />
+  <select name="customer_group_id">
+    <?php foreach ($customer_groups as $customer_group) { ?>
+    <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+    <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+    <?php } else { ?>
+    <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+    <?php } ?>
+    <?php } ?>
+  </select>
+  <br />
+  <br />
+  <?php } ?>
   <h2><?php echo $text_your_password; ?></h2>
   <span class="required">*</span> <?php echo $entry_password; ?><br />
   <input type="password" name="password" value="" class="large-field" />
@@ -37,6 +52,14 @@
   <input type="text" name="company" value="" class="large-field" />
   <br />
   <br />
+  <span id="tax-id-required" class="required">*</span> <?php echo $entry_company_id; ?><br />
+  <input type="text" name="company_id" value="" class="large-field" />
+  <br />
+  <br />
+  <span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?><br />
+  <input type="text" name="tax_id" value="" class="large-field" />
+  <br />
+  <br />
   <span class="required">*</span> <?php echo $entry_address_1; ?><br />
   <input type="text" name="address_1" value="" class="large-field" />
   <br />
@@ -49,12 +72,12 @@
   <input type="text" name="city" value="" class="large-field" />
   <br />
   <br />
-  <span class="required">*</span> <?php echo $entry_postcode; ?><br />
+  <span id="payment-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?><br />
   <input type="text" name="postcode" value="<?php echo $postcode; ?>" class="large-field" />
   <br />
   <br />
   <span class="required">*</span> <?php echo $entry_country; ?><br />
-  <select name="country_id" class="large-field" onchange="$('#payment-address select[name=\'zone_id\']').load('index.php?route=checkout/register/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');">
+  <select name="country_id" class="large-field">
     <option value=""><?php echo $text_select; ?></option>
     <?php foreach ($countries as $country) { ?>
     <?php if ($country['country_id'] == $country_id) { ?>
@@ -94,11 +117,34 @@
 </div>
 <?php } else { ?>
 <div class="buttons">
-  <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="button" /></div>
+  <div class="right">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="button" />
+  </div>
 </div>
 <?php } ?>
+<?php 
+$postcode_required_data = array(); 
+
+foreach ($countries as $country) {
+	if ($country['postcode_required']) {
+		$postcode_required_data[] = '\'' . $country['country_id'] . '\'';
+	} 
+} 
+?>
 <script type="text/javascript"><!--
-$('#payment-address select[name=\'zone_id\']').load('index.php?route=checkout/register/zone&country_id=<?php echo $country_id; ?>&zone_id=<?php echo $zone_id; ?>');
+$('#payment-address select[name=\'country_id\']').bind('change', function() {
+	var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+	
+	if ($.inArray(this.value, postcode_required) >= 0) {
+		$('#payment-postcode-required').show();
+	} else {
+		$('#payment-postcode-required').hide();
+	}
+	
+	$('#payment-address select[name=\'zone_id\']').load('index.php?route=checkout/register/zone&country_id=' + this.value + '&zone_id=<?php echo $zone_id; ?>');	
+});
+
+$('#payment-address select[name=\'country_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 $('.colorbox').colorbox({

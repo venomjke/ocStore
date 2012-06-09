@@ -115,6 +115,15 @@
               </tr>
             </table>
           </div>
+          <?php 
+$postcode_required_data = array(); 
+
+foreach ($countries as $country) {
+	if ($country['postcode_required']) {
+		$postcode_required_data[] = '\'' . $country['country_id'] . '\'';
+	} 
+} 
+?>
           <?php $address_row = 1; ?>
           <?php foreach ($addresses as $address) { ?>
           <div id="tab-address-<?php echo $address_row; ?>" class="vtabs-content">
@@ -137,7 +146,7 @@
               <tr>
                 <td><?php echo $entry_company; ?></td>
                 <td><input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" /></td>
-              </tr>                         
+              </tr>
               <tr>
                 <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
                 <td><input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" />
@@ -157,12 +166,12 @@
                   <?php } ?></td>
               </tr>
               <tr>
-                <td><span class="required">*</span> <?php echo $entry_postcode; ?></td>
+                <td><span id="postcode-required<?php echo $address_row; ?>" class="required">*</span> <?php echo $entry_postcode; ?></td>
                 <td><input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" /></td>
               </tr>
               <tr>
                 <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-                <td><select name="address[<?php echo $address_row; ?>][country_id]" id="address[<?php echo $address_row; ?>][country_id]" onchange="$('select[name=\'address[<?php echo $address_row; ?>][zone_id]\']').load('index.php?route=sale/customer/zone&token=<?php echo $token; ?>&country_id=' + this.value + '&zone_id=<?php echo $address['zone_id']; ?>');">
+                <td><select name="address[<?php echo $address_row; ?>][country_id]">
                     <option value=""><?php echo $text_select; ?></option>
                     <?php foreach ($countries as $country) { ?>
                     <?php if ($country['country_id'] == $address['country_id']) { ?>
@@ -195,8 +204,20 @@
               </tr>
             </table>
             <script type="text/javascript"><!--
-		    $('select[name=\'address[<?php echo $address_row; ?>][zone_id]\']').load('index.php?route=sale/customer/zone&token=<?php echo $token; ?>&country_id=<?php echo $address['country_id']; ?>&zone_id=<?php echo $address['zone_id']; ?>');
-		    //--></script> 
+$('select[name=\'address[<?php echo $address_row; ?>][country_id]\']').live('change', function() {
+	var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+	
+	if ($.inArray(this.value, postcode_required) >= 0) {
+		$('#postcode-required<?php echo $address_row; ?>').show();
+	} else {
+		$('#postcode-required<?php echo $address_row; ?>').hide();
+	}
+	
+	$('select[name=\'address[<?php echo $address_row; ?>][zone_id]\']').load('index.php?route=sale/customer/zone&token=<?php echo $token; ?>&country_id=' + this.value + '&zone_id=<?php echo $address['zone_id']; ?>');
+});
+
+$('select[name=\'address[<?php echo $address_row; ?>][country_id]\']').trigger('change');
+//--></script> 
           </div>
           <?php $address_row++; ?>
           <?php } ?>
@@ -279,11 +300,11 @@ function addAddress() {
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 	html += '  <table class="form">'; 
 	html += '    <tr>';
-    html += '	   <td><?php echo $entry_firstname; ?></td>';
+    html += '	   <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>';
     html += '	   <td><input type="text" name="address[' + address_row + '][firstname]" value="" /></td>';
     html += '    </tr>';
     html += '    <tr>';
-    html += '      <td><?php echo $entry_lastname; ?></td>';
+    html += '      <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>';
     html += '      <td><input type="text" name="address[' + address_row + '][lastname]" value="" /></td>';
     html += '    </tr>';
     html += '    <tr>';
@@ -291,7 +312,7 @@ function addAddress() {
     html += '      <td><input type="text" name="address[' + address_row + '][company]" value="" /></td>';
     html += '    </tr>';	
     html += '    <tr>';
-    html += '      <td><?php echo $entry_address_1; ?></td>';
+    html += '      <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>';
     html += '      <td><input type="text" name="address[' + address_row + '][address_1]" value="" /></td>';
     html += '    </tr>';
     html += '    <tr>';
@@ -299,16 +320,16 @@ function addAddress() {
     html += '      <td><input type="text" name="address[' + address_row + '][address_2]" value="" /></td>';
     html += '    </tr>';
     html += '    <tr>';
-    html += '      <td><?php echo $entry_city; ?></td>';
+    html += '      <td><span class="required">*</span> <?php echo $entry_city; ?></td>';
     html += '      <td><input type="text" name="address[' + address_row + '][city]" value="" /></td>';
     html += '    </tr>';
     html += '    <tr>';
-    html += '      <td><?php echo $entry_postcode; ?></td>';
+    html += '      <td><span id="postcode-required' + address_row + '" class="required">*</span> <?php echo $entry_postcode; ?></td>';
     html += '      <td><input type="text" name="address[' + address_row + '][postcode]" value="" /></td>';
     html += '    </tr>';
     html += '    <tr>';
-    html += '      <td><?php echo $entry_country; ?></td>';
-    html += '      <td><select name="address[' + address_row + '][country_id]" onchange="$(\'select[name=\\\'address[' + address_row + '][zone_id]\\\']\').load(\'index.php?route=sale/customer/zone&token=<?php echo $token; ?>&country_id=\' + this.value + \'&zone_id=0\');">';
+    html += '      <td><span class="required">*</span> <?php echo $entry_country; ?></td>';
+    html += '      <td><select name="address[' + address_row + '][country_id]">';
     html += '         <option value=""><?php echo $text_select; ?></option>';
     <?php foreach ($countries as $country) { ?>
     html += '         <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
@@ -316,7 +337,7 @@ function addAddress() {
     html += '      </select></td>';
     html += '    </tr>';
     html += '    <tr>';
-    html += '      <td><?php echo $entry_zone; ?></td>';
+    html += '      <td><span class="required">*</span> <?php echo $entry_zone; ?></td>';
     html += '      <td><select name="address[' + address_row + '][zone_id]"><option value="false"><?php echo $this->language->get('text_none'); ?></option></select></td>';
     html += '    </tr>';
 	html += '    <tr>';
@@ -327,6 +348,25 @@ function addAddress() {
     html += '</div>';
 	
 	$('#tab-general').append(html);
+	
+	$('select[name=\'address[' + address_row + '][country_id]\']').live('change', function() {
+		var start = ($(this).attr('name').indexOf('[', 0) + 1);
+		var length = ($(this).attr('name').indexOf(']', 0)) - start;
+		
+		index = $(this).attr('name').substr(start, length);
+		
+		var postcode_required = [<?php echo implode(',', $postcode_required_data); ?>];
+		
+		if ($.inArray(this.value, postcode_required) >= 0) {
+			$('#postcode-required' + index).show();
+		} else {
+			$('#postcode-required' + index).hide();
+		}
+		
+		$('select[name=\'address[' + index + '][zone_id]\']').load('index.php?route=sale/customer/zone&token=<?php echo $token; ?>&country_id=' + this.value);
+	});
+
+	$('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');	
 	
 	$('#address-add').before('<a href="#tab-address-' + address_row + '" id="address-' + address_row + '"><?php echo $tab_address; ?> ' + address_row + '&nbsp;<img src="view/image/delete.png" alt="" onclick="$(\'#vtabs a:first\').trigger(\'click\'); $(\'#address-' + address_row + '\').remove(); $(\'#tab-address-' + address_row + '\').remove(); return false;" /></a>');
 		 
