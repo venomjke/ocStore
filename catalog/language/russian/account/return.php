@@ -36,7 +36,7 @@ $_['column_status']      = 'Статус';
 // Entry
 $_['entry_order_id']     = '№ заказа:';
 $_['entry_date_ordered'] = 'Дата заказа:';
-$_['entry_firstname']    = 'Имя:';
+$_['entry_firstname']    = 'Имя, Отчество:';
 $_['entry_lastname']     = 'Фамилия:';
 $_['entry_email']        = 'E-Mail:';
 $_['entry_telephone']    = 'Телефон:';
