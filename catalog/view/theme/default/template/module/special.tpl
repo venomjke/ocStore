@@ -19,14 +19,8 @@
         <?php } ?>
         <?php if ($product['rating']) { ?>
         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
-        <?php }
-	if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
-		<div class="cart"><input type="button" disabled="disabled" value="<?php echo $this->language->get('button_out_of_stock'); ?>" onclick="return;" class="button" /></div>
-	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout') ) { ?>
-		<div class="cart"><input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
-	<?php } else { ?>
-		<div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
-	<?php } ?>
+        <?php } ?>
+        <div class="cart"><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></div>
       </div>
       <?php } ?>
     </div>

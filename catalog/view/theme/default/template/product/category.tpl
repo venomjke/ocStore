@@ -91,13 +91,7 @@
       <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
       <?php } ?>
       <div class="cart">
-	<?php if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
-			<input type="button" disabled="disabled" value="<?php echo $this->language->get('button_out_of_stock'); ?>" onclick="return;" class="button" />
-	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout') ) { ?>
-			<input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" />
-	<?php } else { ?>
-			<input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" />
-	<?php } ?>
+         <input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" />
       </div>
       <div class="wishlist"><a onclick="addToWishList('<?php echo $product['product_id']; ?>');"><?php echo $button_wishlist; ?></a></div>
       <div class="compare"><a onclick="addToCompare('<?php echo $product['product_id']; ?>');"><?php echo $button_compare; ?></a></div>

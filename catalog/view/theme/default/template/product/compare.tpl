@@ -111,15 +111,9 @@
     <?php } ?>
     <tr>
       <td></td>
-      <?php foreach ($products as $product) {
-	if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
-		<td><input onclick="return;" class="button" value="<?php echo $this->language->get('button_out_of_stock'); ?>" /></td>
-	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
-		<td><input onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" value="<?php echo $this->language->get('button_pre_order'); ?>" /></td>
-	<?php } else { ?>
-		<td><input onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" value="<?php echo $button_cart; ?>" /></td>
-	<?php }
-       } ?>
+      <?php foreach ($products as $product) { ?>
+      <td><input type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button" /></td>
+      <?php } ?>
     </tr>
     <tr>
       <td></td>

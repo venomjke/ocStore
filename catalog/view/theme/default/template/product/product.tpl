@@ -205,13 +205,7 @@
         <div><?php echo $text_qty; ?>
           <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
           <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
-		<?php if ($product_info['quantity'] == 0 || ($product_info['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
-          		&nbsp;<input onclick="return;" disabled="disabled" type="button" value="<?php echo $this->language->get('button_out_of_stock'); ?>" id="button-cart" class="button" />
-		<?php } elseif ($product_info['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
-          		&nbsp;<input type="button" value="<?php echo $this->language->get('button_pre_order'); ?>" id="button-cart" class="button" />
-		<?php } else { ?>
-          		&nbsp;<input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
-		<?php } ?>
+          &nbsp;<input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
           </div>
         <div><span>&nbsp;&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;&nbsp;</span></div>
         <div><a onclick="addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a><br />
@@ -319,14 +313,8 @@
         <?php } ?>
         <?php if ($product['rating']) { ?>
         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
-        <?php }
-	if ($product['quantity'] == 0 || ($product['quantity'] < 0 && !$this->config->get('config_stock_checkout')) ) { ?>
-		<a onclick="return;" class="button"><?php echo $this->language->get('button_out_of_stock'); ?></a></div>
-	<?php } elseif ($product['quantity'] < 0 && $this->config->get('config_stock_checkout')) { ?>
-		<a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $this->language->get('button_pre_order'); ?></a></div>
-	<?php } else { ?>
-		<a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a></div>
-	<?php } ?>
+        <?php } ?>
+        <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a></div>
       <?php } ?>
     </div>
   </div>
