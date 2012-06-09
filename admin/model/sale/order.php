@@ -16,17 +16,17 @@ class ModelSaleOrder extends Model {
 		$this->load->model('setting/setting');
 
 		$setting_info = $this->model_setting_setting->getSetting('setting', $data['store_id']);
-			
+
 		if (isset($setting_info['invoice_prefix'])) {
 			$invoice_prefix = $setting_info['invoice_prefix'];
 		} else {
 			$invoice_prefix = $this->config->get('config_invoice_prefix');
 		}
-		
+
 		$this->load->model('localisation/country');
 
 		$this->load->model('localisation/zone');
-		
+
 		$country_info = $this->model_localisation_country->getCountry($data['shipping_country_id']);
 
 		if ($country_info) {
@@ -86,13 +86,13 @@ class ModelSaleOrder extends Model {
       				$this->db->query("INSERT INTO " . DB_PREFIX . "order_product SET order_id = '" . (int)$order_id . "', product_id = '" . (int)$order_product['product_id'] . "', name = '" . $this->db->escape($order_product['name']) . "', model = '" . $this->db->escape($order_product['model']) . "', quantity = '" . (int)$order_product['quantity'] . "', price = '" . (float)$order_product['price'] . "', total = '" . (float)$order_product['total'] . "', tax = '" . (float)$order_product['tax'] . "', reward = '" . (int)$order_product['reward'] . "'");
 
 				$order_product_id = $this->db->getLastId();
-	
+
 				if (isset($order_product['order_option'])) {
 					foreach ($order_product['order_option'] as $order_option) {
 						$this->db->query("INSERT INTO " . DB_PREFIX . "order_option SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', product_option_id = '" . (int)$order_option['product_option_id'] . "', product_option_value_id = '" . (int)$order_option['product_option_value_id'] . "', name = '" . $this->db->escape($order_option['name']) . "', `value` = '" . $this->db->escape($order_option['value']) . "', `type` = '" . $this->db->escape($order_option['type']) . "'");
 					}
 				}
-				
+
 				if (isset($order_product['order_download'])) {
 					foreach ($order_product['order_download'] as $order_download) {
 						$this->db->query("INSERT INTO " . DB_PREFIX . "order_download SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', name = '" . $this->db->escape($order_download['name']) . "', filename = '" . $this->db->escape($order_download['filename']) . "', mask = '" . $this->db->escape($order_download['mask']) . "', remaining = '" . (int)$order_download['remaining'] . "'");
@@ -120,8 +120,23 @@ class ModelSaleOrder extends Model {
 			$total += $order_total['value'];
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET total = '" . (float)$total . "' WHERE order_id = '" . (int)$order_id . "'");
-
+		// Affiliate
+		$affiliate_id = 0;
+		$commission = 0;
+		
+		if (!empty($this->request->post['affiliate_id'])) {
+			$this->load->model('sale/affiliate');
+			
+			$affiliate_info = $this->model_sale_affiliate->getAffiliate($this->request->post['affiliate_id']);
+			
+			if ($affiliate_info) {
+				$affiliate_id = $affiliate_info['affiliate_id']; 
+				$commission = ($total / 100) * $affiliate_info['commission']; 
+			}
+		}
+		
+		// Update order total			 
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET total = '" . (float)$total . "', affiliate_id = '" . (int)$affiliate_id . "', commission = '" . (float)$commission . "' WHERE order_id = '" . (int)$order_id . "'"); 	
 	}
 
 	public function editOrder($order_id, $data) {
@@ -218,7 +233,22 @@ TODO: Добавить прибавление товара на склад пр�
 			$total += $order_total['value'];
 		}
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET total = '" . (float)$total . "' WHERE order_id = '" . (int)$order_id . "'");
+		// Affiliate
+		$affiliate_id = 0;
+		$commission = 0;
+		
+		if (!empty($this->request->post['affiliate_id'])) {
+			$this->load->model('sale/affiliate');
+			
+			$affiliate_info = $this->model_sale_affiliate->getAffiliate($this->request->post['affiliate_id']);
+			
+			if ($affiliate_info) {
+				$affiliate_id = $affiliate_info['affiliate_id']; 
+				$commission = ($total / 100) * $affiliate_info['commission']; 
+			}
+		}
+				 
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET total = '" . (float)$total . "', affiliate_id = '" . (int)$affiliate_id . "', commission = '" . (float)$commission . "' WHERE order_id = '" . (int)$order_id . "'"); 
 	}
 
 	public function deleteOrder($order_id) {
@@ -239,10 +269,10 @@ TODO: Добавить прибавление товара на склад пр�
                 }
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
-      	$this->db->query("DELETE FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
-      	$this->db->query("DELETE FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_history WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_fraud WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
@@ -297,7 +327,7 @@ TODO: Добавить прибавление товара на склад пр�
 			} else {
 				$payment_zone_code = '';
 			}
-		
+
 			if ($order_query->row['affiliate_id']) {
 				$affiliate_id = $order_query->row['affiliate_id'];
 			} else {
@@ -395,9 +425,9 @@ TODO: Добавить прибавление товара на склад пр�
 				'currency_code'           => $order_query->row['currency_code'],
 				'currency_value'          => $order_query->row['currency_value'],
 				'ip'                      => $order_query->row['ip'],
-				'forwarded_ip'            => $order_query->row['forwarded_ip'], 
-				'user_agent'              => $order_query->row['user_agent'],	
-				'accept_language'         => $order_query->row['accept_language'],					
+				'forwarded_ip'            => $order_query->row['forwarded_ip'],
+				'user_agent'              => $order_query->row['user_agent'],
+				'accept_language'         => $order_query->row['accept_language'],
 				'date_added'              => $order_query->row['date_added'],
 				'date_modified'           => $order_query->row['date_modified']
 			);
@@ -405,7 +435,7 @@ TODO: Добавить прибавление товара на склад пр�
 			return false;
 		}
 	}
-	
+
 	public function getOrders($data = array()) {
 		$sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.total, o.currency_code, o.currency_value, o.date_added, o.date_modified FROM `" . DB_PREFIX . "order` o";
 
@@ -480,7 +510,7 @@ TODO: Добавить прибавление товара на склад пр�
 
 		return $query->row;
 	}
-	
+
 	public function getOrderOptions($order_id, $order_product_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
 
@@ -492,19 +522,19 @@ TODO: Добавить прибавление товара на склад пр�
 
 		return $query->rows;
 	}
-	
+
 	public function getOrderVouchers($order_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
-		
+
 		return $query->rows;
 	}
-	
+
 	public function getOrderVoucherByVoucherId($voucher_id) {
       	$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE voucher_id = '" . (int)$voucher_id . "'");
 
 		return $query->row;
 	}
-				
+
 	public function getOrderTotals($order_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order");
 
@@ -564,7 +594,7 @@ TODO: Добавить прибавление товара на склад пр�
 
 		return $query->row['total'];
 	}
-	
+
 	public function getTotalSales() {
       	$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'");
 
@@ -579,7 +609,7 @@ TODO: Добавить прибавление товара на склад пр�
 
 	public function createInvoiceNo($order_id) {
 		$order_info = $this->getOrder($this->request->get['order_id']);
-			
+
 		if ($order_info && !$order_info['invoice_no']) {
 			$query = $this->db->query("SELECT MAX(invoice_no) AS invoice_no FROM `" . DB_PREFIX . "order` WHERE invoice_prefix = '" . $this->db->escape($order_info['invoice_prefix']) . "'");
 
@@ -588,13 +618,13 @@ TODO: Добавить прибавление товара на склад пр�
 			} else {
 				$invoice_no = 1;
 			}
-		
+
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET invoice_no = '" . (int)$invoice_no . "', invoice_prefix = '" . $this->db->escape($order_info['invoice_prefix']) . "' WHERE order_id = '" . (int)$order_id . "'");
-			
+
 			return $order_info['invoice_prefix'] . $invoice_no;
 		}
 	}
-	
+
 	public function addOrderHistory($order_id, $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$data['order_status_id'] . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
@@ -676,29 +706,29 @@ TODO: Добавить прибавление товара на склад пр�
 
 		return $query->row['total'];
 	}
-	
+
 	public function getEmailsByProductsOrdered($products, $start, $end) {
 		$implode = array();
-		
+
 		foreach ($products as $product_id) {
 			$implode[] = "op.product_id = '" . $product_id . "'";
 		}
-		
+
 		$query = $this->db->query("SELECT DISTINCT email FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
-	
+
 		return $query->rows;
 	}
-	
+
 	public function getTotalEmailsByProductsOrdered($products) {
 		$implode = array();
-		
+
 		foreach ($products as $product_id) {
 			$implode[] = "op.product_id = '" . $product_id . "'";
 		}
-				
+
 		$query = $this->db->query("SELECT COUNT(DISTINCT email) AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_product op ON (o.order_id = op.order_id) WHERE (" . implode(" OR ", $implode) . ") AND o.order_status_id <> '0'");
-	
+
 		return $query->row['total'];
-	}	
+	}
 }
 ?>

@@ -264,19 +264,19 @@ class ControllerCatalogManufacturer extends Controller {
   	private function getForm() {
     	$this->data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_enabled'] = $this->language->get('text_enabled');
-    	$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$this->data['text_enabled'] = $this->language->get('text_enabled');
+		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_default'] = $this->language->get('text_default');
-    	$this->data['text_image_manager'] = $this->language->get('text_image_manager');
+		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 		$this->data['text_browse'] = $this->language->get('text_browse');
-		$this->data['text_clear'] = $this->language->get('text_clear');			
+		$this->data['text_clear'] = $this->language->get('text_clear');
 		$this->data['text_percent'] = $this->language->get('text_percent');
 		$this->data['text_amount'] = $this->language->get('text_amount');
 
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
-    	$this->data['entry_image'] = $this->language->get('entry_image');
+		$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
@@ -285,8 +285,8 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->data['entry_seo_title'] = $this->language->get('entry_seo_title');
 		$this->data['entry_seo_h1'] = $this->language->get('entry_seo_h1');
 
-    	$this->data['button_save'] = $this->language->get('button_save');
-    	$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$this->data['button_save'] = $this->language->get('button_save');
+		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
 		$this->data['tab_general'] = $this->language->get('tab_general');
 
@@ -345,7 +345,7 @@ class ControllerCatalogManufacturer extends Controller {
     	}
 
 		$this->load->model('localisation/language');
-		
+
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->post['manufacturer_description'])) {
@@ -394,14 +394,16 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$this->load->model('tool/image');
 
-		if (!empty($manufacturer_info) && $manufacturer_info['image'] && file_exists(DIR_IMAGE . $manufacturer_info['image'])) {
+		if (isset($this->request->post['image']) && file_exists(DIR_IMAGE . $this->request->post['image'])) {
+			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+		} elseif (!empty($manufacturer_info) && $manufacturer_info['image'] && file_exists(DIR_IMAGE . $manufacturer_info['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'], 100, 100);
 		} else {
 			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		}
 
 		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
-		
+
 		if (isset($this->request->post['sort_order'])) {
       		$this->data['sort_order'] = $this->request->post['sort_order'];
     	} elseif (!empty($manufacturer_info)) {
