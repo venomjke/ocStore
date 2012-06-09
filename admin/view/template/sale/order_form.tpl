@@ -118,7 +118,10 @@
             </tr>
             <tr id="tax-id-display">
               <td><span id="tax-id-required" class="required">*</span> <?php echo $entry_tax_id; ?></td>
-              <td><input type="text" name="payment_tax_id" value="<?php echo $payment_tax_id; ?>" /></td>
+              <td><input type="text" name="payment_tax_id" value="<?php echo $payment_tax_id; ?>" />
+                <?php if ($error_payment_tax_id) { ?>
+                <span class="error"><?php echo $error_payment_tax_id; ?></span>
+                <?php } ?></td>
             </tr>                        
             <tr>
               <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
@@ -622,11 +625,11 @@ $('input[name=\'customer\']').catcomplete({
 		
 		$('select[name=\'shipping_address\']').html(html);
 		$('select[name=\'payment_address\']').html(html);
-			
-		$('select[id=\'customer_group_id\']').attr('value', ui.item['customer_group_id']);
-		$('select[id=\'customer_group_id\']').attr('disabled', true); 
 		
+		$('select[id=\'customer_group_id\']').attr('disabled', false);
+		$('select[id=\'customer_group_id\']').attr('value', ui.item['customer_group_id']);
 		$('select[id=\'customer_group_id\']').trigger('change');
+		$('select[id=\'customer_group_id\']').attr('disabled', true); 
 					 	
 		return false; 
 	},
@@ -637,45 +640,42 @@ $('input[name=\'customer\']').catcomplete({
 
 $('select[id=\'customer_group_id\']').live('change', function() {
 	$('input[name=\'customer_group_id\']').attr('value', this.value);
-	 
-	$.ajax({
-		url: 'index.php?route=sale/customer/customer_group&token=<?php echo $token; ?>&customer_group_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[id=\'customer_group_id\']').after('<span class="wait">&nbsp;<img src="view/image/loading.gif" alt="" /></span>');
-		},		
-		complete: function() {
-			$('.wait').remove();
-		},			
-		success: function(json) {
-			if (json['company_id_display'] == '1') {
-				$('#company-id-display').show();
-			} else {
-				$('#company-id-display').hide();
-			}
-			
-			if (json['company_id_required'] == '1') {
-				$('#company-id-required').show();
-			} else {
-				$('#company-id-required').hide();
-			}
-			
-			if (json['tax_id_display'] == '1') {
-				$('#tax-id-display').show();
-			} else {
-				$('#tax-id-display').hide();
-			}
-			
-			if (json['tax_id_required'] == '1') {
-				$('#tax-id-required').show();
-			} else {
-				$('#tax-id-required').hide();
-			}						
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	
+	var customer_group = [];
+	
+<?php foreach ($customer_groups as $customer_group) { ?>
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_display'] = '<?php echo $customer_group['company_id_display']; ?>';
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_required'] = '<?php echo $customer_group['company_id_required']; ?>';
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
+	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_required'] = '<?php echo $customer_group['tax_id_required']; ?>';
+<?php } ?>	
+
+	if (customer_group[this.value]) {
+		if (customer_group[this.value]['company_id_display'] == '1') {
+			$('#company-id-display').show();
+		} else {
+			$('#company-id-display').hide();
 		}
-	});
+		
+		if (customer_group[this.value]['company_id_required'] == '1') {
+			$('#company-id-required').show();
+		} else {
+			$('#company-id-required').hide();
+		}
+		
+		if (customer_group[this.value]['tax_id_display'] == '1') {
+			$('#tax-id-display').show();
+		} else {
+			$('#tax-id-display').hide();
+		}
+		
+		if (customer_group[this.value]['tax_id_required'] == '1') {
+			$('#tax-id-required').show();
+		} else {
+			$('#tax-id-required').hide();
+		}	
+	}
 });
 
 $('select[id=\'customer_group_id\']').trigger('change');

@@ -1207,6 +1207,7 @@ INSERT INTO `oc_geo_zone` (`geo_zone_id`, `name`, `description`, `date_modified`
 DROP TABLE IF EXISTS `oc_information`;
 CREATE TABLE `oc_information` (
   `information_id` int(11) NOT NULL auto_increment,
+  `bottom` int(1) NOT NULL default '0',
   `sort_order` int(3) NOT NULL default '0',
   `status` tinyint(1) NOT NULL default '1',
   PRIMARY KEY  (`information_id`)
@@ -1217,10 +1218,10 @@ CREATE TABLE `oc_information` (
 -- 
 
 INSERT INTO `oc_information` (`information_id`, `sort_order`, `status`) VALUES
-(3, 3, 1),
-(4, 1, 1),
-(5, 4, 1),
-(6, 2, 1);
+(3, 1, 3, 1),
+(4, 1, 1, 1),
+(5, 1, 4, 1),
+(6, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -1868,6 +1869,25 @@ CREATE TABLE `oc_order_history` (
 -- --------------------------------------------------------
 
 -- 
+-- Table structure for table `oc_order_misc`
+--
+
+DROP TABLE IF EXISTS `oc_order_misc`;
+CREATE TABLE `oc_order_misc` (
+  `order_id` int(11) NOT NULL,
+  `key` varchar(64) COLLATE utf8_general_ci NOT NULL,
+  `value` text COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`order_id`,`key`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_order_misc`
+--
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_order_option`
 -- 
 
@@ -7280,7 +7300,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3966, 190, '11', 'Goriška', 1),
 (3967, 190, '12', 'Obalno-kraška', 1),
 (3968, 220, 'KE', 'Херсон', 1),
-(3968, 33, '', 'Ruse', 1);
+(3969, 33, '', 'Ruse', 1);
 
 -- --------------------------------------------------------
 
