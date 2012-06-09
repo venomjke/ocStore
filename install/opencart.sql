@@ -32,6 +32,8 @@ CREATE TABLE `oc_address` (
   `firstname` varchar(32) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `lastname` varchar(32) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `company` varchar(32) COLLATE utf8_general_ci NOT NULL,
+  `company_id` varchar(32) COLLATE utf8_general_ci NOT NULL,
+  `tax_id` varchar(32) COLLATE utf8_general_ci NOT NULL,
   `address_1` varchar(128) COLLATE utf8_general_ci NOT NULL,
   `address_2` varchar(128) COLLATE utf8_general_ci NOT NULL,
   `city` varchar(128) COLLATE utf8_general_ci NOT NULL,
@@ -957,8 +959,6 @@ CREATE TABLE `oc_customer` (
   `newsletter` tinyint(1) NOT NULL default '0',
   `address_id` int(11) NOT NULL default '0',
   `customer_group_id` int(11) NOT NULL,
-  `company_id` varchar(32) COLLATE utf8_general_ci NOT NULL,
-  `tax_id` varchar(32) COLLATE utf8_general_ci NOT NULL,
   `ip` varchar(40) COLLATE utf8_general_ci NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
@@ -981,11 +981,12 @@ CREATE TABLE `oc_customer` (
 DROP TABLE IF EXISTS `oc_customer_group`;
 CREATE TABLE IF NOT EXISTS `oc_customer_group` (
   `customer_group_id` int(11) NOT NULL auto_increment,
-  `approve` int(1) NOT NULL,
-  `company_display` int(1) NOT NULL,
-  `company_required` int(1) NOT NULL,
-  `tax_display` int(1) NOT NULL,
-  `tax_required` int(1) NOT NULL,
+  `approval` int(1) NOT NULL,
+  `company_id_display` int(1) NOT NULL,
+  `company_id_required` int(1) NOT NULL,
+  `tax_id_display` int(1) NOT NULL,
+  `tax_id_required` int(1) NOT NULL,
+  `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`customer_group_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1715,6 +1716,8 @@ CREATE TABLE `oc_order` (
   `payment_firstname` varchar(32) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `payment_lastname` varchar(32) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `payment_company` varchar(32) COLLATE utf8_general_ci NOT NULL,
+  `payment_company_id` varchar(32) COLLATE utf8_general_ci NOT NULL,
+  `payment_tax_id` varchar(32) COLLATE utf8_general_ci NOT NULL,    
   `payment_address_1` varchar(128) COLLATE utf8_general_ci NOT NULL,
   `payment_address_2` varchar(128) COLLATE utf8_general_ci NOT NULL,
   `payment_city` varchar(128) COLLATE utf8_general_ci NOT NULL,
@@ -2072,7 +2075,7 @@ INSERT INTO `oc_product` (`product_id`, `model`, `sku`, `upc`, `location`, `quan
 (47, 'Товар 21', '', '', '', 1000, 5, 'data/hp_1.jpg', 7, 1, 100.0000, 400, 9, '2009-02-03', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 0, 1, 0, 1, '2009-02-03 21:08:40', '2011-09-30 01:05:28', 0),
 (48, 'Товар 20', 'test 1', '', 'test 2', 995, 5, 'data/ipod_classic_1.jpg', 8, 1, 100.0000, 0, 9, '2009-02-08', 1.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 2, 1, 1, 0, 1, '2009-02-08 17:21:51', '2011-09-30 01:07:06', 0),
 (49, 'SAM1', '', '', '', 0, 8, 'data/samsung_tab_1.jpg', 0, 1, 199.9900, 0, 9, '2011-04-25', 0.00000000, 1, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 1, 1, '2011-04-26 08:57:34', '2011-09-30 01:06:23', 0),
-(64, 'Товар 1', '', '', '', 946, 7, 'data/htc_touch_hd_1.jpg', 5, 1, 500.0000, 200, 9, '2009-02-03', 146.40000000, 2, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, '2011-05-24 23:48:34', '0000-00-00 00:00:00', 0);
+(64, 'Товар 01', '', '', '', 946, 7, 'data/htc_touch_hd_1.jpg', 5, 1, 500.0000, 200, 9, '2009-02-03', 146.40000000, 2, 0.00000000, 0.00000000, 0.00000000, 1, 1, 1, 0, 0, '2011-05-24 23:48:34', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2909,7 +2912,6 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (87, 0, 'config', 'config_checkout_id', '5', 0),
 (88, 0, 'config', 'config_guest_checkout', '1', 0),
 (89, 0, 'config', 'config_account_id', '3', 0),
-(90, 0, 'config', 'config_registred_group_id', '1', 0),
 (91, 0, 'config', 'config_customer_price', '0', 0),
 (92, 0, 'config', 'config_customer_group_id', '1', 0),
 (93, 0, 'voucher', 'voucher_sort_order', '8', 0),
@@ -3112,11 +3114,11 @@ CREATE TABLE `oc_url_alias` (
 
 INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 (704, 'product_id=48', 'ipod_classic'),
-(766, 'category_id=20', 'desktops'),
+(773, 'category_id=20', 'desktops'),
 (503, 'category_id=26', 'pc'),
 (505, 'category_id=27', 'mac'),
 (730, 'manufacturer_id=8', 'apple'),
-(732, 'information_id=4', 'about_us'),
+(772, 'information_id=4', 'about_us'),
 (768, 'product_id=42', 'test'),
 (767, 'category_id=34', 'mp3-players'),
 (536, 'category_id=36', 'Normal');
@@ -4917,6 +4919,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (1581, 102, 'NN', 'Ninawa', 1),
 (1582, 102, 'DH', 'Dahuk', 1),
 (1583, 102, 'AL', 'Arbil', 1),
+
 (1584, 102, 'TM', 'At Ta''mim', 1),
 (1585, 102, 'SL', 'As Sulaymaniyah', 1),
 (1586, 103, 'CA', 'Carlow', 1),

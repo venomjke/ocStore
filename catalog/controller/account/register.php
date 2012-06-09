@@ -13,6 +13,8 @@ class ControllerAccountRegister extends Controller {
 
 		$this->load->model('account/customer');
 
+		$this->load->model('account/customer_group');
+		
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_account_customer->addCustomer($this->request->post);
 
@@ -63,6 +65,7 @@ class ControllerAccountRegister extends Controller {
 		$this->data['text_select'] = $this->language->get('text_select');
     	$this->data['text_account_already'] = sprintf($this->language->get('text_account_already'), $this->url->link('account/login', '', 'SSL'));
     	$this->data['text_your_account'] = $this->language->get('text_your_account');
+		$this->data['text_account_type'] = $this->language->get('text_account_type');
 		$this->data['text_your_details'] = $this->language->get('text_your_details');
     	$this->data['text_your_address'] = $this->language->get('text_your_address');
     	$this->data['text_your_password'] = $this->language->get('text_your_password');
@@ -74,6 +77,8 @@ class ControllerAccountRegister extends Controller {
     	$this->data['entry_telephone'] = $this->language->get('entry_telephone');
     	$this->data['entry_fax'] = $this->language->get('entry_fax');
     	$this->data['entry_company'] = $this->language->get('entry_company');
+		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
+		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');
     	$this->data['entry_address_1'] = $this->language->get('entry_address_1');
     	$this->data['entry_address_2'] = $this->language->get('entry_address_2');
     	$this->data['entry_postcode'] = $this->language->get('entry_postcode');
@@ -128,6 +133,18 @@ class ControllerAccountRegister extends Controller {
 			$this->data['error_confirm'] = '';
 		}
 
+  		if (isset($this->error['company_id'])) {
+			$this->data['error_company_id'] = $this->error['company_id'];
+		} else {
+			$this->data['error_company_id'] = '';
+		}
+		
+  		if (isset($this->error['tax_id'])) {
+			$this->data['error_tax_id'] = $this->error['tax_id'];
+		} else {
+			$this->data['error_tax_id'] = '';
+		}
+						
   		if (isset($this->error['address_1'])) {
 			$this->data['error_address_1'] = $this->error['address_1'];
 		} else {
@@ -163,16 +180,18 @@ class ControllerAccountRegister extends Controller {
 		$customer_group_data = array();
 		
 		if (is_array($this->config->get('config_customer_group_display'))) {
-			$this->load->model('account/customer_group');
-			
 			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
 			
 			foreach ($customer_groups  as $customer_group) {
 				if (in_array($customer_group['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 					$customer_group_data[] = array(
-						'customer_group_id' => $customer_group['customer_group_id'],
-						'name'              => $customer_group['name'],
-						'description'       => $customer_group['description']
+						'customer_group_id'   => $customer_group['customer_group_id'],
+						'name'                => $customer_group['name'],
+						'description'         => $customer_group['description'],
+						'company_id_display'  => $customer_group['company_id_display'],
+						'company_id_required' => $customer_group['company_id_required'],
+						'tax_id_display'      => $customer_group['tax_id_display'],
+						'tax_id_required'     => $customer_group['tax_id_required']
 					);
 				}
 			}
@@ -226,6 +245,18 @@ class ControllerAccountRegister extends Controller {
 			$this->data['company'] = '';
 		}
 
+		if (isset($this->request->post['company_id'])) {
+    		$this->data['company_id'] = $this->request->post['company_id'];
+		} else {
+			$this->data['company_id'] = '';
+		}
+		
+		if (isset($this->request->post['tax_id'])) {
+    		$this->data['tax_id'] = $this->request->post['tax_id'];
+		} else {
+			$this->data['tax_id'] = '';
+		}
+						
 		if (isset($this->request->post['address_1'])) {
     		$this->data['address_1'] = $this->request->post['address_1'];
 		} else {
@@ -329,10 +360,22 @@ class ControllerAccountRegister extends Controller {
   	}
 
   	private function validate() {
-		if (is_array($this->config->get('config_customer_group_display')) && count($this->config->get('config_customer_group_display') > 1)) {
-			if (!in_array($this->request->post['config_customer_group_id'], $this->config->get('config_customer_group_display'))) {
-				$this->error['warning'] = $this->language->get('error_customer_group');
-			}	
+		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			$customer_group_id = $this->request->post['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+
+		$customer_group = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+			
+		if ($customer_group) {	
+			if ($customer_group['company_id_display'] && $customer_group['company_id_required'] && !$this->request->post['company_id']) {
+				$this->error['company_id'] = $this->language->get('error_company_id');
+			}
+			
+			if ($customer_group['tax_id_display'] && $customer_group['tax_id_required'] && !$this->request->post['tax_id']) {
+				$this->error['tax_id'] = $this->language->get('error_tax_id');
+			}						
 		}
 		
     	if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
@@ -403,7 +446,7 @@ class ControllerAccountRegister extends Controller {
       		return false;
     	}
   	}
-
+	 
   	public function zone() {
 		$output = '<option value="">' . $this->language->get('text_select') . '</option>';
 

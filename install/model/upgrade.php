@@ -37,6 +37,7 @@ class ModelUpgrade extends Model {
 					// For example, ALTER TABLE will error if the table has since been removed,
 					// So validate the table exists first, etc.
 					if (preg_match('/^ALTER TABLE (.+?) ADD PRIMARY KEY/', $line, $matches)) {
+//					$res = mysql_query(sprintf("SHOW KEYS FROM %s",$matches[1]), $connection);
 						$info = mysql_fetch_assoc(mysql_query(sprintf("SHOW KEYS FROM %s",$matches[1]), $connection));
 						if ($info['Key_name'] == 'PRIMARY') { continue; }
 					}
@@ -44,10 +45,12 @@ class ModelUpgrade extends Model {
 //						if (@mysql_num_rows(@mysql_query(sprintf("SHOW KEYS FROM %s WHERE Key_name != 'PRIMARY' AND Column_name = '%s'",$matches[1],str_replace('`', ''$
 //					}
 					if (preg_match('/^ALTER TABLE (.+?) ADD INDEX (.+?) /', $line, $matches)) {
+//					$res = mysql_query(sprintf("SHOW KEYS FROM %s",$matches[1]), $connection);
 						$info = mysql_fetch_assoc(mysql_query(sprintf("SHOW INDEX FROM %s",$matches[1]), $connection));
 						if ($info['Key_name'] == 'PRIMARY') { continue; }
 					}
 					if (preg_match('/^ALTER TABLE (.+?) ADD PRIMARY KEY/', $line, $matches)) {
+//					$res = mysql_query(sprintf("SHOW KEYS FROM %s",$matches[1]), $connection);
 						$info = mysql_fetch_assoc(mysql_query(sprintf("SHOW KEYS FROM %s",$matches[1]), $connection));
 						if ($info['Key_name'] == 'PRIMARY') { continue; }
 					}
@@ -130,6 +133,28 @@ class ModelUpgrade extends Model {
 		}
 		if (empty($settings['config_voucher_max'])) {
 			$db->query("UPDATE " . DB_PREFIX . "setting SET value = '50' WHERE `key` = 'config_voucher_max'");
+		}
+
+		// Layout routes now require "%" for wildcard paths
+		$layout_route_query = $db->query("SELECT * FROM " . DB_PREFIX . "layout_route");
+		foreach ($layout_route_query->rows as $layout_route) {
+			if (strpos($layout_route['route'], '/') === false) { // If missing the trailing slash, add "/%"
+					$db->query("UPDATE " . DB_PREFIX . "layout_route SET route = '" . $layout_route['route'] . "/%' WHERE `layout_route_id` = '" . $layout_route['layout_route_id'] . "'");
+			} elseif (strrchr($layout_route['route'], '/') == "/") { // If has the trailing slash, then just add "%"
+					$db->query("UPDATE " . DB_PREFIX . "layout_route SET route = '" . $layout_route['route'] . "%' WHERE `layout_route_id` = '" . $layout_route['layout_route_id'] . "'");
+			}
+		}
+
+		// Customer Group 'name' field moved to new customer_group_description table. Need to loop through and move over.
+		$column_query = $db->query("DESC " . DB_PREFIX . "customer_group `name`");
+		if ($column_query->num_rows) {
+			$customer_group_query = $db->query("SELECT * FROM " . DB_PREFIX . "customer_group");
+			$default_language_query = $db->query("SELECT language_id FROM " . DB_PREFIX . "language WHERE code = '" . $settings['config_admin_language'] . "'");
+			$default_language_id = $default_language_query->row['language_id'];
+			foreach ($customer_group_query->rows as $customer_group) {
+				$db->query("INSERT INTO " . DB_PREFIX . "customer_group_description SET customer_group_id = '" . (int)$customer_group['customer_group_id'] . "', language_id = '" . (int)$default_language_id . "', `name` = '" . $db->escape($customer_group['name']) . "' ON DUPLICATE KEY UPDATE customer_group_id=customer_group_id");
+			}
+			$db->query("ALTER TABLE " . DB_PREFIX . "customer_group DROP `name`");
 		}
 	}
 }

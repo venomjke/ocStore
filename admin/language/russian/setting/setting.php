@@ -55,7 +55,6 @@ $_['entry_tax_customer']       = 'Использовать налоговый а
 $_['entry_customer_group']     = 'Группа покупателей:<br /><span class="help">Группа покупателей по умолчанию.</span>';
 $_['entry_customer_group_display'] = 'Customer Groups:<br /><span class="help">Display customer groups that new customers can select to use such as wholesale and business when signing up.</span>';
 $_['entry_customer_price']     = 'Не показывать цены гостям:<br /><span class="help">Показывать цены только зарегистрированнным клиентам.</span>';
-$_['entry_invoice']            = 'Начальный № счета-фактуры:<br /><span class="help">Установите стартовый номер счета-фактуры.</span>';
 $_['entry_invoice_prefix']     = 'Префикс счета-фактуры:<br /><span class="help">Установите префикс счета-фактуры. Пример: INV-2011-00</span>';
 $_['entry_account']            = 'Подтверждение при регистрации:<br /><span class="help">Требовать подтверждение согласия с правилами при регистрации аккаунта.</span>';
 $_['entry_cart_weight']        = 'Показывать вес на странице корзины:<br /><span class="help">Показывает вес заказанных товаров на странице корзины</span>';
@@ -117,7 +116,6 @@ $_['entry_sms_copy']           = 'Дополнительные номера:<br/
 $_['entry_seo_url_type']       = 'Тип SEO URL:';
 $_['entry_seo_url_include_path'] = 'SEO URL товаров с категориями:<span class="help">/category/subcategory/product<br />(только для SeoPro)</span>';
 $_['entry_seo_url_postfix']    = 'Окончание ЧПУ:<span class="help">Например .html<br />(только для SeoPro)</span>';
-$_['entry_registred_group']    = 'Группа зарегистрированных:<br /><span class="help">Назначается при регистрации.</span>';
 
 // Error
 $_['error_warning']            = 'Внимательно проверьте форму на ошибки!<br />Поля, содержащие ошибки, имеют комментарий красного цвета.<br />Так же обратите внимание на то, что поле, содержащее ошибку может быть на субвкладке (например, при использовании нескольких языков).';

@@ -46,7 +46,6 @@ $_['entry_tax_default']         		= 'Использовать налоговый
 $_['entry_tax_customer']        		= 'Использовать налоговый адрес покупателя:<br /><span class="help">Использовать заданный по умолчанию адрес клиента для подсчёта налогов. Можно выбрать заданный по умолчанию адрес клиента или адрес платежа для доставки товара клиенту.</span>';
 $_['entry_customer_group']			= 'Группа покупателей:<br /><span class="help">Группа покупателей по умолчанию.</span>';
 $_['entry_customer_group_display'] = 'Customer Groups:<br /><span class="help">Display customer groups that new customers can select to use such as wholesale and business when signing up.</span>';
-$_['entry_registred_group']    			= 'Группа зарегистрированных:<br /><span class="help">Назначается при регистрации.</span>';
 $_['entry_customer_price']			= 'Не показывать цены гостям:<br /><span class="help">Показывать цены только зарегистрированнным клиентам.</span>';
 $_['entry_account']				= 'Подтверждение при регистрации:<br /><span class="help">Требовать подтверждение согласия с правилами при регистрации аккаунта.</span>';
 $_['entry_checkout']				= 'Подтверждение при заказе:<br /><span class="help">Требовать подтверждение согласия с правилами при оформлении заказа.</span>';
