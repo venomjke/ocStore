@@ -16,7 +16,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['scripts'] = $this->document->getScripts();
 		$this->data['lang'] = $this->language->get('code');
 		$this->data['direction'] = $this->language->get('direction');
-		
+
 		$this->load->language('common/header');
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -106,7 +106,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['home'] = $this->url->link('common/login', '', 'SSL');
 		} else {
 			$this->data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
-	
+
 			$this->data['home'] = $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['affiliate'] = $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['attribute'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], 'SSL');

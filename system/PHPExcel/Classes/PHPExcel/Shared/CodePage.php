@@ -42,13 +42,12 @@ class PHPExcel_Shared_CodePage
 	 * @param int $number Microsoft Code Page Indentifier
 	 * @return string Code Page Name
 	 * @throws Exception
-	*/
- 	public static function NumberToName($codePage = '1252')
- 	{
-	if($codePage == 0) $codePage = 1252;
- 		switch ($codePage) {
- 			case 367:	return 'ASCII';		break;	// ASCII
- 			case 437:	return 'CP437';		break;	//OEM US
+	 */
+	public static function NumberToName($codePage = '1252')
+	{
+		switch ($codePage) {
+			case 367:	return 'ASCII';		break;	// ASCII
+			case 437:	return 'CP437';		break;	//OEM US
 			case 720:	throw new Exception('Code page 720 not supported.');
 											break;	//OEM Arabic
 			case 737:	return 'CP737';		break;	//OEM Greek

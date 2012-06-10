@@ -12,7 +12,7 @@ $_['entry_description'] = 'Use this function to export or import all your catego
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify exports/imports!';
 $_['error_upload']      = 'Uploaded file is not a valid spreadsheet file or its values are not in the expected formats!';
-$_['error_sheet_count'] = 'Export/Import: Invalid number of worksheets, 7 worksheets expected';
+$_['error_sheet_count'] = 'Export/Import: Invalid number of worksheets, 8 worksheets expected';
 $_['error_categories_header'] = 'Export/Import: Invalid header in the Categories worksheet';
 $_['error_products_header']   = 'Export/Import: Invalid header in the Products worksheet';
 $_['error_options_header']    = 'Export/Import: Invalid header in the Options worksheet';
