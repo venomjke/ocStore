@@ -32,10 +32,10 @@ class ModelUserUser extends Model {
 
 	public function getUserByUsername($username) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE username = '" . $this->db->escape($username) . "'");
-	
+
 		return $query->row;
 	}
-		
+
 	public function getUserByCode($code) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user` WHERE code = '" . $this->db->escape($code) . "' AND code != ''");
 

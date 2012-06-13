@@ -148,7 +148,7 @@ $registry->set('session', $session);
 // Language Detection
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1'"); 
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1'");
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
@@ -199,7 +199,7 @@ $language->load($languages[$code]['filename']);
 $registry->set('language', $language);
 
 // Document
-$registry->set('document', new Document()); 		
+$registry->set('document', new Document());
 
 // Customer
 $registry->set('customer', new Customer($registry));
@@ -228,7 +228,7 @@ $registry->set('cart', new Cart($registry));
 
 //  Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
-		
+
 // Front Controller
 $controller = new Front($registry);
 

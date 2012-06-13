@@ -5,8 +5,8 @@ class ControllerCheckoutCheckout extends Controller {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 	  		$this->redirect($this->url->link('checkout/cart'));
     	}
-		
-		// Validate minimum quantity requirments.			
+
+		// Validate minimum quantity requirments.
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
@@ -80,14 +80,14 @@ class ControllerCheckoutCheckout extends Controller {
 
 		$this->response->setOutput($this->render());
   	}
-	
+
 	public function country() {
 		$json = array();
-		
+
 		$this->load->model('localisation/country');
 
     	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
-		
+
 		if ($country_info) {
 			$this->load->model('localisation/zone');
 
@@ -99,10 +99,10 @@ class ControllerCheckoutCheckout extends Controller {
 				'address_format'    => $country_info['address_format'],
 				'postcode_required' => $country_info['postcode_required'],
 				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']		
+				'status'            => $country_info['status']
 			);
 		}
-		
+
 		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -188,7 +188,7 @@ class ControllerStep3 extends Controller {
 			'footer'
 		);
 
-		$this->response->setOutput($this->render());		
+		$this->response->setOutput($this->render());
 	}
 
 //TODO: перевести ошибки!

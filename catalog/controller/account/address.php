@@ -67,12 +67,12 @@ class ControllerAccountAddress extends Controller {
 				unset($this->session->data['shipping_method']);
                                 unset($this->session->data['shipping_methods']);
                         }
-			
+
 			// Default Payment Address
                         if (isset($this->session->data['payment_address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address_id'])) {
 				$this->session->data['payment_country_id'] = $this->request->post['country_id'];
 				$this->session->data['payment_zone_id'] = $this->request->post['zone_id'];
-	  			
+
 				unset($this->session->data['payment_method']);
                                 unset($this->session->data['payment_methods']);
                         }
@@ -110,7 +110,7 @@ class ControllerAccountAddress extends Controller {
                                 unset($this->session->data['shipping_method']);
                                 unset($this->session->data['shipping_methods']);
                         }
-			
+
 			// Default Payment Address
                         if (isset($this->session->data['payment_address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address_id'])) {
 				unset($this->session->data['payment_address_id']);
@@ -283,7 +283,7 @@ class ControllerAccountAddress extends Controller {
         $this->data['entry_lastname'] = $this->language->get('entry_lastname');
         $this->data['entry_company'] = $this->language->get('entry_company');
 		$this->data['entry_company_id'] = $this->language->get('entry_company_id');
-		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');		
+		$this->data['entry_tax_id'] = $this->language->get('entry_tax_id');
         $this->data['entry_address_1'] = $this->language->get('entry_address_1');
         $this->data['entry_address_2'] = $this->language->get('entry_address_2');
         $this->data['entry_postcode'] = $this->language->get('entry_postcode');
@@ -312,13 +312,13 @@ class ControllerAccountAddress extends Controller {
 		} else {
 			$this->data['error_company_id'] = '';
 		}
-		
+
   		if (isset($this->error['tax_id'])) {
 			$this->data['error_tax_id'] = $this->error['tax_id'];
 		} else {
 			$this->data['error_tax_id'] = '';
 		}
-										
+
                 if (isset($this->error['address_1'])) {
                 $this->data['error_address_1'] = $this->error['address_1'];
                 } else {
@@ -382,39 +382,39 @@ class ControllerAccountAddress extends Controller {
                 } else {
                 $this->data['company'] = '';
         }
-		
+
 		if (isset($this->request->post['company_id'])) {
     		$this->data['company_id'] = $this->request->post['company_id'];
     	} elseif (!empty($address_info)) {
-			$this->data['company_id'] = $address_info['company_id'];			
+			$this->data['company_id'] = $address_info['company_id'];
 		} else {
 			$this->data['company_id'] = '';
 		}
-		
+
 		if (isset($this->request->post['tax_id'])) {
     		$this->data['tax_id'] = $this->request->post['tax_id'];
     	} elseif (!empty($address_info)) {
-			$this->data['tax_id'] = $address_info['tax_id'];			
+			$this->data['tax_id'] = $address_info['tax_id'];
 		} else {
 			$this->data['tax_id'] = '';
 		}
-		
+
 		$this->load->model('account/customer_group');
-		
+
 		$customer_group_info = $this->model_account_customer_group->getCustomerGroup($this->customer->getCustomerGroupId());
-		
+
 		if ($customer_group_info) {
 			$this->data['company_id_display'] = $customer_group_info['company_id_display'];
 		} else {
 			$this->data['company_id_display'] = '';
 		}
-		
+
 		if ($customer_group_info) {
 			$this->data['tax_id_display'] = $customer_group_info['tax_id_display'];
 		} else {
 			$this->data['tax_id_display'] = '';
 		}
-								
+
         if (isset($this->request->post['address_1'])) {
                 $this->data['address_1'] = $this->request->post['address_1'];
     	} elseif (!empty($address_info)) {
@@ -520,13 +520,13 @@ class ControllerAccountAddress extends Controller {
 			if ($country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2) || (utf8_strlen($this->request->post['postcode']) > 10)) {
 				$this->error['postcode'] = $this->language->get('error_postcode');
 			}
-			
+
 			// VAT Validation
 			$this->load->helper('vat');
-			
+
 			if ($this->config->get('config_vat') && $this->request->post['tax_id'] && (vat_validation($country_info['iso_code_2'], $this->request->post['tax_id']) == 'invalid')) {
 				$this->error['tax_id'] = $this->language->get('error_vat');
-			}		
+			}
                 }
 
         if ($this->request->post['country_id'] == '') {
@@ -562,11 +562,11 @@ class ControllerAccountAddress extends Controller {
 
 	public function country() {
 		$json = array();
-		
+
 		$this->load->model('localisation/country');
 
     	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
-		
+
 		if ($country_info) {
 			$this->load->model('localisation/zone');
 
@@ -578,7 +578,7 @@ class ControllerAccountAddress extends Controller {
 				'address_format'    => $country_info['address_format'],
 				'postcode_required' => $country_info['postcode_required'],
 				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']		
+				'status'            => $country_info['status']
 			);
 		}
 

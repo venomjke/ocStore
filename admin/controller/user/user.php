@@ -440,9 +440,9 @@ class ControllerUserUser extends Controller {
     	if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 20)) {
       		$this->error['username'] = $this->language->get('error_username');
     	}
-		
+
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
-		
+
 		if (!isset($this->request->get['user_id'])) {
 			if ($user_info) {
 				$this->error['warning'] = $this->language->get('error_exists');
@@ -452,7 +452,7 @@ class ControllerUserUser extends Controller {
 				$this->error['warning'] = $this->language->get('error_exists');
 			}
 		}
-		
+
     	if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
     	}

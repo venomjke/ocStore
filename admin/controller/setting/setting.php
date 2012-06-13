@@ -25,7 +25,7 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_yes'] = $this->language->get('text_yes');
@@ -41,9 +41,9 @@ class ControllerSettingSetting extends Controller {
 		$this->data['text_return'] = $this->language->get('text_return');
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
  		$this->data['text_browse'] = $this->language->get('text_browse');
-		$this->data['text_clear'] = $this->language->get('text_clear');	
-		$this->data['text_shipping'] = $this->language->get('text_shipping');	
-		$this->data['text_payment'] = $this->language->get('text_payment');					
+		$this->data['text_clear'] = $this->language->get('text_clear');
+		$this->data['text_shipping'] = $this->language->get('text_shipping');
+		$this->data['text_payment'] = $this->language->get('text_payment');
 		$this->data['text_mail'] = $this->language->get('text_mail');
 		$this->data['text_smtp'] = $this->language->get('text_smtp');
 
@@ -122,7 +122,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
 		$this->data['entry_use_ssl'] = $this->language->get('entry_use_ssl');
 		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
-		
+
 		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
 		$this->data['entry_seo_url'] = $this->language->get('entry_seo_url');
 		$this->data['entry_seo_url_type'] = $this->language->get('entry_seo_url_type');
@@ -210,7 +210,7 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['error_customer_group_display'] = '';
 		}
-				
+
   		if (isset($this->error['voucher_min'])) {
 			$this->data['error_voucher_min'] = $this->error['voucher_min'];
 		} else {
@@ -228,7 +228,7 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['error_image_category'] = '';
 		}
-				
+
  		if (isset($this->error['image_thumb'])) {
 			$this->data['error_image_thumb'] = $this->error['image_thumb'];
 		} else {
@@ -246,7 +246,7 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['error_image_product'] = '';
 		}
-		
+
  		if (isset($this->error['image_additional'])) {
 			$this->data['error_image_additional'] = $this->error['image_additional'];
 		} else {
@@ -320,7 +320,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['action'] = $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		$this->data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->post['config_name'])) {
@@ -480,7 +480,7 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_product_count'] = $this->config->get('config_product_count');
 		}
-				
+
 		if (isset($this->request->post['config_review_status'])) {
 			$this->data['config_review_status'] = $this->request->post['config_review_status'];
 		} else {
@@ -516,25 +516,25 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_tax'] = $this->config->get('config_tax');
 		}
-		
+
 		if (isset($this->request->post['config_vat'])) {
 			$this->data['config_vat'] = $this->request->post['config_vat'];
 		} else {
-			$this->data['config_vat'] = $this->config->get('config_vat');			
+			$this->data['config_vat'] = $this->config->get('config_vat');
 		}
-				
+
 		if (isset($this->request->post['config_tax_default'])) {
 			$this->data['config_tax_default'] = $this->request->post['config_tax_default'];
 		} else {
-			$this->data['config_tax_default'] = $this->config->get('config_tax_default');			
-		}	
-			
+			$this->data['config_tax_default'] = $this->config->get('config_tax_default');
+		}
+
 		if (isset($this->request->post['config_tax_customer'])) {
 			$this->data['config_tax_customer'] = $this->request->post['config_tax_customer'];
 		} else {
-			$this->data['config_tax_customer'] = $this->config->get('config_tax_customer');			
-		}	
-								
+			$this->data['config_tax_customer'] = $this->config->get('config_tax_customer');
+		}
+
 		if (isset($this->request->post['config_customer_group_id'])) {
 			$this->data['config_customer_group_id'] = $this->request->post['config_customer_group_id'];
 		} else {
@@ -548,17 +548,17 @@ class ControllerSettingSetting extends Controller {
 		if (isset($this->request->post['config_customer_group_display'])) {
 			$this->data['config_customer_group_display'] = $this->request->post['config_customer_group_display'];
 		} elseif ($this->config->get('config_customer_group_display')) {
-			$this->data['config_customer_group_display'] = $this->config->get('config_customer_group_display');	
+			$this->data['config_customer_group_display'] = $this->config->get('config_customer_group_display');
 		} else {
-			$this->data['config_customer_group_display'] = array();			
+			$this->data['config_customer_group_display'] = array();
 		}
-								
+
 		if (isset($this->request->post['config_customer_price'])) {
 			$this->data['config_customer_price'] = $this->request->post['config_customer_price'];
 		} else {
 			$this->data['config_customer_price'] = $this->config->get('config_customer_price');
 		}
-						
+
 		if (isset($this->request->post['config_account_id'])) {
 			$this->data['config_account_id'] = $this->request->post['config_account_id'];
 		} else {
@@ -704,13 +704,13 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_image_category_width'] = $this->config->get('config_image_category_width');
 		}
-		
+
 		if (isset($this->request->post['config_image_category_height'])) {
 			$this->data['config_image_category_height'] = $this->request->post['config_image_category_height'];
 		} else {
 			$this->data['config_image_category_height'] = $this->config->get('config_image_category_height');
 		}
-				
+
 		if (isset($this->request->post['config_image_thumb_width'])) {
 			$this->data['config_image_thumb_width'] = $this->request->post['config_image_thumb_width'];
 		} else {
@@ -872,29 +872,29 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		if (isset($this->request->post['config_fraud_detection'])) {
-			$this->data['config_fraud_detection'] = $this->request->post['config_fraud_detection']; 
+			$this->data['config_fraud_detection'] = $this->request->post['config_fraud_detection'];
 		} else {
 			$this->data['config_fraud_detection'] = $this->config->get('config_fraud_detection');
-		}	
-				
+		}
+
 		if (isset($this->request->post['config_fraud_key'])) {
-			$this->data['config_fraud_key'] = $this->request->post['config_fraud_key']; 
+			$this->data['config_fraud_key'] = $this->request->post['config_fraud_key'];
 		} else {
 			$this->data['config_fraud_key'] = $this->config->get('config_fraud_key');
-		}		
+		}
 
 		if (isset($this->request->post['config_fraud_score'])) {
-			$this->data['config_fraud_score'] = $this->request->post['config_fraud_score']; 
+			$this->data['config_fraud_score'] = $this->request->post['config_fraud_score'];
 		} else {
 			$this->data['config_fraud_score'] = $this->config->get('config_fraud_score');
-		}	
-			
+		}
+
 		if (isset($this->request->post['config_fraud_status_id'])) {
-			$this->data['config_fraud_status_id'] = $this->request->post['config_fraud_status_id']; 
+			$this->data['config_fraud_status_id'] = $this->request->post['config_fraud_status_id'];
 		} else {
 			$this->data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
-		}		
-				
+		}
+
 		if (isset($this->request->post['config_use_ssl'])) {
 			$this->data['config_use_ssl'] = $this->request->post['config_use_ssl'];
 		} else {
@@ -1061,20 +1061,20 @@ class ControllerSettingSetting extends Controller {
 
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
 			$this->error['customer_group_display'] = $this->language->get('error_customer_group_display');
-		}	
-		
+		}
+
 		if (!$this->request->post['config_voucher_min']) {
 			$this->error['voucher_min'] = $this->language->get('error_voucher_min');
-		}	
-		
+		}
+
 		if (!$this->request->post['config_voucher_max']) {
 			$this->error['voucher_max'] = $this->language->get('error_voucher_max');
-		}	
-								
+		}
+
 		if (!$this->request->post['config_image_category_width'] || !$this->request->post['config_image_category_height']) {
 			$this->error['image_category'] = $this->language->get('error_image_category');
-		} 
-				
+		}
+
 		if (!$this->request->post['config_image_thumb_width'] || !$this->request->post['config_image_thumb_height']) {
 			$this->error['image_thumb'] = $this->language->get('error_image_thumb');
 		}
@@ -1158,10 +1158,10 @@ class ControllerSettingSetting extends Controller {
 				'address_format'    => $country_info['address_format'],
 				'postcode_required' => $country_info['postcode_required'],
 				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']		
+				'status'            => $country_info['status']
 			);
 		}
-		
+
 		$this->response->setOutput(json_encode($json));
 	}
 }

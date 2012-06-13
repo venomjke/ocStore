@@ -48,5 +48,5 @@ class PHPExcel_Calculation_Exception extends Exception {
 		$e->line = $line;
 		$e->file = $file;
 		throw $e;
-	}	
+	}
 }

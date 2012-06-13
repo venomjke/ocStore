@@ -1,7 +1,7 @@
-<?php 
-class ControllerToolExport extends Controller { 
+<?php
+class ControllerToolExport extends Controller {
 	private $error = array();
-	
+
 	public function index() {
 		$this->load->language('tool/export');
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -32,15 +32,15 @@ class ControllerToolExport extends Controller {
 		} else {
 			$this->data['error_warning'] = '';
 		}
-		
+
 		if (isset($this->session->data['success'])) {
 			$this->data['success'] = $this->session->data['success'];
-		
+
 			unset($this->session->data['success']);
 		} else {
 			$this->data['success'] = '';
 		}
-		
+
 		$this->data['breadcrumbs'] = array();
 
 		$this->data['breadcrumbs'][] = array(
@@ -54,7 +54,7 @@ class ControllerToolExport extends Controller {
 			'href'      => $this->url->link('tool/export', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
-		
+
 		$this->data['action'] = $this->url->link('tool/export', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['export'] = $this->url->link('tool/export/download', 'token=' . $this->session->data['token'], 'SSL');
@@ -91,7 +91,7 @@ class ControllerToolExport extends Controller {
 		if (!$this->user->hasPermission('modify', 'tool/export')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
+
 		if (!$this->error) {
 			return TRUE;
 		} else {

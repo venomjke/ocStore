@@ -11,7 +11,7 @@ class ModelAccountOrder extends Model {
 				$payment_iso_code_3 = $country_query->row['iso_code_3'];
 			} else {
 				$payment_iso_code_2 = '';
-				$payment_iso_code_3 = '';				
+				$payment_iso_code_3 = '';
 			}
 
 			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['payment_zone_id'] . "'");
@@ -29,7 +29,7 @@ class ModelAccountOrder extends Model {
 				$shipping_iso_code_3 = $country_query->row['iso_code_3'];
 			} else {
 				$shipping_iso_code_2 = '';
-				$shipping_iso_code_3 = '';				
+				$shipping_iso_code_3 = '';
 			}
 
 			$zone_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE zone_id = '" . (int)$order_query->row['shipping_zone_id'] . "'");
@@ -54,7 +54,7 @@ class ModelAccountOrder extends Model {
 				'fax'                     => $order_query->row['fax'],
 				'email'                   => $order_query->row['email'],
 				'payment_firstname'       => $order_query->row['payment_firstname'],
-				'payment_lastname'        => $order_query->row['payment_lastname'],				
+				'payment_lastname'        => $order_query->row['payment_lastname'],
 				'payment_company'         => $order_query->row['payment_company'],
 				'payment_address_1'       => $order_query->row['payment_address_1'],
 				'payment_address_2'       => $order_query->row['payment_address_2'],
@@ -64,7 +64,7 @@ class ModelAccountOrder extends Model {
 				'payment_zone'            => $order_query->row['payment_zone'],
 				'payment_zone_code'       => $payment_zone_code,
 				'payment_country_id'      => $order_query->row['payment_country_id'],
-				'payment_country'         => $order_query->row['payment_country'],	
+				'payment_country'         => $order_query->row['payment_country'],
 				'payment_iso_code_2'      => $payment_iso_code_2,
 				'payment_iso_code_3'      => $payment_iso_code_3,
 				'payment_address_format'  => $order_query->row['payment_address_format'],
@@ -122,13 +122,13 @@ class ModelAccountOrder extends Model {
 
 		return $query->rows;
 	}
-	
+
 	public function getOrderVouchers($order_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE order_id = '" . (int)$order_id . "'");
-		
+
 		return $query->rows;
 	}
-	
+
 	public function getOrderTotals($order_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_total WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order");
 
@@ -158,12 +158,12 @@ class ModelAccountOrder extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function getTotalOrderVouchersByOrderId($order_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order_voucher` WHERE order_id = '" . (int)$order_id . "'");
-		
+
 		return $query->row['total'];
-	}	
-	
+	}
+
 }
 ?>

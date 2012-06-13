@@ -10,7 +10,7 @@ final class Sms16 extends SmsGate {
 		$data .= '<sender>' . $this->truncate($this->encode($this->from)) . '</sender>';
 		$data .= '<text>' . $this->encode($this->message) . '</text>';
 		$data .= '<abonent phone="' . $this->truncate($this->encode($this->to)) . '" number_sms="' . $number_sms++ . '"/>';
-			
+
 		if ($this->copy) {
 			$phones = explode(',', $this->copy);
 			foreach ($phones as $phone) {

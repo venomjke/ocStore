@@ -25,7 +25,7 @@ class ControllerCommonFileManager extends Controller {
 		$this->data['button_rename'] = $this->language->get('button_rename');
 		$this->data['button_upload'] = $this->language->get('button_upload');
 		$this->data['button_refresh'] = $this->language->get('button_refresh');
-		$this->data['button_submit'] = $this->language->get('button_submit'); 
+		$this->data['button_submit'] = $this->language->get('button_submit');
 
 		$this->data['error_select'] = $this->language->get('error_select');
 		$this->data['error_directory'] = $this->language->get('error_directory');
@@ -87,7 +87,7 @@ class ControllerCommonFileManager extends Controller {
 			}
 		}
 
-		$this->response->setOutput(json_encode($json));		
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function files() {
@@ -152,7 +152,7 @@ class ControllerCommonFileManager extends Controller {
 			ob_end_clean();
 		}
 
-		$this->response->setOutput(json_encode($json));	
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function create() {
@@ -340,7 +340,7 @@ class ControllerCommonFileManager extends Controller {
 			$json['success'] = $this->language->get('text_copy');
 		}
 
-		$this->response->setOutput(json_encode($json));	
+		$this->response->setOutput(json_encode($json));
 	}
 
 	function recursiveCopy($source, $destination) {
@@ -429,7 +429,7 @@ class ControllerCommonFileManager extends Controller {
 		if (isset($this->request->post['directory'])) {
 			if (isset($this->request->files['image']) && $this->request->files['image']['tmp_name']) {
 				$filename = basename(html_entity_decode($this->request->files['image']['name'], ENT_QUOTES, 'UTF-8'));
-				
+
 				if ((strlen($filename) < 3) || (strlen($filename) > 255)) {
 					$json['error'] = $this->language->get('error_filename');
 				}
@@ -484,7 +484,7 @@ class ControllerCommonFileManager extends Controller {
     	}
 
 		if (!isset($json['error'])) {
-			if (@move_uploaded_file($this->request->files['image']['tmp_name'], $directory . '/' . $filename)) {		
+			if (@move_uploaded_file($this->request->files['image']['tmp_name'], $directory . '/' . $filename)) {
 				$json['success'] = $this->language->get('text_uploaded');
 			} else {
 				$json['error'] = $this->language->get('error_uploaded');

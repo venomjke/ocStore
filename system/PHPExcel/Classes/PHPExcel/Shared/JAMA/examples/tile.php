@@ -7,7 +7,7 @@ include "../Matrix.php";
 * creates a larger matrix than the original data X. Example, if
 * X is to be tiled in a [3 x 4] manner, then:
 *
-*     /            \
+*     /
 *     | X  X  X  X |
 * C = | X  X  X  X |
 *     | X  X  X  X |

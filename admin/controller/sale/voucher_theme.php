@@ -263,8 +263,8 @@ class ControllerSaleVoucherTheme extends Controller {
 
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
  		$this->data['text_browse'] = $this->language->get('text_browse');
-		$this->data['text_clear'] = $this->language->get('text_clear');			
-   	
+		$this->data['text_clear'] = $this->language->get('text_clear');
+
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 
@@ -322,7 +322,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		} else {
 			$this->data['action'] = $this->url->link('sale/voucher_theme/update', 'token=' . $this->session->data['token'] . '&voucher_theme_id=' . $this->request->get['voucher_theme_id'] . $url, 'SSL');
 		}
-					
+
 		$this->data['cancel'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['voucher_theme_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
@@ -358,7 +358,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		} else {
 			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		}
-		
+
 		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 
 		$this->template = 'sale/voucher_theme_form.tpl';

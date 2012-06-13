@@ -1541,7 +1541,7 @@ class PHPExcel_Writer_Excel5_Parser
 	 * The following tree:
 	 *
 	 *    +
-	 *   / \
+	 *   /
 	 *  2   3
 	 *
 	 * produces: "23+"
@@ -1549,9 +1549,9 @@ class PHPExcel_Writer_Excel5_Parser
 	 * The following tree:
 	 *
 	 *    +
-	 *   / \
+	 *   /
 	 *  3   *
-	 *     / \
+	 *     /
 	 *    6   A1
 	 *
 	 * produces: "36A1*+"

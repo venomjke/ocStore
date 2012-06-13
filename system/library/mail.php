@@ -83,7 +83,7 @@ class Mail {
 		$header = '';
 
 		$header .= 'MIME-Version: 1.0' . $this->newline;
-		
+
 		if ($this->protocol != 'mail') {
 			$header .= 'To: ' . $to . $this->newline;
 			$header .= 'Subject: ' . $this->subject . $this->newline;
@@ -126,7 +126,7 @@ class Mail {
 				$handle = fopen($attachment, 'r');
 
 				$content = fread($handle, filesize($attachment));
-				
+
 				fclose($handle);
 
 				$message .= '--' . $boundary . $this->newline;

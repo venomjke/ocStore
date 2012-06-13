@@ -64,7 +64,7 @@ class ControllerFeedYandexMarket extends Controller {
 			// Товарные предложения
 			$in_stock_id = $this->config->get('yandex_market_in_stock'); // id статуса товара "В наличии"
 			$out_of_stock_id = $this->config->get('yandex_market_out_of_stock'); // id статуса товара "Нет на складе"
-			$vendor_required = false; // true - только товары у которых задан производитель, необходимо для 'vendor.model' 
+			$vendor_required = false; // true - только товары у которых задан производитель, необходимо для 'vendor.model'
 			$products = $this->model_export_yandex_market->getProduct($allowed_categories, $out_of_stock_id, $vendor_required);
 
 			foreach ($products as $product) {
@@ -452,7 +452,7 @@ class ControllerFeedYandexMarket extends Controller {
 				$new_path = $this->categories[$category_id]['id'];
 			} else {
 				$new_path = $this->categories[$category_id]['id'] . '_' . $current_path;
-			}	
+			}
 
 			if (isset($this->categories[$category_id]['parentId'])) {
 				return $this->getPath($this->categories[$category_id]['parentId'], $new_path);

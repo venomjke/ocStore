@@ -21,10 +21,10 @@ class ModelSaleVoucher extends Model {
 
 	public function getVoucherByCode($code) {
       	$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "voucher WHERE code = '" . $this->db->escape($code) . "'");
-		
+
 		return $query->row;
 	}
-		
+
 	public function getVouchers($data = array()) {
 		$sql = "SELECT v.voucher_id, v.code, v.from_name, v.from_email, v.to_name, v.to_email, (SELECT vtd.name FROM " . DB_PREFIX . "voucher_theme_description vtd WHERE vtd.voucher_theme_id = v.voucher_theme_id AND vtd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS theme, v.amount, v.status, v.date_added FROM " . DB_PREFIX . "voucher v";
 
@@ -68,7 +68,7 @@ class ModelSaleVoucher extends Model {
 
 		return $query->rows;
 	}
-		
+
 	public function sendVoucher($voucher_id) {
 		$voucher_info = $this->getVoucher($voucher_id);
 
@@ -128,7 +128,7 @@ class ModelSaleVoucher extends Model {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($order_info['store_name']);
 				$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $voucher_info['from_name']), ENT_QUOTES, 'UTF-8'));
-				$mail->setHtml($template->fetch('mail/voucher.tpl'));				
+				$mail->setHtml($template->fetch('mail/voucher.tpl'));
 				$mail->send();
 
 			// If voucher does not belong to an order

@@ -17,7 +17,7 @@ class ControllerTotalShipping extends Controller {
 			$this->data['button_shipping'] = $this->language->get('button_shipping');
 
 			if (isset($this->session->data['guest']['shipping']['country_id'])) {
-				$this->data['country_id'] = $this->session->data['guest']['shipping']['country_id'];			  	
+				$this->data['country_id'] = $this->session->data['guest']['shipping']['country_id'];
 			} else {
 				$this->data['country_id'] = $this->config->get('config_country_id');
 			}
@@ -27,13 +27,13 @@ class ControllerTotalShipping extends Controller {
 			$this->data['countries'] = $this->model_localisation_country->getCountries();
 
 			if (isset($this->session->data['guest']['shipping']['zone_id'])) {
-				$this->data['zone_id'] = $this->session->data['guest']['shipping']['zone_id'];			
+				$this->data['zone_id'] = $this->session->data['guest']['shipping']['zone_id'];
 			} else {
 				$this->data['zone_id'] = '';
 			}
 
 			if (isset($this->session->data['guest']['shipping']['postcode'])) {
-				$this->data['postcode'] = $this->session->data['guest']['shipping']['postcode'];					
+				$this->data['postcode'] = $this->session->data['guest']['shipping']['postcode'];
 			} else {
 				$this->data['postcode'] = '';
 			}
@@ -178,7 +178,7 @@ class ControllerTotalShipping extends Controller {
 			}
 		}
 
-		$this->response->setOutput(json_encode($json));						
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function calculate() {
@@ -204,7 +204,7 @@ class ControllerTotalShipping extends Controller {
 			$json['redirect'] = $this->url->link('checkout/cart', '', 'SSL');
 		}
 
-		$this->response->setOutput(json_encode($json));			
+		$this->response->setOutput(json_encode($json));
 	}
 
   	public function zone() {

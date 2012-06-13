@@ -22,13 +22,13 @@ class ModelSaleAffiliate extends Model {
 
 		return $query->row;
 	}
-	
+
 	public function getAffiliateByEmail($email) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "affiliate WHERE LCASE(email) = '" . $this->db->escape(strtolower($email)) . "'");
-	
+
 		return $query->row;
 	}
-			
+
 	public function getAffiliates($data = array()) {
 		$sql = "SELECT *, CONCAT(a.firstname, ' ', a.lastname) AS name, (SELECT SUM(at.amount) FROM " . DB_PREFIX . "affiliate_transaction at WHERE at.affiliate_id = a.affiliate_id GROUP BY at.affiliate_id) AS balance FROM " . DB_PREFIX . "affiliate a";
 

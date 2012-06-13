@@ -344,7 +344,7 @@ class ControllerCatalogProduct extends Controller {
    		);
 
 		$this->data['insert'] = $this->url->link('catalog/product/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['copy'] = $this->url->link('catalog/product/copy', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$this->data['copy'] = $this->url->link('catalog/product/copy', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['delete'] = $this->url->link('catalog/product/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$this->data['products'] = array();
@@ -759,7 +759,7 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		$this->data['token'] = $this->session->data['token'];
-		
+
 		$this->load->model('localisation/language');
 
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();

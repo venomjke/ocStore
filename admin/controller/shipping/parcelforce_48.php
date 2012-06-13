@@ -78,7 +78,7 @@ class ControllerShippingParcelforce48 extends Controller {
 		} else {
 			$this->data['parcelforce_48_rate'] = '10:15.99,12:19.99,14:20.99,16:21.99,18:21.99,20:21.99,22:26.99,24:30.99,26:34.99,28:38.99,30:42.99,35:52.99,40:62.99,45:72.99,50:82.99,55:92.99,60:102.99,65:112.99,70:122.99,75:132.99,80:142.99,85:152.99,90:162.99,95:172.99,100:182.99';
 		}
-		
+
 		if (isset($this->request->post['parcelforce_48_insurance'])) {
 			$this->data['parcelforce_48_insurance'] = $this->request->post['parcelforce_48_insurance'];
 		} elseif ($this->config->get('parcelforce_48_insurance')) {
@@ -86,7 +86,7 @@ class ControllerShippingParcelforce48 extends Controller {
 		} else {
 			$this->data['parcelforce_48_insurance'] = '150:0,500:12,1000:24,1500:36,2000:48,2500:60';
 		}
-								
+
 		if (isset($this->request->post['parcelforce_48_display_weight'])) {
 			$this->data['parcelforce_48_display_weight'] = $this->request->post['parcelforce_48_display_weight'];
 		} else {

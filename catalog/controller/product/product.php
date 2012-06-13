@@ -254,7 +254,7 @@ class ControllerProductProduct extends Controller {
 			$this->data['options'] = array();
 
 			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
-				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') { 
+				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') {
 					$option_value_data = array();
 
 					foreach ($option['option_value'] as $option_value) {
@@ -506,22 +506,22 @@ class ControllerProductProduct extends Controller {
 			if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 25)) {
 				$json['error'] = $this->language->get('error_name');
 			}
-			
+
 			if ((utf8_strlen($this->request->post['text']) < 25) || (utf8_strlen($this->request->post['text']) > 1000)) {
 				$json['error'] = $this->language->get('error_text');
 			}
-	
+
 			if (empty($this->request->post['rating'])) {
 				$json['error'] = $this->language->get('error_rating');
 			}
-	
+
 			if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
 				$json['error'] = $this->language->get('error_captcha');
 			}
 
 			if (!isset($json['error'])) {
 				$this->model_catalog_review->addReview($this->request->get['product_id'], $this->request->post);
-				
+
 				$json['success'] = $this->language->get('text_success');
 			}
 		}
@@ -546,7 +546,7 @@ class ControllerProductProduct extends Controller {
 
 		if (!empty($this->request->files['file']['name'])) {
 			$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8')));
-			
+
 			if ((strlen($filename) < 3) || (strlen($filename) > 64)) {
         		$json['error'] = $this->language->get('error_filename');
 	  		}
@@ -583,7 +583,7 @@ class ControllerProductProduct extends Controller {
 			$json['success'] = $this->language->get('text_upload');
 		}
 
-		$this->response->setOutput(json_encode($json));		
+		$this->response->setOutput(json_encode($json));
 	}
 }
 ?>

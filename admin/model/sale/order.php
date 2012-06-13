@@ -123,20 +123,20 @@ class ModelSaleOrder extends Model {
 		// Affiliate
 		$affiliate_id = 0;
 		$commission = 0;
-		
+
 		if (!empty($this->request->post['affiliate_id'])) {
 			$this->load->model('sale/affiliate');
-			
+
 			$affiliate_info = $this->model_sale_affiliate->getAffiliate($this->request->post['affiliate_id']);
-			
+
 			if ($affiliate_info) {
-				$affiliate_id = $affiliate_info['affiliate_id']; 
-				$commission = ($total / 100) * $affiliate_info['commission']; 
+				$affiliate_id = $affiliate_info['affiliate_id'];
+				$commission = ($total / 100) * $affiliate_info['commission'];
 			}
 		}
-		
-		// Update order total			 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET total = '" . (float)$total . "', affiliate_id = '" . (int)$affiliate_id . "', commission = '" . (float)$commission . "' WHERE order_id = '" . (int)$order_id . "'"); 	
+
+		// Update order total
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET total = '" . (float)$total . "', affiliate_id = '" . (int)$affiliate_id . "', commission = '" . (float)$commission . "' WHERE order_id = '" . (int)$order_id . "'");
 	}
 
 	public function editOrder($order_id, $data) {
@@ -236,19 +236,19 @@ TODO: Добавить прибавление товара на склад пр�
 		// Affiliate
 		$affiliate_id = 0;
 		$commission = 0;
-		
+
 		if (!empty($this->request->post['affiliate_id'])) {
 			$this->load->model('sale/affiliate');
-			
+
 			$affiliate_info = $this->model_sale_affiliate->getAffiliate($this->request->post['affiliate_id']);
-			
+
 			if ($affiliate_info) {
-				$affiliate_id = $affiliate_info['affiliate_id']; 
-				$commission = ($total / 100) * $affiliate_info['commission']; 
+				$affiliate_id = $affiliate_info['affiliate_id'];
+				$commission = ($total / 100) * $affiliate_info['commission'];
 			}
 		}
-				 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET total = '" . (float)$total . "', affiliate_id = '" . (int)$affiliate_id . "', commission = '" . (float)$commission . "' WHERE order_id = '" . (int)$order_id . "'"); 
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET total = '" . (float)$total . "', affiliate_id = '" . (int)$affiliate_id . "', commission = '" . (float)$commission . "' WHERE order_id = '" . (int)$order_id . "'");
 	}
 
 	public function deleteOrder($order_id) {
@@ -309,7 +309,7 @@ TODO: Добавить прибавление товара на склад пр�
 			} else {
 				$payment_zone_code = '';
 			}
-			
+
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['shipping_country_id'] . "'");
 
 			if ($country_query->num_rows) {
@@ -393,7 +393,7 @@ TODO: Добавить прибавление товара на склад пр�
 				'payment_iso_code_3'      => $payment_iso_code_3,
 				'payment_address_format'  => $order_query->row['payment_address_format'],
 				'payment_method'          => $order_query->row['payment_method'],
-				'payment_code'            => $order_query->row['payment_code'],				
+				'payment_code'            => $order_query->row['payment_code'],
 				'shipping_firstname'      => $order_query->row['shipping_firstname'],
 				'shipping_lastname'       => $order_query->row['shipping_lastname'],
 				'shipping_company'        => $order_query->row['shipping_company'],

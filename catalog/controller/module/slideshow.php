@@ -13,7 +13,7 @@ class ControllerModuleSlideshow extends Controller {
 		} else {
 			$this->document->addStyle('catalog/view/theme/default/stylesheet/slideshow.css');
 		}
-		
+
 		$this->data['width'] = $setting['width'];
 		$this->data['height'] = $setting['height'];
 
@@ -21,7 +21,7 @@ class ControllerModuleSlideshow extends Controller {
 
 		if (isset($setting['banner_id'])) {
 			$results = $this->model_design_banner->getBanner($setting['banner_id']);
-			  
+
 			foreach ($results as $result) {
 				if (file_exists(DIR_IMAGE . $result['image'])) {
 					$this->data['banners'][] = array(

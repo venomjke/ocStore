@@ -30,13 +30,13 @@ class ControllerPaymentPPStandard extends Controller {
 
 				foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
-						$value = $option['option_value'];	
+						$value = $option['option_value'];
 					} else {
 						$filename = $this->encryption->decrypt($option['option_value']);
-						
+
 						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
 					}
-										
+
 					$option_data[] = array(
 						'name'  => $option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)

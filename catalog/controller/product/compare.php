@@ -10,19 +10,19 @@ class ControllerProductCompare extends Controller {
 		if (!isset($this->session->data['compare'])) {
 			$this->session->data['compare'] = array();
 		}
-				
+
 		if (isset($this->request->get['remove'])) {
 			$key = array_search($this->request->get['remove'], $this->session->data['compare']);
-				
+
 			if ($key !== false) {
 				unset($this->session->data['compare'][$key]);
 			}
-		
+
 			$this->session->data['success'] = $this->language->get('text_remove');
-		
+
 			$this->redirect($this->url->link('product/compare'));
 		}
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->data['breadcrumbs'] = array();
@@ -32,10 +32,10 @@ class ControllerProductCompare extends Controller {
 			'href'      => $this->url->link('common/home'),
 			'separator' => false
 		);
-				
+
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('product/compare'),			
+			'href'      => $this->url->link('product/compare'),
 			'separator' => $this->language->get('text_separator')
 		);
 
@@ -60,14 +60,14 @@ class ControllerProductCompare extends Controller {
 
 		if (isset($this->session->data['success'])) {
 			$this->data['success'] = $this->session->data['success'];
-			
+
 			unset($this->session->data['success']);
 		} else {
 			$this->data['success'] = '';
 		}
-								
+
 		$this->data['products'] = array();
-		
+
 		$this->data['attribute_groups'] = array();
 
 		foreach ($this->session->data['compare'] as $key => $product_id) {

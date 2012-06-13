@@ -304,7 +304,7 @@ class ControllerAccountReturn extends Controller {
 
 			$this->redirect($this->url->link('account/return/success', '', 'SSL'));
     	}
-							
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
       	$this->data['breadcrumbs'] = array();
@@ -413,19 +413,19 @@ class ControllerAccountReturn extends Controller {
 		}
 
 		$this->data['action'] = $this->url->link('account/return/insert', '', 'SSL');
-	
+
 		$this->load->model('account/order');
-		
+
 		if (isset($this->request->get['order_id'])) {
 			$order_info = $this->model_account_order->getOrder($this->request->get['order_id']);
 		}
-		
+
 		$this->load->model('catalog/product');
-		
+
 		if (isset($this->request->get['product_id'])) {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 		}
-		
+
     	if (isset($this->request->post['order_id'])) {
       		$this->data['order_id'] = $this->request->post['order_id'];
 		} elseif (!empty($order_info)) {
@@ -445,7 +445,7 @@ class ControllerAccountReturn extends Controller {
 		if (isset($this->request->post['firstname'])) {
     		$this->data['firstname'] = $this->request->post['firstname'];
 		} elseif (!empty($order_info)) {
-			$this->data['firstname'] = $order_info['firstname'];	
+			$this->data['firstname'] = $order_info['firstname'];
 		} else {
 			$this->data['firstname'] = $this->customer->getFirstName();
 		}
@@ -461,7 +461,7 @@ class ControllerAccountReturn extends Controller {
 		if (isset($this->request->post['email'])) {
     		$this->data['email'] = $this->request->post['email'];
 		} elseif (!empty($order_info)) {
-			$this->data['email'] = $order_info['email'];				
+			$this->data['email'] = $order_info['email'];
 		} else {
 			$this->data['email'] = $this->customer->getEmail();
 		}
@@ -469,7 +469,7 @@ class ControllerAccountReturn extends Controller {
 		if (isset($this->request->post['telephone'])) {
     		$this->data['telephone'] = $this->request->post['telephone'];
 		} elseif (!empty($order_info)) {
-			$this->data['telephone'] = $order_info['telephone'];				
+			$this->data['telephone'] = $order_info['telephone'];
 		} else {
 			$this->data['telephone'] = $this->customer->getTelephone();
 		}
@@ -477,7 +477,7 @@ class ControllerAccountReturn extends Controller {
 		if (isset($this->request->post['product'])) {
     		$this->data['product'] = $this->request->post['product'];
 		} elseif (!empty($product_info)) {
-			$this->data['product'] = $product_info['name'];				
+			$this->data['product'] = $product_info['name'];
 		} else {
 			$this->data['product'] = '';
 		}
@@ -485,7 +485,7 @@ class ControllerAccountReturn extends Controller {
 		if (isset($this->request->post['model'])) {
     		$this->data['model'] = $this->request->post['model'];
 		} elseif (!empty($product_info)) {
-			$this->data['model'] = $product_info['model'];				
+			$this->data['model'] = $product_info['model'];
 		} else {
 			$this->data['model'] = '';
 		}
@@ -494,30 +494,30 @@ class ControllerAccountReturn extends Controller {
     		$this->data['quantity'] = $this->request->post['quantity'];
 		} else {
 			$this->data['quantity'] = 1;
-		}	
-				
+		}
+
 		if (isset($this->request->post['opened'])) {
     		$this->data['opened'] = $this->request->post['opened'];
 		} else {
 			$this->data['opened'] = false;
-		}	
+		}
 
 		if (isset($this->request->post['return_reason_id'])) {
     		$this->data['return_reason_id'] = $this->request->post['return_reason_id'];
 		} else {
 			$this->data['return_reason_id'] = '';
-		}	
-														
+		}
+
 		$this->load->model('localisation/return_reason');
 
     	$this->data['return_reasons'] = $this->model_localisation_return_reason->getReturnReasons();
-		
+
 		if (isset($this->request->post['comment'])) {
     		$this->data['comment'] = $this->request->post['comment'];
 		} else {
 			$this->data['comment'] = '';
-		}	
-		
+		}
+
 		if (isset($this->request->post['captcha'])) {
 			$this->data['captcha'] = $this->request->post['captcha'];
 		} else {
@@ -609,18 +609,18 @@ class ControllerAccountReturn extends Controller {
     	if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
       		$this->error['telephone'] = $this->language->get('error_telephone');
     	}
-		
+
 		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
 			$this->error['product'] = $this->language->get('error_product');
-		}	
-		
+		}
+
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');
-		}							
+		}
 
 		if (empty($this->request->post['return_reason_id'])) {
 			$this->error['reason'] = $this->language->get('error_reason');
-		}	
+		}
 
     	if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
       		$this->error['captcha'] = $this->language->get('error_captcha');

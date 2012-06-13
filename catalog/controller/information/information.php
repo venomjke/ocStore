@@ -29,7 +29,7 @@ class ControllerInformationInformation extends Controller {
 			}
 			$this->document->setDescription($information_info['meta_description']);
 			$this->document->setKeywords($information_info['meta_keyword']);
-			
+
       		$this->data['breadcrumbs'][] = array(
         		'text'      => $information_info['title'],
 				'href'      => $this->url->link('information/information', 'information_id=' .  $information_id),

@@ -4,7 +4,7 @@ class ControllerProductManufacturer extends Controller {
 		$this->language->load('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
-		
+
 		$this->load->model('tool/image');
 
 		$this->document->setTitle($this->language->get('heading_title'));

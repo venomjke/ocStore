@@ -228,8 +228,8 @@ class ModelCatalogProduct extends Model {
 			$customer_group_id = $this->customer->getCustomerGroupId();
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
-		}	
-				
+		}
+
 		$product_data = $this->cache->get('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $customer_group_id . '.' . (int)$limit);
 
 		if (!$product_data) {
@@ -262,8 +262,8 @@ class ModelCatalogProduct extends Model {
 			$customer_group_id = $this->customer->getCustomerGroupId();
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
-		}	
-				
+		}
+
 		$product_data = $this->cache->get('product.bestseller.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'). '.' . $customer_group_id . '.' . (int)$limit);
 
 		if (!$product_data) {

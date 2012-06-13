@@ -2,7 +2,7 @@
 class ModelCheckoutVoucher extends Model {
 	public function addVoucher($order_id, $data) {
       	$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '1', date_added = NOW()");
-	
+
 		return $this->db->getLastId();
 	}
 
@@ -18,12 +18,12 @@ class ModelCheckoutVoucher extends Model {
 				if (!$order_query->num_rows) {
 					$status = false;
 				}
-				
+
 				$order_voucher_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_voucher` WHERE order_id = '" . (int)$voucher_query->row['order_id'] . "' AND voucher_id = '" . (int)$voucher_query->row['voucher_id'] . "'");
-			
+
 				if (!$order_voucher_query->num_rows) {
 					$status = false;
-				}				
+				}
 			}
 
 			$voucher_history_query = $this->db->query("SELECT SUM(amount) AS total FROM `" . DB_PREFIX . "voucher_history` vh WHERE vh.voucher_id = '" . (int)$voucher_query->row['voucher_id'] . "' GROUP BY vh.voucher_id");
@@ -114,7 +114,7 @@ class ModelCheckoutVoucher extends Model {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($order_info['store_name']);
 				$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $voucher['from_name']), ENT_QUOTES, 'UTF-8'));
-				$mail->setHtml($html);				
+				$mail->setHtml($html);
 				$mail->send();
 			}
 		}

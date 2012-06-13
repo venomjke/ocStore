@@ -26,7 +26,7 @@ class ModelPaymentPayMate extends Model {
 		if (!in_array(strtoupper($this->currency->getCode()), $currencies)) {
 			$status = false;
 		}
-					
+
 		$method_data = array();
 
 		if ($status) {

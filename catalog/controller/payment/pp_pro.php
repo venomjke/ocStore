@@ -111,11 +111,11 @@ class ControllerPaymentPPPro extends Controller {
 		$request .= '&CARDSTART=' . urlencode($this->request->post['cc_start_date_month'] . $this->request->post['cc_start_date_year']);
 		$request .= '&EXPDATE=' . urlencode($this->request->post['cc_expire_date_month'] . $this->request->post['cc_expire_date_year']);
 		$request .= '&CVV2=' . urlencode($this->request->post['cc_cvv2']);
-		
-		if ($this->request->post['cc_type'] == 'SWITCH' || $this->request->post['cc_type'] == 'SOLO') { 
+
+		if ($this->request->post['cc_type'] == 'SWITCH' || $this->request->post['cc_type'] == 'SOLO') {
 			$request .= '&CARDISSUE=' . urlencode($this->request->post['cc_issue']);
 		}
-		
+
 		$request .= '&FIRSTNAME=' . urlencode($order_info['payment_firstname']);
 		$request .= '&LASTNAME=' . urlencode($order_info['payment_lastname']);
 		$request .= '&EMAIL=' . urlencode($order_info['email']);
@@ -141,9 +141,9 @@ class ControllerPaymentPPPro extends Controller {
 			$request .= '&SHIPTOCITY=' . urlencode($order_info['payment_city']);
 			$request .= '&SHIPTOSTATE=' . urlencode(($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code']);
 			$request .= '&SHIPTOCOUNTRYCODE=' . urlencode($order_info['payment_iso_code_2']);
-			$request .= '&SHIPTOZIP=' . urlencode($order_info['payment_postcode']);			
-		}		
-		
+			$request .= '&SHIPTOZIP=' . urlencode($order_info['payment_postcode']);
+		}
+
 		if (!$this->config->get('pp_pro_test')) {
 			$curl = curl_init('https://api-3t.paypal.com/nvp');
 		} else {

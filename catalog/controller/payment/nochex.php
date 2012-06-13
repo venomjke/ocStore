@@ -6,7 +6,7 @@ class ControllerPaymentNochex extends Controller {
 		$this->load->language('payment/nochex');
 
 		$this->data['button_confirm'] = $this->language->get('button_confirm');
-		
+
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
@@ -26,35 +26,35 @@ class ControllerPaymentNochex extends Controller {
         $this->data['description'] = $this->config->get('config_name');
 
 		$this->data['billing_fullname'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
-        
+
 		if ($order_info['payment_address_2']) {
             $this->data['billing_address']  = $order_info['payment_address_1'] . "\r\n" . $order_info['payment_address_2'] . "\r\n" . $order_info['payment_city'] . "\r\n" . $order_info['payment_zone'] . "\r\n";
         } else {
             $this->data['billing_address']  = $order_info['payment_address_1'] . "\r\n" . $order_info['payment_city'] . "\r\n" . $order_info['payment_zone'] . "\r\n";
         }
-		
+
         $this->data['billing_postcode'] = $order_info['payment_postcode'];
 
 		if ($this->cart->hasShipping()) {
 			$this->data['delivery_fullname'] = $order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname'];
-			
+
 			if ($order_info['shipping_address_2']) {
 				$this->data['delivery_address'] = $order_info['shipping_address_1'] . "\r\n" . $order_info['shipping_address_2'] . "\r\n" . $order_info['shipping_city'] . "\r\n" . $order_info['shipping_zone'] . "\r\n";
 			} else {
 				$this->data['delivery_address'] = $order_info['shipping_address_1'] . "\r\n" . $order_info['shipping_city'] . "\r\n" . $order_info['shipping_zone'] . "\r\n";
 			}
-		
+
         	$this->data['delivery_postcode'] = $order_info['shipping_postcode'];
 		} else {
 			$this->data['delivery_fullname'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
-			
+
 			if ($order_info['payment_address_2']) {
 				$this->data['delivery_address'] = $order_info['payment_address_1'] . "\r\n" . $order_info['payment_address_2'] . "\r\n" . $order_info['payment_city'] . "\r\n" . $order_info['payment_zone'] . "\r\n";
 			} else {
 				$this->data['delivery_address'] = $order_info['shipping_address_1'] . "\r\n" . $order_info['payment_city'] . "\r\n" . $order_info['payment_zone'] . "\r\n";
 			}
-		
-        	$this->data['delivery_postcode'] = $order_info['payment_postcode'];			
+
+        	$this->data['delivery_postcode'] = $order_info['payment_postcode'];
 		}
 
         $this->data['email_address'] = $order_info['email'];
@@ -64,7 +64,7 @@ class ControllerPaymentNochex extends Controller {
         $this->data['cancel_url'] = $this->url->link('checkout/payment', '', 'SSL');
         $this->data['declined_url'] = $this->url->link('payment/nochex/callback', 'method=decline', 'SSL');
         $this->data['callback_url'] = $this->url->link('payment/nochex/callback', '&order=' . $this->session->data['order_id'], 'SSL');
-        
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/nochex.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/nochex.tpl';
 		} else {
@@ -79,8 +79,8 @@ class ControllerPaymentNochex extends Controller {
 
 		if (isset($this->request->get['method']) && $this->request->get['method'] == 'decline') {
 			$this->session->data['error'] = $this->language->get('error_declined');
-			
-			$this->redirect($this->url->link('checkout/cart')); 
+
+			$this->redirect($this->url->link('checkout/cart'));
 		}
 
 		if (isset($this->request->post['order_id'])) {
@@ -95,7 +95,7 @@ class ControllerPaymentNochex extends Controller {
 
 		if (!$order_info) {
 			$this->session->data['error'] = $this->language->get('error_no_order');
-			
+
 			$this->redirect($this->url->link('checkout/cart'));
 		}
 

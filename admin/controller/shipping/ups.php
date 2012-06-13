@@ -24,7 +24,7 @@ class ControllerShippingUPS extends Controller {
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');
 		$this->data['text_select_all'] = $this->language->get('text_select_all');
-		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');		
+		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
 		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
 		$this->data['text_none'] = $this->language->get('text_none');
 		$this->data['text_next_day_air'] = $this->language->get('text_next_day_air');
@@ -122,7 +122,7 @@ class ControllerShippingUPS extends Controller {
 		} else {
 			$this->data['error_country'] = '';
 		}
-		
+
 		if (isset($this->error['dimension'])) {
 			$this->data['error_dimension'] = $this->error['dimension'];
 		} else {
@@ -758,7 +758,7 @@ class ControllerShippingUPS extends Controller {
 		} else {
 			$this->data['ups_debug'] = $this->config->get('ups_debug');
 		}
-		
+
 		$this->template = 'shipping/ups.tpl';
 		$this->children = array(
 			'common/header',
@@ -800,15 +800,15 @@ class ControllerShippingUPS extends Controller {
 		if (empty($this->request->post['ups_length'])) {
 			$this->error['dimension'] = $this->language->get('error_dimension');
 		}
-		
+
 		if (empty($this->request->post['ups_width'])) {
 			$this->error['dimension'] = $this->language->get('error_dimension');
 		}
-		
+
 		if (empty($this->request->post['ups_height'])) {
 			$this->error['dimension'] = $this->language->get('error_dimension');
 		}
-		
+
 		if (!$this->error) {
 			return true;
 		} else {

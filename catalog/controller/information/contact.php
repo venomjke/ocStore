@@ -198,12 +198,12 @@ class ControllerInformationContact extends Controller {
 
 	public function captcha() {
 		$this->load->library('captcha');
-		
+
 		$captcha = new Captcha();
-		
+
 		$this->session->data['captcha'] = $captcha->getCode();
-		
+
 		$captcha->showImage();
-	}	
+	}
 }
 ?>

@@ -67,7 +67,7 @@ class ControllerPaymentMoneybookers extends Controller {
 			$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
 
 			$verified = true;
-			
+
 			// md5sig validation
 			if ($this->config->get('moneybookers_secret')) {
 				$hash  = $this->request->post['merchant_id'];
@@ -76,10 +76,10 @@ class ControllerPaymentMoneybookers extends Controller {
 				$hash .= $this->request->post['mb_amount'];
 				$hash .= $this->request->post['mb_currency'];
 				$hash .= $this->request->post['status'];
-				
+
 				$md5hash = strtoupper(md5($hash));
 				$md5sig = $this->request->post['md5sig'];
-				
+
 				if ($md5hash != $md5sig) {
 					$verified = false;
 				}

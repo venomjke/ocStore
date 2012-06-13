@@ -347,7 +347,7 @@ class ControllerCatalogInformation extends Controller {
 		}
 
 		$this->data['token'] = $this->session->data['token'];
-		
+
 		$this->load->model('localisation/language');
 
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
@@ -387,7 +387,7 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$this->data['bottom'] = 0;
 		}
-		
+
 		if (isset($this->request->post['status'])) {
 			$this->data['status'] = $this->request->post['status'];
 		} elseif (!empty($information_info)) {
@@ -395,7 +395,7 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$this->data['status'] = 1;
 		}
-				
+
 		if (isset($this->request->post['sort_order'])) {
 			$this->data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($information_info)) {

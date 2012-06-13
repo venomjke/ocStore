@@ -2,32 +2,32 @@
 
 /**
  * UGRSR
- * 
+ *
  * @package Simple vQmod OpenCart install script
  * @author Jay Gilford - http://jaygilford.com/
  * @copyright Jay Gilford 2011
  * @version 0.2
  * @access public
- * 
+ *
  * @information
  * This file will perform all necessary file alterations for the
  * OpenCart index.php files both in the root directory and in the
  * Administration folder. Please note that if you have changed your
  * default folder name from admin to something else, you will need
  * to edit the admin/index.php in this file to install successfully
- * 
+ *
  * @license
  * Permission is hereby granted, free of charge, to any person to
  * use, copy, modify, distribute, sublicense, and/or sell copies
  * of the Software, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software
- * 
+ *
  * @warning
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESSED OR IMPLIED.
- *  
+ *
  */
 
 // Counters
@@ -55,7 +55,7 @@ $u->file_search = false;
 // Add both index files to files to include
 $u->addFile('index.php');
 
-// Pattern to add vqmod include 
+// Pattern to add vqmod include
 $u->addPattern('~// Startup~', '// VirtualQMOD
 require_once(\'./vqmod/vqmod.php\');
 $vqmod = new VQMod();
@@ -73,7 +73,7 @@ $u->resetFileList();
 // changed your admin folder name
 $u->addFile('admin/index.php');
 
-// Pattern to add vqmod include 
+// Pattern to add vqmod include
 $u->addPattern('~// Startup~', '//VirtualQMOD
 require_once(\'../vqmod/vqmod.php\');
 $vqmod = new VQMod();

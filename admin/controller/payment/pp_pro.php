@@ -100,7 +100,7 @@ class ControllerPaymentPPPro extends Controller {
 		} else {
 			$this->data['pp_pro_password'] = $this->config->get('pp_pro_password');
 		}
-				
+
 		if (isset($this->request->post['pp_pro_signature'])) {
 			$this->data['pp_pro_signature'] = $this->request->post['pp_pro_signature'];
 		} else {

@@ -278,8 +278,8 @@ class ControllerCatalogOption extends Controller {
 		$this->data['text_time'] = $this->language->get('text_time');
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 		$this->data['text_browse'] = $this->language->get('text_browse');
-		$this->data['text_clear'] = $this->language->get('text_clear');	
-		
+		$this->data['text_clear'] = $this->language->get('text_clear');
+
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_type'] = $this->language->get('entry_type');
 		$this->data['entry_value'] = $this->language->get('entry_value');
@@ -352,7 +352,7 @@ class ControllerCatalogOption extends Controller {
     	}
 
 		$this->data['token'] = $this->session->data['token'];
-		
+
 		$this->load->model('localisation/language');
 
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
@@ -388,18 +388,18 @@ class ControllerCatalogOption extends Controller {
 		} else {
 			$option_values = array();
 		}
-		
+
 		$this->load->model('tool/image');
-		
+
 		$this->data['option_values'] = array();
-		 
+
 		foreach ($option_values as $option_value) {
 			if ($option_value['image'] && file_exists(DIR_IMAGE . $option_value['image'])) {
 				$image = $option_value['image'];
 			} else {
 				$image = 'no_image.jpg';
 			}
-			
+
 			$this->data['option_values'][] = array(
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
@@ -483,7 +483,7 @@ class ControllerCatalogOption extends Controller {
 			$this->load->model('catalog/option');
 
 			$this->load->model('tool/image');
-			
+
 			$data = array(
 				'filter_name' => $this->request->get['filter_name'],
 				'start'       => 0,
@@ -504,11 +504,11 @@ class ControllerCatalogOption extends Controller {
 						} else {
 							$image = '';
 						}
-													
+
 						$option_value_data[] = array(
 							'option_value_id' => $option_value['option_value_id'],
 							'name'            => html_entity_decode($option_value['name'], ENT_QUOTES, 'UTF-8'),
-							'image'           => $image					
+							'image'           => $image
 						);
 					}
 

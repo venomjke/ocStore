@@ -68,7 +68,7 @@ class ControllerModuleWelcome extends Controller {
 		$this->data['action'] = $this->url->link('module/welcome', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		$this->data['token'] = $this->session->data['token'];
 
 		$this->data['modules'] = array();

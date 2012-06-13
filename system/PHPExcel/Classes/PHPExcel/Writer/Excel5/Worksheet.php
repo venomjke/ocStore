@@ -1070,7 +1070,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
 	function _writeUrlExternal($row1, $col1, $row2, $col2, $url)
 	{
 		// Network drives are different. We will handle them separately
-		// MS/Novell network drives and shares start with \\
+		// MS/Novell network drives and shares start with
 		if (preg_match('[^external:\\\\]', $url)) {
 			return; //($this->_writeUrlExternal_net($row1, $col1, $row2, $col2, $url, $str, $format));
 		}

@@ -186,7 +186,7 @@ class ControllerAccountLogin extends Controller {
 
 	if ($customer_info && !$customer_info['approved']) {
 		$this->error['warning'] = $this->language->get('error_approved');
-	}		
+	}
 
     	if (!$this->error) {
       		return true;

@@ -19,7 +19,7 @@ if (ini_get('register_globals')) {
 
 	foreach ($globals as $global) {
 		foreach(array_keys($global) as $key) {
-			unset(${$key}); 
+			unset(${$key});
 		}
 	}
 }
@@ -70,8 +70,8 @@ if (!isset($_SERVER['REQUEST_URI'])) {
 }
 
 // Helper
-require_once(DIR_SYSTEM . 'helper/json.php'); 
-require_once(DIR_SYSTEM . 'helper/utf8.php'); 
+require_once(DIR_SYSTEM . 'helper/json.php');
+require_once(DIR_SYSTEM . 'helper/utf8.php');
 
 // Engine
 require_once(DIR_SYSTEM . 'engine/action.php');

@@ -90,10 +90,10 @@ class ControllerCommonHeader extends Controller {
 
 					if ($this->config->get('config_product_count')) {
 						$product_total = $this->model_catalog_product->getTotalProducts($data);
-						
+
 						$child['name'] .= ' (' . $product_total . ')';
 					}
-								
+
 					$children_data[] = array(
 						'name'  => $child['name'],
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
@@ -110,7 +110,7 @@ class ControllerCommonHeader extends Controller {
 				);
 			}
 		}
-		
+
 		$this->children = array(
 			'module/language',
 			'module/currency',

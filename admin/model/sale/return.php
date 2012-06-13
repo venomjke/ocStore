@@ -11,7 +11,7 @@ class ModelSaleReturn extends Model {
 	public function editReturnAction($return_id, $return_action_id) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "return` SET return_action_id = '" . (int)$return_action_id . "' WHERE return_id = '" . (int)$return_id . "'");
 	}
-		
+
 	public function deleteReturn($return_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "return` WHERE return_id = '" . (int)$return_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "return_history WHERE return_id = '" . (int)$return_id . "'");
@@ -43,11 +43,11 @@ class ModelSaleReturn extends Model {
 		if (!empty($data['filter_product'])) {
 			$implode[] = "r.product = '" . $this->db->escape($data['filter_product']) . "'";
 		}
-		
+
 		if (!empty($data['filter_model'])) {
 			$implode[] = "r.model = '" . $this->db->escape($data['filter_model']) . "'";
-		}	
-						
+		}
+
 		if (!empty($data['filter_return_status_id'])) {
 			$implode[] = "r.return_status_id = '" . (int)$data['filter_return_status_id'] . "'";
 		}
@@ -78,7 +78,7 @@ class ModelSaleReturn extends Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY r.return_id";	
+			$sql .= " ORDER BY r.return_id";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -124,10 +124,10 @@ class ModelSaleReturn extends Model {
 		if (!empty($data['filter_product'])) {
 			$implode[] = "r.product = '" . $this->db->escape($data['filter_product']) . "'";
 		}
-		
+
 		if (!empty($data['filter_model'])) {
 			$implode[] = "r.model = '" . $this->db->escape($data['filter_model']) . "'";
-		}	
+		}
 
 		if (!empty($data['filter_return_status_id'])) {
 			$implode[] = "r.return_status_id = '" . (int)$data['filter_return_status_id'] . "'";
