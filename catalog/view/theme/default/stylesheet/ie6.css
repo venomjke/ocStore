@@ -129,7 +129,7 @@
 }
 .box-product div {
 	width: 116px;
-	vertical-align: top;	
+	vertical-align: top;
 	zoom: 1;
 	display: inline;
 	margin-right: 35px;
@@ -176,7 +176,7 @@
 }
 .product-grid div {
 	width: 116px;
-	vertical-align: top;	
+	vertical-align: top;
 	zoom: 1;
 	display: inline;
 	margin-right: 35px;
@@ -243,7 +243,7 @@
 .tab-content {
 	zoom: 1;
 }
-/* footer */ 
+/* footer */
 #footer {
 	zoom: 1;
 }

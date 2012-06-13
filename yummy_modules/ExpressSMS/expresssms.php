@@ -1,9 +1,9 @@
 <?php
 
 final class expresssms extends SmsGate {
-	
+
 	private $url = 'http://lcab.express-sms.ru/API/XML/send.php';
-  		
+
 	private function GetPageByUrl($headers, $post_body) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->url); // урл страницы
@@ -17,8 +17,8 @@ final class expresssms extends SmsGate {
 		$result = curl_exec($ch); // получить результат в переменную
 		curl_close($ch);
 		return $result;
-	}	
-	
+	}
+
 	public function send() {
 		$xml = "<?xml version='1.0' encoding='UTF-8'?>
 		<data>
@@ -29,7 +29,7 @@ final class expresssms extends SmsGate {
 			<text>".$this->message."</text>
 			<flash>".(int)$this->flash."</flash>
 		</data>";
-		
+
 		$headers[] = 'Content-Type: text/xml; charset=utf-8';
 		$headers[] = 'Content-Length: ' . strlen($xml);
 		return array("answer" => $this->GetPageByUrl($headers, $xml));
