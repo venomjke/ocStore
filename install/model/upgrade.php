@@ -114,19 +114,19 @@ class ModelUpgrade extends Model {
 		## v1.5.1.3
 		// Set defaults for new Store Tax Address and Customer Tax Address
 		if (empty($settings['config_tax_default'])) {
-			$db->query("UPDATE " . DB_PREFIX . "setting SET value = 'shipping' WHERE `key` = 'config_tax_default'");
+			$db->query("INSERT INTO " . DB_PREFIX . "setting SET value = 'shipping', `key` = 'config_tax_default', `group` = 'config', store_id = 0");
 		}
 		if (empty($settings['config_tax_customer'])) {
-			$db->query("UPDATE " . DB_PREFIX . "setting SET value = 'shipping' WHERE `key` = 'config_tax_customer'");
+			$db->query("INSERT INTO " . DB_PREFIX . "setting SET value = 'shipping', `key` = 'config_tax_customer', `group` = 'config', store_id = 0");
 		}
 
 		## v1.5.3
 		// Set defaults for new Voucher Min/Max fields
 		if (empty($settings['config_voucher_min'])) {
-			$db->query("UPDATE " . DB_PREFIX . "setting SET value = '1' WHERE `key` = 'config_voucher_min'");
+			$db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1', `key` = 'config_voucher_min', `group` = 'config', store_id = 0");
 		}
 		if (empty($settings['config_voucher_max'])) {
-			$db->query("UPDATE " . DB_PREFIX . "setting SET value = '1000' WHERE `key` = 'config_voucher_max'");
+			$db->query("INSERT INTO " . DB_PREFIX . "setting SET value = '1000', `key` = 'config_voucher_max', `group` = 'config', store_id = 0");
 		}
 
 		// Layout routes now require "%" for wildcard paths
@@ -150,9 +150,9 @@ class ModelUpgrade extends Model {
 			}
 			// Comment this for now in case people want to roll back to 1.5.2 from 1.5.3
 			// Uncomment it when 1.5.4 is out.
-			//$db->query("ALTER TABLE " . DB_PREFIX . "customer_group DROP `name`");
+			//$db->query("ALTER TABLE " . DB_PREFIX . "customer_group DROP `name`");			
 		}
-
+		
 		// Default to "default" customer group display for registration if this is the first time using this version to avoid registration confusion.
 		// In 1.5.2 and earlier, the default install uses "8" as the "Default" customer group
 		// In 1.5.3 the default install uses "1" as the "Default" customer group.
@@ -173,7 +173,7 @@ class ModelUpgrade extends Model {
 			}
 		}
 
-		if (defined('HTTP_ADMIN')) {
+		if (defined('HTTP_ADMIN') && ini_get('open_basedir') == false) {
 			$adminFolder = trim(str_replace(str_replace('install/', '', HTTP_SERVER), '', HTTP_ADMIN), '/');
 
 			$dirAdmin = str_replace("\\", "/", realpath(DIR_SYSTEM . '../' . $adminFolder . '/') . '/');

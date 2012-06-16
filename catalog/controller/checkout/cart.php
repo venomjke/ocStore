@@ -61,7 +61,7 @@ class ControllerCheckoutCart extends Controller {
 
 		// Reward
 		if (isset($this->request->post['reward']) && $this->validateReward()) {
-			$this->session->data['reward'] = $this->request->post['reward'];
+			$this->session->data['reward'] = abs($this->request->post['reward']);
 
 			$this->session->data['success'] = $this->language->get('text_reward');
 
@@ -224,7 +224,7 @@ class ControllerCheckoutCart extends Controller {
 
 				// Display prices
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-					$total = $this->currency->format($this->tax->calculate($product['total'], $product['tax_class_id'], $this->config->get('config_tax')));
+					$total = $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']);
 				} else {
 					$total = false;
 				}

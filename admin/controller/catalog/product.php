@@ -1370,5 +1370,9 @@ class ControllerCatalogProduct extends Controller {
 
 		return $output;
 	}
+	
+	public function sync() {
+		$this->load->model('catalog/product');
+	}
 }
 ?>
