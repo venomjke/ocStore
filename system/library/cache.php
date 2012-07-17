@@ -3,37 +3,7 @@ final class Cache {
 	private $expire;
 	private $memcache;
 	private $ismemcache = false;
-
-  	public function __construct($exp = 3600) {
-  		$this->expire = $exp;
-
-  		if (defined("CACHE_DRIVER") && CACHE_DRIVER == "memcache")
-  		{
-		    $mc = new Memcache;
-		    if ($mc->pconnect(MEMCACHE_HOSTNAME, MEMCACHE_PORT))
-		    {
-			$this->memcache = $mc;
-			$this->ismemcache = true;
-		    };
-		};
-
-		if (!$this->ismemcache)
-		{
-		    $files = glob(DIR_CACHE . 'cache.*');
-
-		    if ($files) {
-			    foreach ($files as $file) {
-				    $time = substr(strrchr($file, '.'), 1);
-
-			    if ($time < time()) {
-					    if (file_exists($file)) {
-						    @unlink($file);
-					    }
-				}
-			    }
-		    }
-		}
-  	}
+	private $expire = 3600;
 
 	public function get($key) {
 	    if ((defined("CACHE_DRIVER") && CACHE_DRIVER == "memcache") && $this->ismemcache)
@@ -42,7 +12,7 @@ final class Cache {
 	    }
 	    else
 	    {
-		$files = glob(DIR_CACHE . 'cache.' . $key . '.*');
+		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
 		if ($files) {
     		foreach ($files as $file) {
@@ -72,7 +42,7 @@ final class Cache {
 
     		    $this->delete($key);
 
-		    $file = DIR_CACHE . 'cache.' . $key . '.' . (time() + $this->expire);
+		    $file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
 
 		    $handle = fopen($file, 'w');
 
@@ -89,7 +59,7 @@ final class Cache {
 	    }
 	    else
 	    {
-		$files = glob(DIR_CACHE . 'cache.' . $key . '.*');
+		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
 		if ($files) {
     		foreach ($files as $file) {

@@ -67,6 +67,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
 		$this->data['entry_admin_limit'] = $this->language->get('entry_admin_limit');
+		$this->data['entry_product_count'] = $this->language->get('entry_product_count');
 		$this->data['entry_review'] = $this->language->get('entry_review');
 		$this->data['entry_download'] = $this->language->get('entry_download');
 		$this->data['entry_upload_allowed'] = $this->language->get('entry_upload_allowed');
@@ -76,6 +77,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_vat'] = $this->language->get('entry_vat');
 		$this->data['entry_tax_default'] = $this->language->get('entry_tax_default');
 		$this->data['entry_tax_customer'] = $this->language->get('entry_tax_customer');
+		$this->data['entry_customer_online'] = $this->language->get('entry_customer_online');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_customer_group_display'] = $this->language->get('entry_customer_group_display');
 		$this->data['entry_customer_price'] = $this->language->get('entry_customer_price');
@@ -532,6 +534,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_tax_customer'] = $this->request->post['config_tax_customer'];
 		} else {
 			$this->data['config_tax_customer'] = $this->config->get('config_tax_customer');
+		}
+
+		if (isset($this->request->post['config_customer_online'])) {
+			$this->data['config_customer_online'] = $this->request->post['config_customer_online'];
+		} else {
+			$this->data['config_customer_online'] = $this->config->get('config_customer_online');
 		}
 
 		if (isset($this->request->post['config_customer_group_id'])) {

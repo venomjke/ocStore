@@ -51,7 +51,7 @@ class ControllerProductProduct extends Controller {
 			if ($manufacturer_info) {
 				$this->data['breadcrumbs'][] = array(
 					'text'	    => $manufacturer_info['name'],
-					'href'	    => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id']),					
+					'href'	    => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id']),
 					'separator' => $this->language->get('text_separator')
 				);
 			}
@@ -80,7 +80,7 @@ class ControllerProductProduct extends Controller {
 				'text'      => $this->language->get('text_search'),
 				'href'      => $this->url->link('product/search', $url),
 				'separator' => $this->language->get('text_separator')
-			); 	
+			);
 		}
 
 		if (isset($this->request->get['product_id'])) {

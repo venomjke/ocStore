@@ -1339,7 +1339,7 @@ class ControllerCatalogProduct extends Controller {
 
 				$json[] = array(
 					'product_id' => $result['product_id'],
-					'name'       => html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),
+					'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 					'model'      => $result['model'],
 					'option'     => $option_data,
 					'price'      => $result['price']
@@ -1370,7 +1370,7 @@ class ControllerCatalogProduct extends Controller {
 
 		return $output;
 	}
-	
+
 	public function sync() {
 		$this->load->model('catalog/product');
 	}
