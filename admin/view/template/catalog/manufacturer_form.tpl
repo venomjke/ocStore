@@ -103,7 +103,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
 CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
@@ -115,13 +115,13 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
 });
 <?php } ?>
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 function image_upload(field, thumb) {
 	$('#dialog').remove();
-	
+
 	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
-	
+
 	$('#dialog').dialog({
 		title: '<?php echo $text_image_manager; ?>',
 		close: function (event, ui) {
@@ -134,7 +134,7 @@ function image_upload(field, thumb) {
 					}
 				});
 			}
-		},	
+		},
 		bgiframe: false,
 		width: 800,
 		height: 400,
@@ -142,9 +142,9 @@ function image_upload(field, thumb) {
 		modal: false
 	});
 };
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-$('#tabs a').tabs(); 
+$('#tabs a').tabs();
 $('#languages a').tabs();
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

@@ -85,8 +85,8 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
-<script type="text/javascript" src="view/javascript/ckeditor/adapters/jquery.js"></script> 
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="view/javascript/ckeditor/adapters/jquery.js"></script>
 <script type="text/javascript"><!--
 $('textarea[name=\'message\']').ckeditor({
 	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
@@ -96,28 +96,28 @@ $('textarea[name=\'message\']').ckeditor({
 	filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
 });
-//--></script> 
-<script type="text/javascript"><!--	
+//--></script>
+<script type="text/javascript"><!--
 $('select[name=\'to\']').bind('change', function() {
 	$('#mail .to').hide();
-	
+
 	$('#mail #to-' + $(this).attr('value').replace('_', '-')).show();
 });
 
 $('select[name=\'to\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $.widget('custom.catcomplete', $.ui.autocomplete, {
 	_renderMenu: function(ul, items) {
 		var self = this, currentCategory = '';
-		
+
 		$.each(items, function(index, item) {
 			if (item.category != currentCategory) {
 				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-				
+
 				currentCategory = item.category;
 			}
-			
+
 			self._renderItem(ul, item);
 		});
 	}
@@ -129,7 +129,7 @@ $('input[name=\'customers\']').catcomplete({
 		$.ajax({
 			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {	
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						category: item.customer_group,
@@ -139,16 +139,16 @@ $('input[name=\'customers\']').catcomplete({
 				}));
 			}
 		});
-		
-	}, 
+
+	},
 	select: function(event, ui) {
 		$('#customer' + ui.item.value).remove();
-		
+
 		$('#customer').append('<div id="customer' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="customer[]" value="' + ui.item.value + '" /></div>');
 
 		$('#customer div:odd').attr('class', 'odd');
 		$('#customer div:even').attr('class', 'even');
-				
+
 		return false;
 	},
 	focus: function(event, ui) {
@@ -158,19 +158,19 @@ $('input[name=\'customers\']').catcomplete({
 
 $('#customer div img').live('click', function() {
 	$(this).parent().remove();
-	
+
 	$('#customer div:odd').attr('class', 'odd');
-	$('#customer div:even').attr('class', 'even');	
+	$('#customer div:even').attr('class', 'even');
 });
-//--></script> 
-<script type="text/javascript"><!--	
+//--></script>
+<script type="text/javascript"><!--
 $('input[name=\'affiliates\']').autocomplete({
 	delay: 0,
 	source: function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -179,16 +179,16 @@ $('input[name=\'affiliates\']').autocomplete({
 				}));
 			}
 		});
-		
-	}, 
+
+	},
 	select: function(event, ui) {
 		$('#affiliate' + ui.item.value).remove();
-		
+
 		$('#affiliate').append('<div id="affiliate' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="affiliate[]" value="' + ui.item.value + '" /></div>');
 
 		$('#affiliate div:odd').attr('class', 'odd');
 		$('#affiliate div:even').attr('class', 'even');
-				
+
 		return false;
 	},
 	focus: function(event, ui) {
@@ -198,9 +198,9 @@ $('input[name=\'affiliates\']').autocomplete({
 
 $('#affiliate div img').live('click', function() {
 	$(this).parent().remove();
-	
+
 	$('#affiliate div:odd').attr('class', 'odd');
-	$('#affiliate div:even').attr('class', 'even');	
+	$('#affiliate div:even').attr('class', 'even');
 });
 
 $('input[name=\'products\']').autocomplete({
@@ -209,7 +209,7 @@ $('input[name=\'products\']').autocomplete({
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -218,15 +218,15 @@ $('input[name=\'products\']').autocomplete({
 				}));
 			}
 		});
-	}, 
+	},
 	select: function(event, ui) {
 		$('#product' + ui.item.value).remove();
-		
+
 		$('#product').append('<div id="product' + ui.item.value + '">' + ui.item.label + '<img src="view/image/delete.png" /><input type="hidden" name="product[]" value="' + ui.item.value + '" /></div>');
 
 		$('#product div:odd').attr('class', 'odd');
 		$('#product div:even').attr('class', 'even');
-				
+
 		return false;
 	},
 	focus: function(event, ui) {
@@ -236,18 +236,18 @@ $('input[name=\'products\']').autocomplete({
 
 $('#product div img').live('click', function() {
 	$(this).parent().remove();
-	
+
 	$('#product div:odd').attr('class', 'odd');
-	$('#product div:even').attr('class', 'even');	
+	$('#product div:even').attr('class', 'even');
 });
 
-function send(url) { 
+function send(url) {
 	$('textarea[name=\'message\']').html($('textarea[name=\'message\']').val());
-	
+
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('select, input, textarea'),		
+		data: $('select, input, textarea'),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-send').attr('disabled', true);
@@ -256,41 +256,41 @@ function send(url) {
 		complete: function() {
 			$('#button-send').attr('disabled', false);
 			$('.wait').remove();
-		},				
+		},
 		success: function(json) {
 			$('.success, .warning, .error').remove();
-			
+
 			if (json['error']) {
 				if (json['error']['warning']) {
 					$('.box').before('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
-			
+
 					$('.warning').fadeIn('slow');
 				}
-				
+
 				if (json['error']['subject']) {
 					$('input[name=\'subject\']').after('<span class="error">' + json['error']['subject'] + '</span>');
-				}	
-				
+				}
+
 				if (json['error']['message']) {
 					$('textarea[name=\'message\']').parent().append('<span class="error">' + json['error']['message'] + '</span>');
-				}									
-			}			
-			
+				}
+			}
+
 			if (json['next']) {
 				if (json['success']) {
 					$('.box').before('<div class="success">' + json['success'] + '</div>');
-					
+
 					send(json['next']);
-				}		
+				}
 			} else {
 				if (json['success']) {
 					$('.box').before('<div class="success" style="display: none;">' + json['success'] + '</div>');
-			
+
 					$('.success').fadeIn('slow');
-				}					
-			}				
+				}
+			}
 		}
 	});
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

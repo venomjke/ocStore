@@ -198,7 +198,7 @@
 <script type="text/javascript"><!--
 $('input[name=\'next\']').bind('change', function() {
 	$('.cart-module > div').hide();
-	
+
 	$('#' + this.value).show();
 });
 //--></script>
@@ -209,7 +209,7 @@ $('#button-quote').live('click', function() {
 		url: 'index.php?route=checkout/cart/quote',
 		type: 'post',
 		data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
-		dataType: 'json',		
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-quote').attr('disabled', true);
 			$('#button-quote').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
@@ -217,63 +217,63 @@ $('#button-quote').live('click', function() {
 		complete: function() {
 			$('#button-quote').attr('disabled', false);
 			$('.wait').remove();
-		},		
+		},
 		success: function(json) {
-			$('.success, .warning, .attention, .error').remove();			
-						
+			$('.success, .warning, .attention, .error').remove();
+
 			if (json['error']) {
 				if (json['error']['warning']) {
 					$('#notification').html('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
+
 					$('.warning').fadeIn('slow');
-					
-					$('html, body').animate({ scrollTop: 0 }, 'slow'); 
-				}	
-							
+
+					$('html, body').animate({ scrollTop: 0 }, 'slow');
+				}
+
 				if (json['error']['country']) {
 					$('select[name=\'country_id\']').after('<span class="error">' + json['error']['country'] + '</span>');
-				}	
-				
+				}
+
 				if (json['error']['zone']) {
 					$('select[name=\'zone_id\']').after('<span class="error">' + json['error']['zone'] + '</span>');
 				}
-				
+
 				if (json['error']['postcode']) {
 					$('input[name=\'postcode\']').after('<span class="error">' + json['error']['postcode'] + '</span>');
-				}					
+				}
 			}
-			
+
 			if (json['shipping_method']) {
 				html  = '<h2><?php echo $text_shipping_method; ?></h2>';
 				html += '<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">';
 				html += '  <table class="radio">';
-				
+
 				for (i in json['shipping_method']) {
 					html += '<tr>';
 					html += '  <td colspan="3"><b>' + json['shipping_method'][i]['title'] + '</b></td>';
 					html += '</tr>';
-				
+
 					if (!json['shipping_method'][i]['error']) {
 						for (j in json['shipping_method'][i]['quote']) {
 							html += '<tr class="highlight">';
-							
+
 							if (json['shipping_method'][i]['quote'][j]['code'] == '<?php echo $shipping_method; ?>') {
 								html += '<td><input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="' + json['shipping_method'][i]['quote'][j]['code'] + '" checked="checked" /></td>';
 							} else {
 								html += '<td><input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" id="' + json['shipping_method'][i]['quote'][j]['code'] + '" /></td>';
 							}
-								
+
 							html += '  <td><label for="' + json['shipping_method'][i]['quote'][j]['code'] + '">' + json['shipping_method'][i]['quote'][j]['title'] + '</label></td>';
 							html += '  <td style="text-align: right;"><label for="' + json['shipping_method'][i]['quote'][j]['code'] + '">' + json['shipping_method'][i]['quote'][j]['text'] + '</label></td>';
 							html += '</tr>';
-						}		
+						}
 					} else {
 						html += '<tr>';
 						html += '  <td colspan="3"><div class="error">' + json['shipping_method'][i]['error'] + '</div></td>';
-						html += '</tr>';						
+						html += '</tr>';
 					}
 				}
-				
+
 				html += '  </table>';
 				html += '  <br />';
 				html += '  <input type="hidden" name="next" value="shipping" />';
@@ -285,7 +285,7 @@ $('#button-quote').live('click', function() {
 				<?php } ?>
 
 				html += '</form>';
-				
+
 				$.colorbox({
 					overlayClose: true,
 					opacity: 0.5,
@@ -302,7 +302,7 @@ $('#button-quote').live('click', function() {
 		}
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').bind('change', function() {
 	$.ajax({
@@ -313,30 +313,30 @@ $('select[name=\'country_id\']').bind('change', function() {
 		},
 		complete: function() {
 			$('.wait').remove();
-		},			
+		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
 				$('#postcode-required').show();
 			} else {
 				$('#postcode-required').hide();
 			}
-			
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
 	      				html += ' selected="selected"';
 	    			}
-	
+
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-			
+
 			$('select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

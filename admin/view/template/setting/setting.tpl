@@ -782,11 +782,11 @@
                 <input type="radio" name="config_fraud_detection" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
-            </tr>          
+            </tr>
             <tr>
               <td><?php echo $entry_fraud_key; ?></td>
               <td><input type="text" name="config_fraud_key" value="<?php echo $config_fraud_key; ?>" /></td>
-            </tr>                 
+            </tr>
             <tr>
               <td><?php echo $entry_fraud_score; ?></td>
               <td><input type="text" name="config_fraud_score" value="<?php echo $config_fraud_score; ?>" /></td>
@@ -802,7 +802,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-            </tr>            
+            </tr>
           </table>
         </div>
         <div id="tab-sms">
@@ -990,7 +990,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#template').load('index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent($('select[name=\'config_template\']').attr('value')));
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').bind('change', function() {
 	$.ajax({
@@ -998,33 +998,33 @@ $('select[name=\'config_country_id\']').bind('change', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-		},		
+		},
 		complete: function() {
 			$('.wait').remove();
-		},			
+		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
 				$('#postcode-required').show();
 			} else {
 				$('#postcode-required').hide();
 			}
-			
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
 	      				html += ' selected="selected"';
 	    			}
-	
+
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected><?php echo $text_none; ?></option>';
 			}
-			
+
 			$('select[name=\'config_zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

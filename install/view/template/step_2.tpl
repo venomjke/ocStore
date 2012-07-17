@@ -125,7 +125,7 @@
           <tr>
             <td><?php echo $image_data . '/'; ?></td>
             <td><?php echo is_writable($image_data) ? '<span class="good">Доступно для записи</span>' : '<span class="bad">Не доступно для записи</span>'; ?></td>
-          </tr>          
+          </tr>
           <tr>
             <td><?php echo $download . '/'; ?></td>
             <td><?php echo is_writable($download) ? '<span class="good">Доступно для записи</span>' : '<span class="bad">Не доступно для записи</span>'; ?></td>

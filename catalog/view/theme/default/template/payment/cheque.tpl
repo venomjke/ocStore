@@ -13,12 +13,12 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
-	$.ajax({ 
+	$.ajax({
 		type: 'get',
 		url: 'index.php?route=payment/cheque/confirm',
 		success: function() {
 			location = '<?php echo $continue; ?>';
-		}		
+		}
 	});
 });
-//--></script> 
+//--></script>

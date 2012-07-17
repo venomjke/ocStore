@@ -45,4 +45,4 @@ $('.colorbox').colorbox({
 	width: 640,
 	height: 480
 });
-//--></script> 
+//--></script>

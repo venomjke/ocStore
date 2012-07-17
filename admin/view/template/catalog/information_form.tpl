@@ -99,7 +99,7 @@
                 <?php } else { ?>
                 <input type="checkbox" name="bottom" value="1" />
                 <?php } ?></td>
-            </tr>            
+            </tr>
             <tr>
               <td><?php echo $entry_status; ?></td>
               <td><select name="status">
@@ -164,7 +164,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
 CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
@@ -176,9 +176,9 @@ CKEDITOR.replace('description<?php echo $language['language_id']; ?>', {
 	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
 });
 <?php } ?>
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-$('#tabs a').tabs(); 
-$('#languages a').tabs(); 
-//--></script> 
+$('#tabs a').tabs();
+$('#languages a').tabs();
+//--></script>
 <?php echo $footer; ?>

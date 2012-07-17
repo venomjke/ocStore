@@ -14,7 +14,7 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/backup.png" alt="" /> <?php echo $heading_title; ?></h1>
-     
+
     </div>
     <div class="content">
       <form action="<?php echo $import; ?>" method="post" enctype="multipart/form-data" id="import">
@@ -37,7 +37,7 @@
                   <div class="<?php echo $class; ?>">
                     <input type="checkbox" name="product_category[]" value="<?php echo $category['category_id']; ?>" />
                     <?php echo $category['name']; ?>
-                   
+
                   </div>
                   <?php } ?>
                 </div></td>

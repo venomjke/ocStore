@@ -73,7 +73,7 @@ function test_calc() {
 
  //$rez = mb_strtoupper(mb_substr($location['name'], 0, 1, 'UTF-8'), 'UTF-8') . mb_substr(mb_convert_case($location['name'], MB_CASE_LOWER, 'UTF-8'), 1, mb_strlen($location['name']), 'UTF-8');
 $rez = mb_convert_case($location['name'], MB_CASE_TITLE, 'UTF-8');
-$rez = str_replace(array('Район', 'Край', 'Область', 'Автономный Округ', 'Автономная Область', 'Республика', 'Ао'), array('район', 'край', 'область', 'автономный округ', 'автономная область', 'республика', 'АО'), $rez);    
+$rez = str_replace(array('Район', 'Край', 'Область', 'Автономный Округ', 'Автономная Область', 'Республика', 'Ао'), array('район', 'край', 'область', 'автономный округ', 'автономная область', 'республика', 'АО'), $rez);
 echo $rez;
 ?>
 </option>
@@ -135,7 +135,7 @@ echo $rez;
 <option value="<? echo $location['value']; ?>" <? if ($location['value'] == $ems_city_from) echo 'selected'; ?>>
 <?
 $rez = mb_convert_case($location['name'], MB_CASE_TITLE, 'UTF-8');
-$rez = str_replace(array('Район', 'Край', 'Область', 'Автономный Округ', 'Автономная Область', 'Республика', 'Ао'), array('район', 'край', 'область', 'автономный округ', 'автономная область', 'республика', 'АО'), $rez);    
+$rez = str_replace(array('Район', 'Край', 'Область', 'Автономный Округ', 'Автономная Область', 'Республика', 'Ао'), array('район', 'край', 'область', 'автономный округ', 'автономная область', 'республика', 'АО'), $rez);
 echo $rez;
 ?>
 </option>
@@ -156,7 +156,7 @@ echo $rez;
 <option value="<? echo $location['value']; ?>" <? if ($location['value'] == $ems_city_from) echo 'selected'; ?>>
 <?
 $rez = mb_convert_case($location['name'], MB_CASE_TITLE, 'UTF-8');
-$rez = str_replace(array('Район', 'Край', 'Область', 'Автономный Округ', 'Автономная Область', 'Республика', 'Ао'), array('район', 'край', 'область', 'автономный округ', 'автономная область', 'республика', 'АО'), $rez);    
+$rez = str_replace(array('Район', 'Край', 'Область', 'Автономный Округ', 'Автономная Область', 'Республика', 'Ао'), array('район', 'край', 'область', 'автономный округ', 'автономная область', 'республика', 'АО'), $rez);
 echo $rez;
 ?>
 </option>

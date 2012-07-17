@@ -82,10 +82,10 @@
 <script type="text/javascript"><!--
 $('input[name=\'payment\']').bind('change', function() {
 	$('.payment').hide();
-	
+
 	$('#payment-' + this.value).show();
 });
 
 $('input[name=\'payment\']:checked').trigger('change');
-//--></script> 
-<?php echo $footer; ?> 
+//--></script>
+<?php echo $footer; ?>

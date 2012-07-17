@@ -385,7 +385,7 @@ new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
 	},
 	onComplete: function(file, json) {
 		$('#button-option-<?php echo $option['product_option_id']; ?>').attr('disabled', false);
-		
+
 		$('.error').remove();
 
 		if (json['success']) {

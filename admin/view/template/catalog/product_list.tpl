@@ -69,7 +69,7 @@
                 <?php if ($category['category_id']==$filter_category) { ?>
                   <option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
                 <?php } else { ?>
-                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option> 
+                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
                 <?php } ?>
               <?php } ?>
               </td>
@@ -111,7 +111,7 @@
                 <?php if (in_array($category['category_id'], $product['category'])) { ?>
                 <?php echo $category['name'];?><br>
                 <?php } ?> <?php } ?>
-            
+
               </td>
               <td class="right"><?php if ($product['quantity'] <= 0) { ?>
                 <span style="color: #FF0000;"><?php echo $product['quantity']; ?></span>
@@ -141,53 +141,53 @@
 <script type="text/javascript"><!--
 function filter() {
 	url = 'index.php?route=catalog/product&token=<?php echo $token; ?>';
-	
+
 	var filter_name = $('input[name=\'filter_name\']').attr('value');
-	
+
 	if (filter_name) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
-	
+
 	var filter_model = $('input[name=\'filter_model\']').attr('value');
-	
+
 	if (filter_model) {
 		url += '&filter_model=' + encodeURIComponent(filter_model);
 	}
-	
+
 	var filter_price = $('input[name=\'filter_price\']').attr('value');
-	
+
 	if (filter_price) {
 		url += '&filter_price=' + encodeURIComponent(filter_price);
 	}
-	
+
 	var filter_category = $('select[name=\'filter_category\']').attr('value');
-    
+
     if (filter_category != '*') {
 		url += '&filter_category=' + encodeURIComponent(filter_category);
 	}
-	
+
 	var filter_quantity = $('input[name=\'filter_quantity\']').attr('value');
-	
+
 	if (filter_quantity) {
 		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
 	}
-	
+
 	var filter_status = $('select[name=\'filter_status\']').attr('value');
-	
+
 	if (filter_status != '*') {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
-	}	
+	}
 
 	location = url;
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#form input').keydown(function(e) {
 	if (e.keyCode == 13) {
 		filter();
 	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({
 	delay: 0,
@@ -195,7 +195,7 @@ $('input[name=\'filter_name\']').autocomplete({
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.name,
@@ -204,10 +204,10 @@ $('input[name=\'filter_name\']').autocomplete({
 				}));
 			}
 		});
-	}, 
+	},
 	select: function(event, ui) {
 		$('input[name=\'filter_name\']').val(ui.item.label);
-						
+
 		return false;
 	},
 	focus: function(event, ui) {
@@ -221,7 +221,7 @@ $('input[name=\'filter_model\']').autocomplete({
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request.term),
 			dataType: 'json',
-			success: function(json) {		
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item.model,
@@ -230,15 +230,15 @@ $('input[name=\'filter_model\']').autocomplete({
 				}));
 			}
 		});
-	}, 
+	},
 	select: function(event, ui) {
 		$('input[name=\'filter_model\']').val(ui.item.label);
-						
+
 		return false;
 	},
 	focus: function(event, ui) {
       	return false;
    	}
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

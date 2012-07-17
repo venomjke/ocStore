@@ -728,11 +728,11 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name=\'ups_origin\']').bind('change', function() {
-	$('#service > div').hide();	
-										 
-	$('#' + this.value).show();	
+	$('#service > div').hide();
+
+	$('#' + this.value).show();
 });
 
 $('select[name=\'ups_origin\']').trigger('change');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

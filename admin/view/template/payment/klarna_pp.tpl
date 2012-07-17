@@ -70,7 +70,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-            </tr>            
+            </tr>
             <tr>
               <td><?php echo $entry_status; ?></td>
               <td><select name="klarna_pp_status">
@@ -93,4 +93,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

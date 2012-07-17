@@ -115,6 +115,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#languages a').tabs(); 
-//--></script> 
+$('#languages a').tabs();
+//--></script>
 <?php echo $footer; ?>

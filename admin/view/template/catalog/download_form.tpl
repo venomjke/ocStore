@@ -59,7 +59,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/jquery/ajaxupload.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/ajaxupload.js"></script>
 <script type="text/javascript"><!--
 new AjaxUpload('#button-upload', {
 	action: 'index.php?route=catalog/download/upload&token=<?php echo $token; ?>',
@@ -72,20 +72,20 @@ new AjaxUpload('#button-upload', {
 	},
 	onComplete: function(file, json) {
 		$('#button-upload').attr('disabled', false);
-		
+
 		if (json['success']) {
 			alert(json['success']);
-			
+
 			$('input[name=\'filename\']').attr('value', json['filename']);
 			$('input[name=\'mask\']').attr('value', json['mask']);
 		}
-		
+
 		if (json['error']) {
 			alert(json['error']);
 		}
-		
-		$('.loading').remove();	
+
+		$('.loading').remove();
 	}
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

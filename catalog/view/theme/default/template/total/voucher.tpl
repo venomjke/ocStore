@@ -10,7 +10,7 @@ $('#button-voucher').bind('click', function() {
 		type: 'POST',
 		url: 'index.php?route=total/voucher/calculate',
 		data: $('#voucher :input'),
-		dataType: 'json',		
+		dataType: 'json',
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			$('#button-voucher').attr('disabled', true);
@@ -19,16 +19,16 @@ $('#button-voucher').bind('click', function() {
 		complete: function() {
 			$('#button-voucher').attr('disabled', false);
 			$('.wait').remove();
-		},		
+		},
 		success: function(json) {
 			if (json['error']) {
 				$('#basket').before('<div class="warning">' + json['error'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 			}
-			
+
 			if (json['redirect']) {
 				location = json['redirect'];
 			}
 		}
 	});
 });
-//--></script> 
+//--></script>

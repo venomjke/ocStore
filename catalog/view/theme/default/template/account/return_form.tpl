@@ -139,5 +139,5 @@
 $(document).ready(function() {
 	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

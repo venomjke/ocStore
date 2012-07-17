@@ -10,7 +10,7 @@ $('#button-coupon').bind('click', function() {
 		type: 'POST',
 		url: 'index.php?route=total/coupon/calculate',
 		data: $('#coupon :input'),
-		dataType: 'json',		
+		dataType: 'json',
 		beforeSend: function() {
 			$('.success, .warning').remove();
 			$('#button-coupon').attr('disabled', true);
@@ -19,16 +19,16 @@ $('#button-coupon').bind('click', function() {
 		complete: function() {
 			$('#button-coupon').attr('disabled', false);
 			$('.wait').remove();
-		},		
+		},
 		success: function(json) {
 			if (json['error']) {
 				$('#basket').before('<div class="warning">' + json['error'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 			}
-			
+
 			if (json['redirect']) {
 				location = json['redirect'];
 			}
 		}
 	});
 });
-//--></script> 
+//--></script>
