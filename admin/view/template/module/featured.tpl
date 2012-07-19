@@ -137,17 +137,15 @@ $('input[name=\'product\']').autocomplete({
 
 		$('#featured-product div:odd').attr('class', 'odd');
 		$('#featured-product div:even').attr('class', 'even');
-
 		data = $.map($('#featured-product input'), function(element){
 			return $(element).attr('value');
 		});
 
 		$('input[name=\'featured_product\']').attr('value', data.join());
-
 		return false;
 	},
 	focus: function(event, ui) {
-      	return false;
+	      	return false;
    	}
 });
 
