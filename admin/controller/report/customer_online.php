@@ -126,7 +126,7 @@ class ControllerReportCustomerOnline extends Controller {
 		$pagination->limit = 20;
 		$pagination->url = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url . '&page={page}');
 
-		$this->data['pagination'] = $pagination->render();
+		$this->data['pagination'] = $this->language->get('pagination');
 
 		$this->data['filter_customer'] = $filter_customer;
 		$this->data['filter_ip'] = $filter_ip;
