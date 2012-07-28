@@ -1,4 +1,9 @@
 <?php
+
+/*
+by dj-avtosh a.k.a. Эльхан Исаев
+**/
+
 header ("Content-Type: text/html; charset=utf-8");
 
 if(isset($_REQUEST['city_from']) && !empty($_REQUEST['city_from'])) $city_from = $_REQUEST['city_from']; else $error .= '<li> Выберите город отправления';
@@ -11,27 +16,26 @@ if($_REQUEST['val']>'50000') $error .= '<li> Максимальная объяв
 
 if(empty($error))
 {
-		$url = 'http://emspost.ru/api/rest/?method=ems.calculate&from=' . $city_from . '&to=' . $city_to . '&weight=' . $weight;
 
-		//----------------
-		$quote_data = array();
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-		$response = curl_exec($ch);
-		$response_array = json_decode($response, TRUE);
-		curl_close($ch);
-		//----------------
+			$url = 'http://emspost.ru/api/rest/?method=ems.calculate&from=' . $city_from . '&to=' . $city_to . '&weight=' . $weight;
 
-		if(empty($response_array['rsp']['term']['min']) && empty($response_array['rsp']['term']['max'])) {
-			echo '<li> Нет соединения с API EMS, повторите попытку!';
-		} else {
+			//----------------
+			$quote_data = array();
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+			$response = curl_exec($ch);
+			$response_array = json_decode($response, TRUE);
+			curl_close($ch);
+			//----------------
+
+			if(empty($response_array['rsp']['term']['min']) && empty($response_array['rsp']['term']['max']))
+			echo '<li> Нет соединение с API EMS, повторите попытку!';
+			else
 			echo 'Цена: '. ($response_array['rsp']['price'] + $ob_val) . ' р., в сроки: ' . $response_array['rsp']['term']['min'] . ' - ' . $response_array['rsp']['term']['max'] .' дн.';
-		}
-} else {
-		echo $error;
-}
+} else echo $error;
+
 
 ?>
 
