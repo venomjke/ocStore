@@ -35,7 +35,7 @@ $_['entry_seo_title']          = 'SEO Title:<br/><span class="help">Перена
 $_['entry_seo_h1']             = 'SEO H1:<br/><span class="help">Переназначение h1-заголовка для SEO</span>';
 $_['entry_description']      = 'Описание:';
 $_['entry_store']            = 'Магазины:';
-$_['entry_keyword']          = 'SEO URL:<br/><span class="help">Должно быть уникальным на всю систему.</span>';
+$_['entry_keyword']          = 'SEO URL:<br/><span class="help">Не используйте пробелы (замените их, например, на "-").<br/>Должно быть уникальным на всю систему.</span>';
 $_['entry_model']            = 'Модель:';
 $_['entry_sku']              = 'Артикул (SKU, код производителя):';
 $_['entry_upc']              = 'UPC:';

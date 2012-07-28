@@ -443,3 +443,4 @@ class ControllerCatalogAttribute extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 }
+?>

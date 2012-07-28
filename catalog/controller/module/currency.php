@@ -18,7 +18,13 @@ class ControllerModuleCurrency extends Controller {
 
     	$this->data['text_currency'] = $this->language->get('text_currency');
 
-		$this->data['action'] = $this->url->link('module/currency');
+		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			$connection = 'SSL';
+		} else {
+			$connection = 'NONSSL';
+		}
+
+		$this->data['action'] = $this->url->link('module/currency', '', $connection);
 
 		$this->data['currency_code'] = $this->currency->getCode();
 
@@ -54,12 +60,6 @@ class ControllerModuleCurrency extends Controller {
 
 			if ($data) {
 				$url = '&' . urldecode(http_build_query($data, '', '&'));
-			}
-
-			if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
-				$connection = 'SSL';
-			} else {
-				$connection = 'NONSSL';
 			}
 
 			$this->data['redirect'] = $this->url->link($route, $url, $connection);

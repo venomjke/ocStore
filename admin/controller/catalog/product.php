@@ -597,6 +597,10 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_model'] = $this->language->get('entry_model');
 		$this->data['entry_sku'] = $this->language->get('entry_sku');
 		$this->data['entry_upc'] = $this->language->get('entry_upc');
+		$this->data['entry_ean'] = $this->language->get('entry_ean');
+		$this->data['entry_jan'] = $this->language->get('entry_jan');
+		$this->data['entry_isbn'] = $this->language->get('entry_isbn');
+		$this->data['entry_mpn'] = $this->language->get('entry_mpn');
 		$this->data['entry_location'] = $this->language->get('entry_location');
 		$this->data['entry_minimum'] = $this->language->get('entry_minimum');
 		$this->data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
@@ -796,6 +800,38 @@ class ControllerCatalogProduct extends Controller {
   			$this->data['upc'] = '';
 		}
 
+		if (isset($this->request->post['ean'])) {
+			$this->data['ean'] = $this->request->post['ean'];
+		} elseif (!empty($product_info)) {
+                       $this->data['ean'] = $product_info['ean'];
+		} else {
+			$this->data['ean'] = '';
+		}
+
+		if (isset($this->request->post['jan'])) {
+			$this->data['jan'] = $this->request->post['jan'];
+		} elseif (!empty($product_info)) {
+			$this->data['jan'] = $product_info['jan'];
+		} else {
+			$this->data['jan'] = '';
+		}
+
+		if (isset($this->request->post['isbn'])) {
+			$this->data['isbn'] = $this->request->post['isbn'];
+		} elseif (!empty($product_info)) {
+			$this->data['isbn'] = $product_info['isbn'];
+		} else {
+			$this->data['isbn'] = '';
+		}
+
+		if (isset($this->request->post['mpn'])) {
+			$this->data['mpn'] = $this->request->post['mpn'];
+		} elseif (!empty($product_info)) {
+			$this->data['mpn'] = $product_info['mpn'];
+		} else {
+			$this->data['mpn'] = '';
+		}
+
 		if (isset($this->request->post['location'])) {
   			$this->data['location'] = $this->request->post['location'];
 		} elseif (!empty($product_info)) {
@@ -822,6 +858,14 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['keyword'] = $product_info['keyword'];
 		} else {
 			$this->data['keyword'] = '';
+		}
+
+		if (isset($this->request->post['product_tag'])) {
+			$this->data['product_tag'] = $this->request->post['product_tag'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$this->data['product_tag'] = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
+		} else {
+			$this->data['product_tag'] = array();
 		}
 
 		if (isset($this->request->post['image'])) {
@@ -1006,6 +1050,8 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['product_attributes'] = array();
 		}
 
+		$this->load->model('catalog/option');
+
 		if (isset($this->request->post['product_option'])) {
 			$product_options = $this->request->post['product_option'];
 		} elseif (isset($this->request->get['product_id'])) {
@@ -1055,6 +1101,16 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
+		$this->data['option_values'] = array();
+
+		foreach ($product_options as $product_option) {
+			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
+				if (!isset($this->data['option_values'][$product_option['option_id']])) {
+					$this->data['option_values'][$product_option['option_id']] = $this->model_catalog_option->getOptionValues($product_option['option_id']);
+				}
+			}
+		}
+
 		$this->load->model('sale/customer_group');
 
 		$this->data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
@@ -1095,7 +1151,7 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['product_images'][] = array(
 				'image'      => $image,
 				'thumb'      => $this->model_tool_image->resize($image, 100, 100),
-				'sort_order' => $product_image['sort_order'],
+				'sort_order' => $product_image['sort_order']
 			);
 		}
 

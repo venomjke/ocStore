@@ -15,44 +15,48 @@ class ModelCatalogProduct extends Model {
 
 		if ($query->num_rows) {
 			return array(
-				'seo_title'        => $query->row['seo_title'],
-				'seo_h1'           => $query->row['seo_h1'],
+				'seo_title'	=> $query->row['seo_title'],
+				'seo_h1'	   => $query->row['seo_h1'],
 				'product_id'       => $query->row['product_id'],
-				'name'             => $query->row['name'],
+				'name'	     => $query->row['name'],
 				'description'      => $query->row['description'],
 				'meta_description' => $query->row['meta_description'],
 				'meta_keyword'     => $query->row['meta_keyword'],
-				'tag'              => $query->row['tag'],
-				'model'            => $query->row['model'],
-				'sku'              => $query->row['sku'],
-				'upc'              => $query->row['upc'],
-				'location'         => $query->row['location'],
-				'quantity'         => $query->row['quantity'],
+				'tag'	      => $query->row['tag'],
+				'model'	    => $query->row['model'],
+				'sku'	      => $query->row['sku'],
+				'upc'	      => $query->row['upc'],
+				'ean'	      => $query->row['ean'],
+				'jan'	      => $query->row['jan'],
+				'isbn'	      => $query->row['isbn'],
+				'mpn'	      => $query->row['mpn'],
+				'location'	 => $query->row['location'],
+				'quantity'	 => $query->row['quantity'],
 				'stock_status'     => $query->row['stock_status'],
-				'image'            => $query->row['image'],
+				'image'	    => $query->row['image'],
 				'manufacturer_id'  => $query->row['manufacturer_id'],
 				'manufacturer'     => $query->row['manufacturer'],
-				'price'            => ($query->row['discount'] ? $query->row['discount'] : $query->row['price']),
-				'special'          => $query->row['special'],
-				'reward'           => $query->row['reward'],
-				'points'           => $query->row['points'],
+				'price'	    => ($query->row['discount'] ? $query->row['discount'] : $query->row['price']),
+				'special'	  => $query->row['special'],
+				'reward'	   => $query->row['reward'],
+				'points'	   => $query->row['points'],
 				'tax_class_id'     => $query->row['tax_class_id'],
 				'date_available'   => $query->row['date_available'],
-				'weight'           => $query->row['weight'],
+				'weight'	   => $query->row['weight'],
 				'weight_class_id'  => $query->row['weight_class_id'],
-				'length'           => $query->row['length'],
-				'width'            => $query->row['width'],
-				'height'           => $query->row['height'],
+				'length'	   => $query->row['length'],
+				'width'	    => $query->row['width'],
+				'height'	   => $query->row['height'],
 				'length_class_id'  => $query->row['length_class_id'],
-				'subtract'         => $query->row['subtract'],
-				'rating'           => round($query->row['rating']),
-				'reviews'          => $query->row['reviews'],
-				'minimum'          => $query->row['minimum'],
+				'subtract'	 => $query->row['subtract'],
+				'rating'	   => round($query->row['rating']),
+				'reviews'	  => $query->row['reviews'],
+				'minimum'	  => $query->row['minimum'],
 				'sort_order'       => $query->row['sort_order'],
-				'status'           => $query->row['status'],
+				'status'	   => $query->row['status'],
 				'date_added'       => $query->row['date_added'],
 				'date_modified'    => $query->row['date_modified'],
-				'viewed'           => $query->row['viewed']
+				'viewed'	   => $query->row['viewed']
 			);
 		} else {
 			return false;
@@ -81,12 +85,12 @@ class ModelCatalogProduct extends Model {
 
 			if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
 				$sql .= " AND (";
-				
-				if (!empty($data['filter_name'])) {					
+
+				if (!empty($data['filter_name'])) {
 					if (!empty($data['filter_description'])) {
 						$sql .= "MATCH(pd.name) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "') OR MATCH(pd.description) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
 					} else {
-						$sql .= "LCASE(pd.name) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
+						$sql .= "MATCH(pd.name) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
 					}
 				}
 
@@ -95,27 +99,55 @@ class ModelCatalogProduct extends Model {
 				}
 
 				if (!empty($data['filter_tag'])) {
-					$sql .= "MATCH(pd.tag) LIKE AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "')";
+					$sql .= "MATCH(pd.tag) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "')";
 				}
 
 				$sql .= ")";
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.model) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.sku) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.upc) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.ean) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.jan) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.isbn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.mpn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
 			}
 
 			if (!empty($data['filter_category_id'])) {
 				if (!empty($data['filter_sub_category'])) {
 					$implode_data = array();
 
-					$implode_data[] = "p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
+					$implode_data[] = (int)$data['filter_category_id'];
 
 					$this->load->model('catalog/category');
 
 					$categories = $this->model_catalog_category->getCategoriesByParentId($data['filter_category_id']);
 
 					foreach ($categories as $category_id) {
-						$implode_data[] = "p2c.category_id = '" . (int)$category_id . "'";
+						$implode_data[] = (int)$category_id;
 					}
 
-					$sql .= " AND (" . implode(' OR ', $implode_data) . ")";
+					$sql .= " AND p2c.category_id IN (" . implode(', ', $implode_data) . ")";
 				} else {
 					$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
 				}
@@ -306,15 +338,15 @@ class ModelCatalogProduct extends Model {
 			foreach ($product_attribute_query->rows as $product_attribute) {
 				$product_attribute_data[] = array(
 					'attribute_id' => $product_attribute['attribute_id'],
-					'name'         => $product_attribute['name'],
-					'text'         => $product_attribute['text']
+					'name'	 => $product_attribute['name'],
+					'text'	 => $product_attribute['text']
 				);
 			}
 
 			$product_attribute_group_data[] = array(
 				'attribute_group_id' => $product_attribute_group['attribute_group_id'],
-				'name'               => $product_attribute_group['name'],
-				'attribute'          => $product_attribute_data
+				'name'	       => $product_attribute_group['name'],
+				'attribute'	  => $product_attribute_data
 			);
 		}
 
@@ -335,34 +367,34 @@ class ModelCatalogProduct extends Model {
 				foreach ($product_option_value_query->rows as $product_option_value) {
 					$product_option_value_data[] = array(
 						'product_option_value_id' => $product_option_value['product_option_value_id'],
-						'option_value_id'         => $product_option_value['option_value_id'],
-						'name'                    => $product_option_value['name'],
-						'image'                   => $product_option_value['image'],
-						'quantity'                => $product_option_value['quantity'],
-						'subtract'                => $product_option_value['subtract'],
-						'price'                   => $product_option_value['price'],
-						'price_prefix'            => $product_option_value['price_prefix'],
-						'weight'                  => $product_option_value['weight'],
-						'weight_prefix'           => $product_option_value['weight_prefix']
+						'option_value_id'	 => $product_option_value['option_value_id'],
+						'name'		    => $product_option_value['name'],
+						'image'		   => $product_option_value['image'],
+						'quantity'		=> $product_option_value['quantity'],
+						'subtract'		=> $product_option_value['subtract'],
+						'price'		   => $product_option_value['price'],
+						'price_prefix'	    => $product_option_value['price_prefix'],
+						'weight'		  => $product_option_value['weight'],
+						'weight_prefix'	   => $product_option_value['weight_prefix']
 					);
 				}
 
 				$product_option_data[] = array(
 					'product_option_id' => $product_option['product_option_id'],
-					'option_id'         => $product_option['option_id'],
-					'name'              => $product_option['name'],
-					'type'              => $product_option['type'],
+					'option_id'	 => $product_option['option_id'],
+					'name'	      => $product_option['name'],
+					'type'	      => $product_option['type'],
 					'option_value'      => $product_option_value_data,
-					'required'          => $product_option['required']
+					'required'	  => $product_option['required']
 				);
 			} else {
 				$product_option_data[] = array(
 					'product_option_id' => $product_option['product_option_id'],
-					'option_id'         => $product_option['option_id'],
-					'name'              => $product_option['name'],
-					'type'              => $product_option['type'],
+					'option_id'	 => $product_option['option_id'],
+					'name'	      => $product_option['name'],
+					'type'	      => $product_option['type'],
 					'option_value'      => $product_option['option_value'],
-					'required'          => $product_option['required']
+					'required'	  => $product_option['required']
 				);
 			}
       	}
@@ -423,21 +455,21 @@ class ModelCatalogProduct extends Model {
 
 		if (!$product_data) {
 			$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id)";
-	
+
 			if (!empty($data['filter_category_id'])) {
-				$sql .= " LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id)";			
+				$sql .= " LEFT JOIN " . DB_PREFIX . "product_to_category p2c ON (p.product_id = p2c.product_id)";
 			}
-						
+
 			$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
-			
+
 			if (!empty($data['filter_name']) || !empty($data['filter_tag'])) {
 				$sql .= " AND (";
 
-				if (!empty($data['filter_name'])) {					
+				if (!empty($data['filter_name'])) {
 					if (!empty($data['filter_description'])) {
 						$sql .= "MATCH(pd.name) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "') OR MATCH(pd.description) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
 					} else {
-						$sql .= "LCASE(pd.name) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
+						$sql .= "MATCH(pd.name) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "')";
 					}
 				}
 
@@ -446,40 +478,68 @@ class ModelCatalogProduct extends Model {
 				}
 
 				if (!empty($data['filter_tag'])) {
-					$sql .= "MATCH(pd.tag) LIKE AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "')";
+					$sql .= "MATCH(pd.tag) AGAINST('" . $this->db->escape(utf8_strtolower($data['filter_tag'])) . "')";
 				}
-			
+
 				$sql .= ")";
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.model) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.sku) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.upc) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.ean) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.jan) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.isbn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
+
+				if (!empty($data['filter_name'])) {
+					$sql .= " OR LCASE(p.mpn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				}
 			}
-						
+
 			if (!empty($data['filter_category_id'])) {
 				if (!empty($data['filter_sub_category'])) {
 					$implode_data = array();
 
-					$implode_data[] = "p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
-					
+					$implode_data[] = (int)$data['filter_category_id'];
+
 					$this->load->model('catalog/category');
-					
+
 					$categories = $this->model_catalog_category->getCategoriesByParentId($data['filter_category_id']);
-						
+
 					foreach ($categories as $category_id) {
-						$implode_data[] = "p2c.category_id = '" . (int)$category_id . "'";
+						$implode_data[] = (int)$category_id;
 					}
-								
-					$sql .= " AND (" . implode(' OR ', $implode_data) . ")";			
+
+					$sql .= " AND p2c.category_id IN (" . implode(', ', $implode_data) . ")";
 				} else {
 					$sql .= " AND p2c.category_id = '" . (int)$data['filter_category_id'] . "'";
 				}
-			}		
-			
+			}
+
 			if (!empty($data['filter_manufacturer_id'])) {
 				$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";
 			}
-			
+
 			$query = $this->db->query($sql);
-			
-			$product_data = $query->row['total']; 
-			
+
+			$product_data = $query->row['total'];
+
 			$this->cache->set('product.total.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . (int)$customer_group_id . '.' . $cache, $product_data);
 		}
 

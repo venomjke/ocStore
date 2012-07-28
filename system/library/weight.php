@@ -23,7 +23,7 @@ class Weight {
       		return $value;
 		}
 
-		if (!isset($this->weights[$from])) {
+		if (isset($this->weights[$from])) {
 			$from = $this->weights[$from]['value'];
 		} else {
 			$from = 0;

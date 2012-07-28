@@ -1169,6 +1169,7 @@ class ControllerSaleReturn extends Controller {
 			}
 
 			if (!$this->data['error']) {
+				$this->model_sale_return->addReturnHistory($this->request->get['return_id'], $this->request->post);
 
 				$this->data['success'] = $this->language->get('text_success');
 			}

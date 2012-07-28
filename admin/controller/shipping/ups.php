@@ -66,7 +66,6 @@ class ControllerShippingUPS extends Controller {
 		$this->data['entry_insurance'] = $this->language->get('entry_insurance');
 		$this->data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$this->data['entry_weight_code'] = $this->language->get('entry_weight_code');
-		$this->data['entry_weight_code'] = $this->language->get('entry_weight_code');
 		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_length_code'] = $this->language->get('entry_length_code');
 		$this->data['entry_length_class'] = $this->language->get('entry_length_class');

@@ -1061,13 +1061,13 @@ CREATE TABLE `oc_customer_ip_blacklist` (
 
 DROP TABLE IF EXISTS `oc_customer_online`;
 CREATE TABLE `oc_customer_online` (
-  `ip` bigint(10) NOT NULL,
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `url` text COLLATE utf8_bin NOT NULL,
-  `referer` text COLLATE utf8_bin NOT NULL,
+  `url` text COLLATE utf8_general_ci NOT NULL,
+  `referer` text COLLATE utf8_general_ci NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`ip`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2159,7 +2159,7 @@ CREATE TABLE `oc_product_description` (
   `meta_keyword` varchar(255) COLLATE utf8_general_ci NOT NULL,
   `seo_title` varchar(255) COLLATE utf8_general_ci NOT NULL,
   `seo_h1` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `tag` text COLLATE utf8_bin NOT NULL,
+  `tag` text COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY  (`product_id`,`language_id`),
   KEY `name` (`name`),
   FULLTEXT KEY `description` (`description`),

@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']                	= 'Обзор';
+$_['heading_title']                	= 'Панель управления';
 
 // Text
 $_['text_overview']                	= 'Краткий обзор';
@@ -12,8 +12,8 @@ $_['text_total_order']             	= 'Всего заказов:';
 $_['text_total_customer']          	= 'Всего покупателей:';
 $_['text_total_customer_approval'] 	= 'Покупателей, ожидающих подтверждения:';
 $_['text_total_review_approval']   	= 'Отзывов, ожидающих подтверждения:';
-$_['text_total_affiliate']          = 'Количество партнёров:';
-$_['text_total_affiliate_approval'] = 'Партнёров, ожидающих подтверждения:';
+$_['text_total_affiliate']              = 'Количество партнёров:';
+$_['text_total_affiliate_approval']     = 'Партнёров, ожидающих подтверждения:';
 $_['text_day']                     	= 'Последние 24 часа';
 $_['text_week']                    	= 'Последние 7 дней';
 $_['text_month']                   	= 'Последний месяц';
