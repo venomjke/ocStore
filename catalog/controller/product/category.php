@@ -73,9 +73,9 @@ class ControllerProductCategory extends Controller {
 
 		if ($category_info) {
 			if ($category_info['seo_title']) {
-		  		$this->document->setTitle($category_info['seo_title']);
+				$this->document->setTitle($category_info['seo_title']);
 			} else {
-		  		$this->document->setTitle($category_info['name']);
+				$this->document->setTitle($category_info['name']);
 			}
 
 			$this->document->setDescription($category_info['meta_description']);
@@ -133,8 +133,15 @@ class ControllerProductCategory extends Controller {
 			$results = $this->model_catalog_category->getCategories($category_id);
 
 			foreach ($results as $result) {
+				$data = array(
+					'filter_category_id'  => $result['category_id'],
+					'filter_sub_category' => true
+				);
+
+				$product_total = $this->model_catalog_product->getTotalProducts($data);
+
 				$this->data['categories'][] = array(
-					'name'  => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProductsByCategoryId($result['category_id']) . ')' : ''),
+					'name'  => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
 					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
 				);
 			}
@@ -177,11 +184,7 @@ class ControllerProductCategory extends Controller {
 				} else {
 					$tax = false;
 				}
-				if (!empty($result) && (float)$result['quantity']) {
-					$quantity = (int)$result['quantity'];
-				} else {
-					$quantity = false;
-				}
+
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
@@ -198,7 +201,6 @@ class ControllerProductCategory extends Controller {
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
 					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-					'quantity'	  => $quantity,
 					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'])
 				);
 			}

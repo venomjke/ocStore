@@ -65,7 +65,7 @@ class ControllerProductSpecial extends Controller {
       		'separator' => $this->language->get('text_separator')
    		);
 
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+	    	$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_empty'] = $this->language->get('text_empty');
 		$this->data['text_quantity'] = $this->language->get('text_quantity');
@@ -125,12 +125,6 @@ class ControllerProductSpecial extends Controller {
 				$tax = false;
 			}
 
-			if (!empty($result) && (float)$result['quantity']) {
-				$quantity = (int)$result['quantity'];
-			} else {
-				$quantity = false;
-			}
-
 			if ($this->config->get('config_review_status')) {
 				$rating = (int)$result['rating'];
 			} else {
@@ -147,7 +141,6 @@ class ControllerProductSpecial extends Controller {
 				'tax'         => $tax,
 				'rating'      => $result['rating'],
 				'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-				'quantity'   => $quantity,
 				'href'        => $this->url->link('product/product', $url . '&product_id=' . $result['product_id'])
 			);
 		}

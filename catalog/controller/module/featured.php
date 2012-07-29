@@ -43,12 +43,6 @@ class ControllerModuleFeatured extends Controller {
 					$special = false;
 				}
 
-				if ((float)$product_info['quantity']) {
-					$quantity = (int)$product_info['quantity'];
-				} else {
-					$quantity = false;
-				}
-
 				if ($this->config->get('config_review_status')) {
 					$rating = $product_info['rating'];
 				} else {
@@ -63,7 +57,6 @@ class ControllerModuleFeatured extends Controller {
 					'special' 	 => $special,
 					'rating'     => $rating,
 					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']),
-					'quantity' => $quantity,
 					'href'    	 => $this->url->link('product/product', 'product_id=' . $product_info['product_id']),
 				);
 			}

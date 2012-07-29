@@ -130,8 +130,8 @@ class ControllerProductSearch extends Controller {
 		}
 
 		$this->data['text_empty'] = $this->language->get('text_empty');
-    	$this->data['text_critea'] = $this->language->get('text_critea');
-    	$this->data['text_search'] = $this->language->get('text_search');
+		$this->data['text_critea'] = $this->language->get('text_critea');
+		$this->data['text_search'] = $this->language->get('text_search');
 		$this->data['text_keyword'] = $this->language->get('text_keyword');
 		$this->data['text_category'] = $this->language->get('text_category');
 		$this->data['text_sub_category'] = $this->language->get('text_sub_category');
@@ -149,9 +149,9 @@ class ControllerProductSearch extends Controller {
 		$this->data['text_limit'] = $this->language->get('text_limit');
 
 		$this->data['entry_search'] = $this->language->get('entry_search');
-    	$this->data['entry_description'] = $this->language->get('entry_description');
+		$this->data['entry_description'] = $this->language->get('entry_description');
 
-    	$this->data['button_search'] = $this->language->get('button_search');
+		$this->data['button_search'] = $this->language->get('button_search');
 		$this->data['button_cart'] = $this->language->get('button_cart');
 		$this->data['button_wishlist'] = $this->language->get('button_wishlist');
 		$this->data['button_compare'] = $this->language->get('button_compare');
@@ -240,12 +240,6 @@ class ControllerProductSearch extends Controller {
 					$tax = false;
 				}
 
-				if (!empty($result) && (float)$result['quantity']) {
-					$quantity = (int)$result['quantity'];
-				} else {
-					$quantity = false;
-				}
-
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
@@ -262,7 +256,6 @@ class ControllerProductSearch extends Controller {
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
 					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-					'quantity'	  => $quantity,
 					'href'        => $this->url->link('product/product', $url . '&product_id=' . $result['product_id'])
 				);
 			}
