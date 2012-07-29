@@ -229,8 +229,8 @@ CREATE TABLE IF NOT EXISTS oc_order_misc (
 
 DROP TABLE IF EXISTS oc_product_tag;
 ALTER TABLE oc_product_description ADD `tag` text COLLATE utf8_general_ci NOT NULL AFTER seo_h1;
-ALTER TABLE oc_product_description ADD FULLTEXT KEY `tag` (`tag`);
-ALTER TABLE oc_product_description ADD FULLTEXT KEY `description` (`description`);
+ALTER TABLE oc_product_description ADD FULLTEXT (`tag`);
+ALTER TABLE oc_product_description ADD FULLTEXT (`description`);
 
 ALTER TABLE oc_product ADD `ean` varchar(14) COLLATE utf8_general_ci NOT NULL;
 ALTER TABLE oc_product ADD `jan` varchar(13) COLLATE utf8_general_ci NOT NULL;
