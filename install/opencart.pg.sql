@@ -1,3 +1,4 @@
+DON'T USE THIS! It is DEPRECATED!!!
 --
 -- Database: "ocstore"
 --

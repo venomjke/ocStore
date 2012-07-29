@@ -74,10 +74,6 @@ ALTER TABLE oc_tax_rate DROP tax_class_id ;
 ALTER TABLE oc_tax_rate DROP priority ;
 ALTER TABLE oc_tax_rate DROP description ;
 
-ALTER TABLE oc_product_tag ADD INDEX product_id (product_id);
-ALTER TABLE oc_product_tag ADD INDEX language_id (language_id);
-ALTER TABLE oc_product_tag ADD INDEX tag (tag);
-
 INSERT IGNORE INTO oc_manufacturer_description (manufacturer_id, language_id) SELECT manufacturer_id, language_id FROM oc_manufacturer , oc_language;
 
 
@@ -230,6 +226,16 @@ CREATE TABLE IF NOT EXISTS oc_order_misc (
   `value` text NOT NULL DEFAULT '' COMMENT '' COLLATE utf8_general_ci,
   PRIMARY KEY (order_id, `key`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+DROP TABLE IF EXISTS oc_product_tag;
+ALTER TABLE oc_product_description ADD `tag` text COLLATE utf8_general_ci NOT NULL AFTER seo_h1;
+ALTER TABLE oc_product_description ADD FULLTEXT KEY `tag` (`tag`);
+ALTER TABLE oc_product_description ADD FULLTEXT KEY `description` (`description`);
+
+ALTER TABLE oc_product ADD `ean` varchar(14) COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE oc_product ADD `jan` varchar(13) COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE oc_product ADD `isbn` varchar(13) COLLATE utf8_general_ci NOT NULL;
+ALTER TABLE oc_product ADD `mpn` varchar(64) COLLATE utf8_general_ci NOT NULL;
 
 #### Start 1.5.4
 
