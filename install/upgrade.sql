@@ -231,7 +231,7 @@ DROP TABLE IF EXISTS oc_product_tag;
 ALTER TABLE oc_product_description ADD `tag` text COLLATE utf8_general_ci NOT NULL AFTER seo_h1;
 ALTER TABLE oc_product_description ADD FULLTEXT (`tag`);
 ALTER TABLE oc_product_description ADD FULLTEXT (`description`);
-ALTER TABLE oc_product_description ADD FULLTEXT (`name`);
+REPAIR TABLE oc_product_description QUICK;
 
 ALTER TABLE oc_product ADD `ean` varchar(14) COLLATE utf8_general_ci NOT NULL;
 ALTER TABLE oc_product ADD `jan` varchar(13) COLLATE utf8_general_ci NOT NULL;
@@ -241,7 +241,7 @@ ALTER TABLE oc_product ADD `mpn` varchar(64) COLLATE utf8_general_ci NOT NULL;
 #### Start 1.5.4
 
 CREATE TABLE IF NOT EXISTS `oc_customer_online` (
-  `ip` bigint(10) NOT NULL,
+  `ip` varchar(40) COLLATE utf8_general_ci NOT NULL,
   `customer_id` int(11) NOT NULL,
   `url` text COLLATE utf8_general_ci NOT NULL,
   `referer` text COLLATE utf8_general_ci NOT NULL,
