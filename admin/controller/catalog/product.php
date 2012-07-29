@@ -862,8 +862,8 @@ class ControllerCatalogProduct extends Controller {
 
 		if (isset($this->request->post['product_tag'])) {
 			$this->data['product_tag'] = $this->request->post['product_tag'];
-		} elseif (isset($this->request->get['product_id'])) {
-			$this->data['product_tag'] = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
+// ?!?		} elseif (isset($this->request->get['product_id'])) {
+//			$this->data['product_tag'] = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
 		} else {
 			$this->data['product_tag'] = array();
 		}
