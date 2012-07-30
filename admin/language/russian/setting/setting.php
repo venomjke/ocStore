@@ -4,11 +4,11 @@ $_['heading_title']				= 'Настройки';
 
 // Text
 $_['text_success']				= 'Настройки успешно изменены!';
-$_['text_items']				= 'Items';
+$_['text_items']				= 'Элементы';
 $_['text_product']				= 'Товары';
 $_['text_voucher']				= 'Сертификаты';
 $_['text_tax']					= 'Налоги';
-$_['text_account']				= 'Account';
+$_['text_account']				= 'Регистрация';
 $_['text_checkout']				= 'Оформление заказа';
 $_['text_stock']				= 'Кол-во на складе';
 $_['text_affiliate']				= 'Партнеры';
