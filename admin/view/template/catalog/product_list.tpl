@@ -63,10 +63,10 @@
               <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" /></td>
               <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" /></td>
               <td align="left"><input type="text" name="filter_price" value="<?php echo $filter_price; ?>" size="8"/></td>
-			  <td ><select name="filter_category" style="width: 18em;" >
+			  <td ><select name="filter_category_id" style="width: 18em;" >
               <option value="*"></option>
               <?php foreach ($categories as $category) { ?>
-                <?php if ($category['category_id']==$filter_category) { ?>
+                <?php if ($category['category_id']==$filter_category_id) { ?>
                   <option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
                 <?php } else { ?>
                   <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option>
@@ -160,10 +160,10 @@ function filter() {
 		url += '&filter_price=' + encodeURIComponent(filter_price);
 	}
 
-	var filter_category = $('select[name=\'filter_category\']').attr('value');
+	var filter_category_id = $('select[name=\'filter_category_id\']').attr('value');
 
-    if (filter_category != '*') {
-		url += '&filter_category=' + encodeURIComponent(filter_category);
+    if (filter_category_id != '*') {
+		url += '&filter_category_id=' + encodeURIComponent(filter_category_id);
 	}
 
 	var filter_quantity = $('input[name=\'filter_quantity\']').attr('value');

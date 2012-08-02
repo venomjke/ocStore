@@ -38,8 +38,8 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&filter_price=' . $this->request->get['filter_price'];
 			}
 						//filter category start//
-			if (isset($this->request->get['filter_category'])) {
-                $url .= '&filter_category=' . $this->request->get['filter_category'];
+			if (isset($this->request->get['filter_category_id'])) {
+                $url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
             }
 			//filter category end//
 			if (isset($this->request->get['filter_quantity'])) {
@@ -94,8 +94,8 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&filter_price=' . $this->request->get['filter_price'];
 			}
 						//filter category start//
-			if (isset($this->request->get['filter_category'])) {
-                $url .= '&filter_category=' . $this->request->get['filter_category'];
+			if (isset($this->request->get['filter_category_id'])) {
+                $url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
             }
 			//filter category end//
 			if (isset($this->request->get['filter_quantity'])) {
@@ -206,8 +206,8 @@ class ControllerCatalogProduct extends Controller {
 				$url .= '&filter_price=' . $this->request->get['filter_price'];
 			}
 			//filter category start//
-			if (isset($this->request->get['filter_category'])) {
-                $url .= '&filter_category=' . $this->request->get['filter_category'];
+			if (isset($this->request->get['filter_category_id'])) {
+                $url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
             }
             //filter category end//
 			if (isset($this->request->get['filter_quantity'])) {
@@ -255,10 +255,10 @@ class ControllerCatalogProduct extends Controller {
 			$filter_price = null;
 		}
 			//filter category start//
-		if (isset($this->request->get['filter_category'])) {
-			$filter_category = $this->request->get['filter_category'];
+		if (isset($this->request->get['filter_category_id'])) {
+			$filter_category_id = $this->request->get['filter_category_id'];
 		} else {
-			$filter_category = NULL;
+			$filter_category_id = NULL;
 		}
         //filter category end//
 		if (isset($this->request->get['filter_quantity'])) {
@@ -305,8 +305,8 @@ class ControllerCatalogProduct extends Controller {
 			$url .= '&filter_price=' . $this->request->get['filter_price'];
 		}
 				//filter category start//
-		if (isset($this->request->get['filter_category'])) {
-			$url .= '&filter_category=' . $this->request->get['filter_category'];
+		if (isset($this->request->get['filter_category_id'])) {
+			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
 		}
         //filter category end//
 		if (isset($this->request->get['filter_quantity'])) {
@@ -354,7 +354,7 @@ class ControllerCatalogProduct extends Controller {
 			'filter_model'	  => $filter_model,
 			'filter_price'	  => $filter_price,
   				//filter category start//
-			'filter_category' => $filter_category,
+			'filter_category_id' => $filter_category_id,
 			// End
 			'filter_quantity' => $filter_quantity,
 			'filter_status'   => $filter_status,
@@ -514,8 +514,8 @@ class ControllerCatalogProduct extends Controller {
 			$url .= '&filter_price=' . $this->request->get['filter_price'];
 		}
 			// Add
-        if (isset($this->request->get['filter_category'])) {
-			$url .= '&filter_category=' . $this->request->get['filter_category'];
+        if (isset($this->request->get['filter_category_id'])) {
+			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
 		}
         // End add
 
@@ -548,7 +548,7 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['filter_model'] = $filter_model;
 		$this->data['filter_price'] = $filter_price;
     // Add
-        $this->data['filter_category'] = $filter_category;
+        $this->data['filter_category_id'] = $filter_category_id;
         // End add
 		$this->data['filter_quantity'] = $filter_quantity;
 		$this->data['filter_status'] = $filter_status;
@@ -699,8 +699,8 @@ class ControllerCatalogProduct extends Controller {
 
 		$url = '';
 			//filter category start//
-		if (isset($this->request->get['filter_category'])) {
-			$url .= '&filter_category=' . $this->request->get['filter_category'];
+		if (isset($this->request->get['filter_category_id'])) {
+			$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
 		}
         //filter category end//
 
