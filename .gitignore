@@ -2,15 +2,20 @@
 !.gitignore
 !index.html
 
-#config.php
-#admin/config.php
-
+#Commonly modified files
+config.php
+admin/config.php
 download
-image/cache
 backup
 system/cache
 system/logs
-
 vq/
 vqgen/
 vqmod/vqmod.log
+vqmod/vqcache
+catalog/view/theme/*
+!catalog/view/theme/default
+.user.ini
+image/cache
+image/data/*
+!image/data/demo
