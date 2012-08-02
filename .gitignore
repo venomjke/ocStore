@@ -2,8 +2,8 @@
 !.gitignore
 !index.html
 
-config.php
-admin/config.php
+#config.php
+#admin/config.php
 
 download
 image/cache
