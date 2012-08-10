@@ -56,6 +56,14 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: GD extension needs to be loaded for OpenCart to work!';
 		}
 
+		if (!extension_loaded('curl')) {
+			$this->error['warning'] = 'Warning: CURL extension needs to be loaded for OpenCart to work!';
+		}
+
+		if (!function_exists('mcrypt_encrypt')) {
+			$this->error['warning'] = 'Warning: mCrypt extension needs to be loaded for OpenCart to work!';
+		}
+
 		if (!extension_loaded('zlib')) {
 			$this->error['warning'] = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
 		}
