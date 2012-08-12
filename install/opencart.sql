@@ -676,7 +676,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (78, 'Габон', 'GA', 'GAB', '', 0, 1),
 (79, 'Гамбия', 'GM', 'GMB', '', 0, 1),
 (80, 'Грузия', 'GE', 'GEO', '', 0, 1),
-(81, 'Германия', 'DE', 'DEU', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
+(81, 'Германия', 'DE', 'DEU', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1),
 (82, 'Гана', 'GH', 'GHA', '', 0, 1),
 (83, 'Гибралтар', 'GI', 'GIB', '', 0, 1),
 (84, 'Греция', 'GR', 'GRC', '', 0, 1),
