@@ -130,7 +130,7 @@
                   <?php } ?>
                 </select></td>
               <td class="right"><?php foreach ($customer['action'] as $action) { ?>
-                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <nobr>[<a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a>]</nobr>
                 <?php } ?></td>
             </tr>
             <?php } ?>
