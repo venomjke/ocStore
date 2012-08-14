@@ -186,7 +186,7 @@ DROP TABLE IF EXISTS oc_return_product;
 ALTER TABLE oc_tax_rate_to_customer_group DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 # Disable Category Module to force user to reenable with new settings to avoid php error
-UPDATE `oc_setting` SET `value` = replace(`value`, 's:6:"status";s:1:"1"', 's:6:"status";s:1:"0"') WHERE `key` = 'category_module';
+#UPDATE `oc_setting` SET `value` = replace(`value`, 's:6:"status";s:1:"1"', 's:6:"status";s:1:"0"') WHERE `key` = 'category_module';
 
 #### Start 1.5.2.2
 
@@ -258,3 +258,6 @@ ALTER TABLE oc_product ADD `mpn` varchar(12) COLLATE utf8_bin NOT NULL DEFAULT '
 ALTER TABLE oc_affiliate ADD `salt` varchar(9) COLLATE utf8_general_ci NOT NULL DEFAULT '' after `password`;
 ALTER TABLE oc_customer ADD `salt` varchar(9) COLLATE utf8_general_ci NOT NULL DEFAULT '' after `password`;
 ALTER TABLE oc_user ADD `salt` varchar(9) COLLATE utf8_general_ci NOT NULL DEFAULT '' after `password`;
+
+#Password fix
+ALTER TABLE oc_user MODIFY `password` varchar(40) NOT NULL DEFAULT '';
