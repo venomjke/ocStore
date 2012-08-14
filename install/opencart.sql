@@ -721,7 +721,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (123, 'Литва', 'LT', 'LTU', '', 0, 1),
 (124, 'Люксембург', 'LU', 'LUX', '', 0, 1),
 (125, 'Макао', 'MO', 'MAC', '', 0, 1),
-(126, 'Македония', 'MK', 'MKD', '', 0, 1),
+(126, 'Республика Македония', 'MK', 'MKD', '', 0, 1),
 (127, 'Мадагаскар', 'MG', 'MDG', '', 0, 1),
 (128, 'Малави', 'MW', 'MWI', '', 0, 1),
 (129, 'Малайзия', 'MY', 'MYS', '', 0, 1),
@@ -1886,24 +1886,6 @@ CREATE TABLE `oc_order_history` (
 
 -- --------------------------------------------------------
 
--- 
--- Table structure for table `oc_order_misc`
---
-
-DROP TABLE IF EXISTS `oc_order_misc`;
-CREATE TABLE `oc_order_misc` (
-  `order_id` int(11) NOT NULL,
-  `key` varchar(64) COLLATE utf8_general_ci NOT NULL,
-  `value` text COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`order_id`,`key`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_order_misc`
---
-
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `oc_order_option`
@@ -3150,7 +3132,7 @@ CREATE TABLE `oc_user` (
   `user_id` int(11) NOT NULL auto_increment,
   `user_group_id` int(11) NOT NULL,
   `username` varchar(20) COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `password` varchar(32) COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `password` varchar(40) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `salt` varchar(9) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `firstname` varchar(32) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `lastname` varchar(32) COLLATE utf8_general_ci NOT NULL DEFAULT '',
@@ -7298,7 +7280,8 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3966, 190, '11', 'Goriška', 1),
 (3967, 190, '12', 'Obalno-kraška', 1),
 (3968, 220, 'KE', 'Херсон', 1),
-(3969, 33, '', 'Ruse', 1);
+(3969, 33, '', 'Ruse', 1)
+(3970, 101, 'ALB', 'Alborz', 1);
 
 -- --------------------------------------------------------
 
