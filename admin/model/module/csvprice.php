@@ -18,16 +18,12 @@ class ModelModuleCSVPrice extends Model {
 					$item[] = $data[$c];
 				}
 
-				// Update Price
 				if( count($item) == 6 ) {
-					//$sql = 'UPDATE '. DB_PREFIX . 'product SET quantity = "'.$item[4].'", price = '.$item[5].' WHERE product_id = '.(int)$item[0];
 					$this->db->query('UPDATE '. DB_PREFIX . 'product SET quantity = "'.$item[4].'", price = '.$item[5].' WHERE product_id = '.(int)$item[0]);
 				} elseif ( count($item) == 3 ){
-					//$sql = 'UPDATE '. DB_PREFIX . 'product SET quantity = "'.$item[1].'", price = '.$item[2].' WHERE model = "'.$item[0].'"';
-					$this->db->query('UPDATE '. DB_PREFIX . 'product SET quantity = "'.$item[1].'", price = '.$item[2].' WHERE model = "'.iconv('cp1251', 'UTF-8', $item[0]).'"');
+					$this->db->query('UPDATE '. DB_PREFIX . 'product SET quantity = "'.$item[1].'", price = '.$item[2].' WHERE model = "'.$item[0].'"');
 				}elseif ( count($item) == 2 ){
-					//$sql = 'UPDATE '. DB_PREFIX . 'product SET price = '.$item[1].' WHERE model = "'.$item[0].'"';
-					$this->db->query('UPDATE '. DB_PREFIX . 'product SET price = '.$item[1].' WHERE model = "'.iconv('cp1251', 'UTF-8', $item[0]).'"');
+					$this->db->query('UPDATE '. DB_PREFIX . 'product SET price = '.$item[1].' WHERE model = "'.$item[0].'"');
 				}
 
 				unset($item);
@@ -39,7 +35,7 @@ class ModelModuleCSVPrice extends Model {
 
 	public function export($product_category) {
 		$output = '';
-		$search = array(';',"\n");
+		$search = array($this->CSV_SEPARATOR,"\n");
 
 		if($product_category) {
 			$where = ' AND (';
@@ -60,10 +56,9 @@ class ModelModuleCSVPrice extends Model {
 		}
 		$query = $this->db->query($sql);
 		foreach ($query->rows as $result) {
-			$output .= $result['product_id'] . ';' . str_replace($search, '', $result['name']) . ';' . str_replace($search, '', $result['model']) . ';' . $result['manufacturer'] . ';' . $result['quantity'] . ';' . $result['price'] . "\n";
+			$output .= $this->CSV_ENCLOSURE . $result['product_id'] . $this->CSV_ENCLOSURE . $this->CSV_SEPARATOR . $this->CSV_ENCLOSURE . str_replace($search, '', $result['name']) . $this->CSV_ENCLOSURE . $this->CSV_SEPARATOR . $this->CSV_ENCLOSURE . str_replace($search, '', $result['model']) . $this->CSV_ENCLOSURE . $this->CSV_SEPARATOR . $this->CSV_ENCLOSURE . $result['manufacturer'] . $this->CSV_ENCLOSURE . $this->CSV_SEPARATOR . $this->CSV_ENCLOSURE . $result['quantity'] . $this->CSV_ENCLOSURE . $this->CSV_SEPARATOR . $this->CSV_ENCLOSURE . $result['price'] . $this->CSV_ENCLOSURE . "\n";
 		}
-		return iconv('UTF-8', 'cp1251', $output);
-		//return $output;
+		return $output;
 	}
 }
 ?>
