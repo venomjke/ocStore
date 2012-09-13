@@ -1,14 +1,21 @@
 <?php echo $header; ?>
-<h1 style="background: url('view/image/installation.png') no-repeat;">Шаг 2 - Перед установкой</h1>
-<div style="width: 100%; display: inline-block;">
-  <div style="float: left; width: 569px;">
+<h1>Шаг 2 - Подготовка к установке</h1>
+<div id="column-right">
+  <ul>
+    <li>Лицензия</li>
+    <li><b>Подготовка</b></li>
+    <li>Конфигурация</li>
+    <li>Окончание</li>
+  </ul>
+</div>
+<div id="content">
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
       <p>1. Настройте PHP для соответствия следующим требованиям.</p>
-      <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 15px;">
-        <table width="100%">
+       <fieldset>
+        <table>
           <tr>
             <th width="35%" align="left"><b>Настройки PHP</b></th>
             <th width="25%" align="left"><b>Текущие настройки</b></th>
@@ -46,10 +53,10 @@
             <td align="center"><?php echo (!ini_get('session_auto_start')) ? '<img src="view/image/good.png" alt="Хорошо" />' : '<img src="view/image/bad.png" alt="Плохо" />'; ?></td>
           </tr>
         </table>
-      </div>
+      </fieldset>
       <p>2. Убедитесь, что перечисленные ниже расширения установлены.</p>
-      <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 15px;">
-        <table width="100%">
+      <fieldset>
+        <table>
           <tr>
             <th width="35%" align="left"><b>Расширения</b></th>
             <th width="25%" align="left"><b>Текущие настройки</b></th>
@@ -87,10 +94,10 @@
             <td align="center"><?php echo extension_loaded('zlib') ? '<img src="view/image/good.png" alt="Хорошо" />' : '<img src="view/image/bad.png" alt="Плохо" />'; ?></td>
           </tr>
         </table>
-      </div>
+      </fieldset>
       <p>3. Убедитесь, что перечисленные ниже файлы имеют разрешение на запись.</p>
-      <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 15px;">
-        <table width="100%">
+      <fieldset>
+        <table>
           <tr>
             <th align="left"><b>Файл</b></th>
             <th width="30%" align="left"><b>Состояние</b></th>
@@ -104,10 +111,10 @@
             <td><?php echo is_writable($config_admin) ? '<span class="good">Доступно для записи</span>' : '<span class="bad">Не доступно для записи</span>'; ?></td>
           </tr>
         </table>
-      </div>
+      </fieldset>
       <p>4. Убедитесь, что перечисленные ниже каталоги, а также все их подкаталоги и файлы в них имеют разрешение на запись.</p>
-      <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 15px;">
-        <table width="100%">
+      <fieldset>
+        <table>
           <tr>
             <th align="left"><b>Директория</b></th>
             <th width="30%" align="left"><b>Состояние</b></th>
@@ -137,17 +144,13 @@
             <td><?php echo is_writable($download) ? '<span class="good">Доступно для записи</span>' : '<span class="bad">Не доступно для записи</span>'; ?></td>
           </tr>
         </table>
+      </fieldset>
+    <div class="buttons">
+      <div class="left"><a href="<?php echo $back; ?>" class="button">Back</a></div>
+      <div class="right">
+        <input type="submit" value="Continue" class="button" />
       </div>
-      <div style="text-align: right;"><a onclick="document.getElementById('form').submit()" class="button"><span class="button_left button_continue"></span><span class="button_middle">Продолжить</span><span class="button_right"></span></a></div>
-    </form>
-  </div>
-  <div style="float: right; width: 205px; height: 400px; padding: 10px; color: #663300; border: 1px solid #FFE0CC; background: #FFF5CC;">
-    <ul>
-      <li>Лицензия</li>
-      <li><b>Перед установкой</b></li>
-      <li>Конфигурация</li>
-      <li>Окончание</li>
-    </ul>
-  </div>
+    </div>
+   </form>
 </div>
 <?php echo $footer; ?>

@@ -1,14 +1,20 @@
 <?php echo $header; ?>
-<h1 style="background: url('view/image/license.png') no-repeat;">Шаг 1 - Лицензия</h1>
-<div style="width: 100%; display: inline-block;">
-  <div style="float: left; width: 569px;">
+<h1>Шаг 1 - Лицензия</h1>
+<div id="column-right">
+  <ul>
+    <li><b>Лицензия</b></li>
+    <li>Подготовка</li>
+    <li>Конфигурация</li>
+    <li>Окончание</li>
+  </ul>
+</div>
+  <div id="content">
     <?php if ($error_warning) { ?>
     <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
-    <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 15px;">
-      <div style="color: #333; height: 300px; width: 545px; border: 1px solid #CCC; background: #FFF; overflow-y: scroll;overflow-x:hidden;">
-        <div style="padding: 5px;">
-<h3 style="text-align: center;">СТАНДАРТНАЯ ОБЩЕСТВЕННАЯ ЛИЦЕНЗИЯ GNU</h3>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+        <div class="terms">
+          <h3 style="text-align: center;">СТАНДАРТНАЯ ОБЩЕСТВЕННАЯ ЛИЦЕНЗИЯ GNU</h3>
           <p style="text-align: center;">Версия 3, от 29 июня 2007</p>
           <p>Copyright &copy; 2007 Free Software Foundation, Inc. &lt;http://fsf.org/&gt;</p>
           <p> Каждый имеет право распространять точные копии этой лицензии, но без внесения изменений.</p>
@@ -147,20 +153,12 @@
         </div>
       </div>
     </div>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-      <div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 15px; text-align: right;">Я согласен с лицензией
-        <input type="checkbox" name="agree" />
+    <div class="buttons">
+      <div class="right">Я согласен
+        <input type="checkbox" name="agree" />&nbsp;
+        <input type="submit" value="Продолжить" class="button" />
       </div>
-      <div style="text-align: right;"><a onclick="document.getElementById('form').submit()" class="button"><span class="button_left button_continue"></span><span class="button_middle">Продолжить</span><span class="button_right"></span></a></div>
-    </form>
-  </div>
-  <div style="float: right; width: 205px; height: 400px; padding: 10px; color: #663300; border: 1px solid #FFE0CC; background: #FFF5CC;">
-    <ul>
-      <li><b>Лицензия</b></li>
-      <li>Перед установкой</li>
-      <li>Конфигурация</li>
-      <li>Окончание</li>
-    </ul>
-  </div>
+    </div>
+  </form>
 </div>
 <?php echo $footer; ?>

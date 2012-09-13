@@ -17,7 +17,7 @@
       <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
-      <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-sms"><?php echo $tab_sms; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>
+      <div id="tabs" class="htabs"><a href="#tab-general"><?php echo $tab_general; ?></a><a href="#tab-store"><?php echo $tab_store; ?></a><a href="#tab-local"><?php echo $tab_local; ?></a><a href="#tab-option"><?php echo $tab_option; ?></a><a href="#tab-image"><?php echo $tab_image; ?></a><a href="#tab-ftp"><?php echo $tab_ftp; ?></a><a href="#tab-mail"><?php echo $tab_mail; ?></a><a href="#tab-fraud"><?php echo $tab_fraud; ?></a><a href="#tab-sms"><?php echo $tab_sms; ?></a><a href="#tab-server"><?php echo $tab_server; ?></a></div>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <div id="tab-general">
           <table class="form">
@@ -580,6 +580,19 @@
           <h2><?php echo $text_return; ?></h2>
           <table class="form">
             <tr>
+              <td><?php echo $entry_return; ?></td>
+              <td><select name="config_return_id">
+                  <option value="0"><?php echo $text_none; ?></option>
+                  <?php foreach ($informations as $information) { ?>
+                  <?php if ($information['information_id'] == $config_return_id) { ?>
+                  <option value="<?php echo $information['information_id']; ?>" selected="selected"><?php echo $information['title']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $information['information_id']; ?>"><?php echo $information['title']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+            </tr>
+            <tr>
               <td><?php echo $entry_return_status; ?></td>
               <td><select name="config_return_status_id">
                   <?php foreach ($return_statuses as $return_status) { ?>
@@ -688,6 +701,56 @@
                 <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" size="3" />
                 <?php if ($error_image_cart) { ?>
                 <span class="error"><?php echo $error_image_cart; ?></span>
+                <?php } ?></td>
+            </tr>
+          </table>
+        </div>
+        <div id="tab-ftp">
+          <table class="form">
+            <tr>
+              <td><?php echo $entry_ftp_host; ?></td>
+              <td><input type="text" name="config_ftp_host" value="<?php echo $config_ftp_host; ?>" />
+                <?php if ($error_ftp_host) { ?>
+                <span class="error"><?php echo $error_ftp_host; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_port; ?></td>
+              <td><input type="text" name="config_ftp_port" value="<?php echo $config_ftp_port; ?>" />
+                <?php if ($error_ftp_port) { ?>
+                <span class="error"><?php echo $error_ftp_port; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_username; ?></td>
+              <td><input type="text" name="config_ftp_username" value="<?php echo $config_ftp_username; ?>" />
+                <?php if ($error_ftp_username) { ?>
+                <span class="error"><?php echo $error_ftp_username; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_password; ?></td>
+              <td><input type="text" name="config_ftp_password" value="<?php echo $config_ftp_password; ?>" />
+                <?php if ($error_ftp_password) { ?>
+                <span class="error"><?php echo $error_ftp_password; ?></span>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_root; ?></td>
+              <td><input type="text" name="config_ftp_root" value="<?php echo $config_ftp_root; ?>" /></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_ftp_status; ?></td>
+              <td><?php if ($config_ftp_status) { ?>
+                <input type="radio" name="config_ftp_status" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_ftp_status" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_ftp_status" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_ftp_status" value="0" checked="checked" />
+                <?php echo $text_no; ?>
                 <?php } ?></td>
             </tr>
           </table>
@@ -864,18 +927,36 @@
         <div id="tab-server">
           <table class="form">
             <tr>
-              <td><?php echo $entry_use_ssl; ?></td>
-              <td><?php if ($config_use_ssl) { ?>
-                <input type="radio" name="config_use_ssl" value="1" checked="checked" />
+              <td><?php echo $entry_secure; ?></td>
+              <td><?php if ($config_secure) { ?>
+                <input type="radio" name="config_secure" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
-                <input type="radio" name="config_use_ssl" value="0" />
+                <input type="radio" name="config_secure" value="0" />
                 <?php echo $text_no; ?>
                 <?php } else { ?>
-                <input type="radio" name="config_use_ssl" value="1" />
+                <input type="radio" name="config_secure" value="1" />
                 <?php echo $text_yes; ?>
-                <input type="radio" name="config_use_ssl" value="0" checked="checked" />
+                <input type="radio" name="config_secure" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_shared; ?></td>
+              <td><?php if ($config_shared) { ?>
+                <input type="radio" name="config_shared" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_shared" value="0" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="config_shared" value="1" />
+                <?php echo $text_yes; ?>
+                <input type="radio" name="config_shared" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_robots; ?></td>
+              <td><textarea name="config_robots" cols="40" rows="5"><?php echo $config_robots; ?></textarea></td>
             </tr>
             <tr>
               <td><?php echo $entry_seo_url; ?></td>
@@ -937,7 +1018,10 @@
             </tr>
             <tr>
               <td><?php echo $entry_encryption; ?></td>
-              <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" /></td>
+              <td><input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" />
+                <?php if ($error_encryption) { ?>
+                <span class="error"><?php echo $error_encryption; ?></span>
+                <?php } ?></td>
             </tr>
             <tr>
               <td><?php echo $entry_compression; ?></td>
@@ -1022,7 +1106,7 @@ $('select[name=\'config_country_id\']').bind('change', function() {
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="0" selected="selected><?php echo $text_none; ?></option>';
+				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
 
 			$('select[name=\'config_zone_id\']').html(html);

@@ -61,7 +61,7 @@ class ControllerShippingByTotal extends Controller {
 
 		$this->data['action'] = $this->url->link('shipping/by_total', 'token=' . $this->session->data['token'], 'SSL');
 
-		$this->data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'); 
+		$this->data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->load->model('localisation/geo_zone');
 

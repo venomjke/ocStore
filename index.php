@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '1.5.3.1');
+define('VERSION', '1.5.5');
 
 // Configuration
 require_once('config.php');
@@ -85,7 +85,7 @@ if (!$store_query->num_rows) {
 }
 
 // Url
-$url = new Url($config->get('config_url'), $config->get('config_use_ssl') ? $config->get('config_ssl') : $config->get('config_url'));
+$url = new Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'));
 $registry->set('url', $url);
 
 // Log
@@ -142,13 +142,19 @@ $cache = new Cache();
 $registry->set('cache', $cache);
 
 // Session
-$session = new Session();
+if (isset($request->get['session_id'])) {
+	$session_id = $request->get['session_id'];
+} else {
+	$session_id = '';
+}
+
+$session = new Session($session_id);
 $registry->set('session', $session);
 
 // Language Detection
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1'");
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'");
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
@@ -207,7 +213,7 @@ $registry->set('customer', new Customer($registry));
 // Affiliate
 $registry->set('affiliate', new Affiliate($registry));
 
-if (isset($request->get['tracking']) && !isset($request->cookie['tracking'])) {
+if (isset($request->get['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
 }
 
@@ -226,7 +232,7 @@ $registry->set('length', new Length($registry));
 // Cart
 $registry->set('cart', new Cart($registry));
 
-//  Encryption
+// Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
 // Front Controller
@@ -234,6 +240,9 @@ $controller = new Front($registry);
 
 // Maintenance Mode
 $controller->addPreAction(new Action('common/maintenance'));
+
+// SSL
+$controller->addPreAction(new Action('common/shared'));
 
 // SEO URL's
 if (!$seo_type = $config->get('config_seo_url_type')) {

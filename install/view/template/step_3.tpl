@@ -1,13 +1,20 @@
 <?php echo $header; ?>
-<h1 style="background: url('view/image/configuration.png') no-repeat;">Шаг 3 - Конфигурация</h1>
-<div style="width: 100%; display: inline-block;">
-<div style="float: left; width: 569px;">
+<h1>Шаг 3 - Конфигурация</h1>
+<div id="column-right">
+  <ul>
+    <li>Лицензия</li>
+    <li>Подготовка</li>
+    <li><b>Конфигурация</b></li>
+    <li>Окончание</li>
+  </ul>
+</div>
+<div id="content">
 <?php if ($error_warning) { ?>
 <div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
-<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
   	<p>1 . Введите настройки БД.</p>
-  	<div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 15px;">
+  	<fieldset>
 	<table>
 	<tr>
 		<td width="185"><span class="required">*</span>Драйвер БД:</td>
@@ -50,9 +57,9 @@
 		<td><input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" /></td>
 	</tr>
 	</table>
-  	</div>
+  	</fieldset>
   	<p>2. Введите логин и пароль администратора.</p>
-  	<div style="background: #F7F7F7; border: 1px solid #DDDDDD; padding: 10px; margin-bottom: 15px;">
+  	<fieldset>
 	<table>
 	<tr>
 		<td width="185"><span class="required">*</span>Логин:</td>
@@ -76,17 +83,13 @@
 	  	<?php } ?></td>
 	</tr>
 	</table>
-  	</div>
-  	<div style="text-align: right;"><a onclick="document.getElementById('form').submit()" class="button"><span class="button_left button_continue"></span><span class="button_middle">Continue</span><span class="button_right"></span></a></div>
-	</form>
-</div>
-<div style="float: right; width: 205px; height: 400px; padding: 10px; color: #663300; border: 1px solid #FFE0CC; background: #FFF5CC;">
-	<ul>
-  	<li>Лицензия</li>
-  	<li>Перед установкой</li>
-  	<li><b>Конфигурация</b></li>
-  	<li>Окончание</li>
-	</ul>
-</div>
+  	</fieldset>
+    <div class="buttons">
+      <div class="left"><a href="<?php echo $back; ?>" class="button">Back</a></div>
+      <div class="right">
+        <input type="submit" value="Continue" class="button" />
+      </div>
+   </div>
+  </form>
 </div>
 <?php echo $footer; ?>

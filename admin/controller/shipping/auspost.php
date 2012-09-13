@@ -78,7 +78,7 @@ class ControllerShippingAusPost extends Controller {
 		} else {
 			$this->data['auspost_postcode'] = $this->config->get('auspost_postcode');
 		}
-				
+
 		if (isset($this->request->post['auspost_standard'])) {
 			$this->data['auspost_standard'] = $this->request->post['auspost_standard'];
 		} else {
@@ -104,9 +104,9 @@ class ControllerShippingAusPost extends Controller {
 		}
 
 		$this->load->model('localisation/weight_class');
-		
+
 		$this->data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
-						
+
 		if (isset($this->request->post['auspost_tax_class_id'])) {
 			$this->data['auspost_tax_class_id'] = $this->request->post['auspost_tax_class_id'];
 		} else {

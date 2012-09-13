@@ -884,18 +884,6 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 		}
 
-		$this->load->model('catalog/manufacturer');
-
-		$this->data['manufacturers'] = $this->model_catalog_manufacturer->getManufacturers();
-
-		if (isset($this->request->post['manufacturer_id'])) {
-  			$this->data['manufacturer_id'] = $this->request->post['manufacturer_id'];
-		} elseif (!empty($product_info)) {
-			$this->data['manufacturer_id'] = $product_info['manufacturer_id'];
-		} else {
-  			$this->data['manufacturer_id'] = 0;
-		}
-
 		if (isset($this->request->post['shipping'])) {
   			$this->data['shipping'] = $this->request->post['shipping'];
 		} elseif (!empty($product_info)) {
@@ -1040,6 +1028,38 @@ class ControllerCatalogProduct extends Controller {
   			$this->data['length_class_id'] = $this->config->get('config_length_class_id');
 		}
 
+		$this->load->model('catalog/manufacturer');
+
+    	$this->data['manufacturers'] = $this->model_catalog_manufacturer->getManufacturers();
+
+    	if (isset($this->request->post['manufacturer_id'])) {
+      		$this->data['manufacturer_id'] = $this->request->post['manufacturer_id'];
+		} elseif (!empty($product_info)) {
+			$this->data['manufacturer_id'] = $product_info['manufacturer_id'];
+		} else {
+      		$this->data['manufacturer_id'] = 0;
+    	}
+
+		$this->load->model('catalog/category');
+
+		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
+
+		if (isset($this->request->post['product_category'])) {
+			$this->data['product_category'] = $this->request->post['product_category'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$this->data['product_category'] = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
+		} else {
+			$this->data['product_category'] = array();
+		}
+
+		if (isset($this->request->post['product_filter'])) {
+			$this->data['product_filters'] = $this->request->post['product_filter'];
+		} elseif (isset($this->request->get['product_id'])) {
+			//$this->data['product_filters'] = $this->model_catalog_product->getProductFilters($this->request->get['product_id']);
+		} else {
+			$this->data['product_filters'] = array();
+		}
+
 		if (isset($this->request->post['product_attribute'])) {
 			$this->data['product_attributes'] = $this->request->post['product_attribute'];
 		} elseif (isset($this->request->get['product_id'])) {
@@ -1167,26 +1187,6 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['product_download'] = array();
 		}
 
-		$this->load->model('catalog/category');
-
-		$this->data['categories'] = $this->model_catalog_category->getCategories(0);
-		// SeoPro-related thing (did clean URL like: http://shop/<main_category>/<product> )
-		if (isset($this->request->post['main_category_id'])) {
-			$this->data['main_category_id'] = $this->request->post['main_category_id'];
-		} elseif (isset($product_info)) {
-			$this->data['main_category_id'] = $this->model_catalog_product->getProductMainCategoryId($this->request->get['product_id']);
-		} else {
-			$this->data['main_category_id'] = 0;
-		}
-		// SeoPro
-		if (isset($this->request->post['product_category'])) {
-			$this->data['product_category'] = $this->request->post['product_category'];
-		} elseif (isset($this->request->get['product_id'])) {
-			$this->data['product_category'] = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
-		} else {
-			$this->data['product_category'] = array();
-		}
-
 		if (isset($this->request->post['product_related'])) {
 			$products = $this->request->post['product_related'];
 		} elseif (isset($this->request->get['product_id'])) {
@@ -1207,6 +1207,16 @@ class ControllerCatalogProduct extends Controller {
 				);
 			}
 		}
+
+		// SeoPro-related thing (did clean URL like: http://shop/<main_category>/<product> )
+		if (isset($this->request->post['main_category_id'])) {
+			$this->data['main_category_id'] = $this->request->post['main_category_id'];
+		} elseif (isset($product_info)) {
+			$this->data['main_category_id'] = $this->model_catalog_product->getProductMainCategoryId($this->request->get['product_id']);
+		} else {
+			$this->data['main_category_id'] = 0;
+		}
+		// SeoPro
 
 		if (isset($this->request->post['points'])) {
   			$this->data['points'] = $this->request->post['points'];

@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '1.5.3.1');
+define('VERSION', '1.5.5');
 
 // Configuration
 require_once('config.php');
@@ -61,7 +61,7 @@ foreach ($query->rows as $setting) {
 }
 
 // Url
-$url = new Url(HTTP_SERVER, $config->get('config_use_ssl') ? HTTPS_SERVER : HTTP_SERVER);
+$url = new Url(HTTP_SERVER, $config->get('config_secure') ? HTTPS_SERVER : HTTP_SERVER);
 $registry->set('url', $url);
 
 // Log
@@ -123,7 +123,7 @@ $registry->set('session', $session);
 // Language
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language");
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language`");
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;

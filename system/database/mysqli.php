@@ -1,75 +1,76 @@
 <?php
-/*
-
-На данный момент данный драйвер находится в стадии зачатка разработки.
-Его использование КРАЙНЕ не рекомендуется.
-
-*/
 final class MySQLi {
-	private $connection;
+	private $mysqli;
 
 	public function __construct($hostname, $username, $password, $database) {
-		if (!$this->connection = mysqliconnect($hostname, $username, $password)) {
-      		exit('Error: Could not make a database connection using ' . $username . '@' . $hostname);
-    	}
+		$this->mysqli = new mysqli($hostname, $username, $password, $database);
 
-    	if (!mysqliselect_db($database, $this->connection)) {
-      		exit('Error: Could not connect to database ' . $database);
-    	}
+		if ($this->mysqli->connect_error) {
+      		trigger_error('Error: Could not make a database link (' . $this->mysqli->connect_errno . ') ' . $this->mysqli->connect_error);
+		}
 
-		mysqliquery("SET NAMES 'utf8'", $this->connection);
-		mysqliquery("SET CHARACTER SET utf8", $this->connection);
-		mysqliquery("SET CHARACTER_SET_CONNECTION=utf8", $this->connection);
-		mysqliquery("SET SQL_MODE = ''", $this->connection);
+		$this->mysqli->query("SET NAMES 'utf8'");
+		$this->mysqli->query("SET CHARACTER SET utf8");
+		$this->mysqli->query("SET CHARACTER_SET_CONNECTION=utf8");
+		$this->mysqli->query("SET SQL_MODE = ''");
   	}
 
   	public function query($sql) {
-		$resource = mysqliquery($sql, $this->connection);
+		$result = $this->mysqli->query($sql);
 
-		if ($resource) {
+
+
+		if ($this->mysqli->errno) {
+		//$mysqli->errno
+		}
+
 			if (is_resource($resource)) {
 				$i = 0;
 
 				$data = array();
 
-				while ($result = mysqlifetch_assoc($resource)) {
-					$data[$i] = $result;
+				while ($row = $result->fetch_object()) {
+					$data[$i] = $row;
 
 					$i++;
 				}
 
-				mysqlifree_result($resource);
+				$result->close();
 
 				$query = new stdClass();
 				$query->row = isset($data[0]) ? $data[0] : array();
 				$query->rows = $data;
-				$query->num_rows = $i;
+				$query->num_rows = $result->num_rows;
 
 				unset($data);
 
+
+
+
 				return $query;
     		} else {
-				return TRUE;
+				return true;
 			}
 		} else {
-			exit('Error: ' . mysqlierror($this->connection) . '<br />Error No: ' . mysqlierrno($this->connection) . '<br />' . $sql);
+			trigger_error('Error: ' . mysql_error($this->link) . '<br />Error No: ' . mysql_errno($this->link) . '<br />' . $sql);
+			exit();
     	}
   	}
 
 	public function escape($value) {
-		return mysqlireal_escape_string($value, $this->connection);
+		return $this->mysqli->real_escape_string($value);
 	}
 
   	public function countAffected() {
-    	return mysqliaffected_rows($this->connection);
+    	return $this->mysqli->affected_rows;
   	}
 
   	public function getLastId() {
-    	return mysqliinsert_id($this->connection);
+    	return $this->mysqli->insert_id;
   	}
 
 	public function __destruct() {
-		mysqliclose($this->connection);
+		$this->mysqli->close();
 	}
 }
 ?>

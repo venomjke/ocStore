@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ModelShippingByTotal extends Model {
 	public function getQuote($address) {
 		$this->load->language('shipping/by_total');

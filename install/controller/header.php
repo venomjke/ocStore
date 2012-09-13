@@ -9,7 +9,6 @@ class ControllerHeader extends Controller {
 
 		$this->data['base'] = HTTP_SERVER;
 
-		$this->id       = 'header';
 		$this->template = 'header.tpl';
 
 		$this->render();

@@ -349,13 +349,15 @@ class ControllerProductProduct extends Controller {
 
 			$this->data['tags'] = array();
 
-			$tags = explode(',', $product_info['tag']);
+			if ($product_info['tag']) {
+				$tags = explode(',', $product_info['tag']);
 
-			foreach ($tags as $tag) {
-				$this->data['tags'][] = array(
-					'tag'  => trim($tag),
-					'href' => $this->url->link('product/search', 'filter_tag=' . trim($tag))
-				);
+				foreach ($tags as $tag) {
+					$this->data['tags'][] = array(
+						'tag'  => trim($tag),
+						'href' => $this->url->link('product/search', 'filter_tag=' . trim($tag))
+					);
+				}
 			}
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
@@ -561,15 +563,13 @@ class ControllerProductProduct extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 
-		if (!$json) {
-			if (is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-				$file = basename($filename) . '.' . md5(mt_rand());
+		if (!$json && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
+			$file = basename($filename) . '.' . md5(mt_rand());
 
-				// Hide the uploaded file name so people can not link to it directly.
-				$json['file'] = $this->encryption->encrypt($file);
+			// Hide the uploaded file name so people can not link to it directly.
+			$json['file'] = $this->encryption->encrypt($file);
 
-				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
-			}
+			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 
 			$json['success'] = $this->language->get('text_upload');
 		}
