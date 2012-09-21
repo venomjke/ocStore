@@ -19,3 +19,5 @@ catalog/view/theme/*
 image/cache
 image/data/*
 !image/data/demo
+*.sublime-workspace
+*.sublime-project
