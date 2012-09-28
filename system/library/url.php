@@ -43,5 +43,14 @@ class Url {
 		return $url;
 	}
 
+	/**
+	 * Функция преобразует get параметры в строку запроса используя http_build_query
+	 *
+	 * @return string
+	 **/
+	public function params_to_string($params = array())
+	{
+	}
+
 }
 ?>

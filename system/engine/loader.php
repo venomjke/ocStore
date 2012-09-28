@@ -173,6 +173,21 @@ final class Loader {
 		return $this->language->load($language);
 	}
 
+	public function is_view_exists($view_path)
+	{	
+		$ext  = pathinfo($view_path,PATHINFO_EXTENSION);
+		$file = $ext === ''?$view_path.$this->_oc_view_ext:$view_path;
+
+		$file_exists = false;
+
+		foreach($this->_oc_views_paths as $path){
+			if(file_exists($path.$file)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/*
 	* Метод, выполняющий загрузку файла представления. 
 	*/
