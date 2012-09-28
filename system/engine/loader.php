@@ -21,9 +21,30 @@ final class Loader {
 	 * @var array
 	 **/
 	private $_oc_helpers = array();
+	/**
+	 * Пути к папкам в которых размещаются представления
+	 *
+	 * @var array
+	 **/
+	private $_oc_views_paths = array();
+	/**
+	 * Кэш контейнер, для хранения промежуточных переменных во время загрузки представлений
+	 *
+	 * @var array
+	 **/
+	private $_oc_cache_vars = array();
+	/**
+	 * Расширения файла представления
+	 *
+	 * @var string
+	 **/
+	private $_oc_view_ext = '.tpl';
 	
 	public function __construct($registry) {
 		$this->registry = $registry;
+
+		// Устанавливаем пути к представлениям
+		$this->set_view_paths();
 	}
 	
 	public function __get($key) {
@@ -32,6 +53,11 @@ final class Loader {
 
 	public function __set($key, $value) {
 		$this->registry->set($key, $value);
+	}
+
+	private function set_view_paths()
+	{
+		$this->_oc_views_paths = array( DIR_APPLICATION.'view/' );
 	}
 	
 	public function library($library) {
@@ -147,9 +173,44 @@ final class Loader {
 		return $this->language->load($language);
 	}
 
-	public function view($file,$params=array(),$return = FALSE)
+	/*
+	* Метод, выполняющий загрузку файла представления. 
+	*/
+	public function view($view_path,$vars=array())
 	{
-		
+		$ext  = pathinfo($view_path,PATHINFO_EXTENSION);
+		$file = $ext === ''?$view_path.$this->_oc_view_ext:$view_path;
+
+		$file_exists = false;
+
+		foreach($this->_oc_views_paths as $path){
+			if(file_exists($path.$file)){
+				$file = $path.$file;
+				$file_exists = true;
+				break;
+			}
+		}
+
+		if(!$file_exists){
+			trigger_error('Error: Could not load view '. $file .'!');
+			return false;
+		}
+
+		ob_start();
+
+		if(is_array($vars)){
+			$this->_oc_cache_vars = array_merge($this->_oc_cache_vars,$vars);
+		}
+
+		extract($this->_oc_cache_vars);
+
+		include($file);
+
+		$buffer = ob_get_contents();
+
+		ob_end_clean();
+
+		return $buffer;
 	}
 } 
 ?>
