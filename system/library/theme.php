@@ -36,8 +36,6 @@ class Theme extends Library{
 		$this->set_current_theme();
 		$this->set_default_theme();
 		$this->set_partials_path();
-
-		$this->log->write('Theme: Class loaded');
 		return $this;
 	}
 
@@ -77,6 +75,13 @@ class Theme extends Library{
 	}
 
 
+	/**
+	* Метод для определения того существует ли файл шаблона или нет
+	*/
+	public function is_template_exists($template_path)
+	{
+		return $this->load->is_view_exists($this->get_current_theme().$template_path);
+	}
 
 	/**
 	 * Метод для загрузки файла шаблона в рамках текущей темы
