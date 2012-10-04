@@ -1,9 +1,11 @@
 <?php
-final class MySQL {
+final class SQLite {
 	private $link;
 	
 	public function __construct($hostname, $username, $password, $database) {
-		if (!$this->link = mysql_connect($hostname, $username, $password)) {
+		
+		
+		if (!$this->link = sqlite_open($hostname, $username, $password)) {
       		trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
     	}
 
@@ -11,9 +13,9 @@ final class MySQL {
       		trigger_error('Error: Could not connect to database ' . $database);
     	}
 		
+		mysql_set_charset('utf8', $this->link);
 		mysql_query("SET NAMES 'utf8'", $this->link);
 		mysql_query("SET CHARACTER SET utf8", $this->link);
-		mysql_query("SET CHARACTER_SET_CONNECTION=utf8", $this->link);
 		mysql_query("SET SQL_MODE = ''", $this->link);
   	}
 		
@@ -40,7 +42,7 @@ final class MySQL {
 				$query->num_rows = $i;
 				
 				unset($data);
-				
+
 				return $query;	
     		} else {
 				return true;
