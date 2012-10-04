@@ -25,3 +25,19 @@ if(!function_exists("site_url")){
 		return $registry->get('url')->link($url,$args,$connection);
 	}
 }
+
+if(!function_exists("redirect")){
+
+	/**
+	 * Функция обращается к url->link для генерации url, а затем использует его для формирования заголовка на redirect
+	 *
+	 * @return void
+	 **/
+	function redirect($url,$status=302)
+	{
+		global $registry;
+		header('Status: ' . $status);
+		header('Location: ' . $registry->get('url')->link($url));
+		exit();	
+	}
+}
