@@ -47,9 +47,9 @@ $upgrade = false;
 
 if (filesize('../config.php') > 0) {
 	$upgrade = true;
-
+	
 	$lines = file(DIR_OPENCART . 'config.php');
-
+	
 	foreach ($lines as $line) {
 		if (strpos(strtoupper($line), 'DB_') !== false) {
 			eval($line);
