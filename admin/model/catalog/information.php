@@ -140,10 +140,8 @@ class ModelCatalogInformation extends Model {
 
 		foreach ($query->rows as $result) {
 			$information_description_data[$result['language_id']] = array(
-                'seo_title'        => $result['seo_title'],
+               'seo_title'        => $result['seo_title'],
 				'seo_h1'           => $result['seo_h1'],
-				'meta_keyword'     => $result['meta_keyword'],
-				'meta_description' => $result['meta_description'],
 				'title'       => $result['title'],
 				'description' => $result['description']
 			);

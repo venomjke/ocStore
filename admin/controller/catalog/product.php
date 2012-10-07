@@ -587,8 +587,8 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_reward'] = $this->language->get('entry_reward');
 		$this->data['entry_layout'] = $this->language->get('entry_layout');
-		$this->data['entry_main_category'] = $this->language->get('entry_main_category');
-		$this->data['entry_seo_title'] = $this->language->get('entry_seo_title');
+				
+        $this->data['entry_seo_title'] = $this->language->get('entry_seo_title');
 		$this->data['entry_seo_h1'] = $this->language->get('entry_seo_h1');
 
     	$this->data['button_save'] = $this->language->get('button_save');
@@ -1277,18 +1277,6 @@ class ControllerCatalogProduct extends Controller {
 			} else {
 				$filter_model = '';
 			}
-						
-			if (isset($this->request->get['filter_category_id'])) {
-				$filter_category_id = $this->request->get['filter_category_id'];
-			} else {
-				$filter_category_id = '';
-			}
-			
-			if (isset($this->request->get['filter_sub_category'])) {
-				$filter_sub_category = $this->request->get['filter_sub_category'];
-			} else {
-				$filter_sub_category = '';
-			}
 			
 			if (isset($this->request->get['limit'])) {
 				$limit = $this->request->get['limit'];	
@@ -1297,12 +1285,10 @@ class ControllerCatalogProduct extends Controller {
 			}			
 						
 			$data = array(
-				'filter_name'         => $filter_name,
-				'filter_model'        => $filter_model,
-				'filter_category_id'  => $filter_category_id,
-				'filter_sub_category' => $filter_sub_category,
-				'start'               => 0,
-				'limit'               => $limit
+				'filter_name'  => $filter_name,
+				'filter_model' => $filter_model,
+				'start'        => 0,
+				'limit'        => $limit
 			);
 			
 			$results = $this->model_catalog_product->getProducts($data);
