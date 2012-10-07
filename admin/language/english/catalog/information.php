@@ -18,14 +18,10 @@ $_['entry_store']       = 'Stores:';
 $_['entry_keyword']     = 'SEO Keyword:<br /><span class="help">Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.</span>';
 $_['entry_bottom']      = 'Bottom:<br/><span class="help">Display in the bottom footer.</span>';
 $_['entry_status']      = 'Status:';
-$_['entry_sort_order']  = 'Sort Order:<br/><span class="help">Set to -1 to hide from listing</span>';
+$_['entry_sort_order']  = 'Sort Order:';
 $_['entry_layout']      = 'Layout Override:';
-$_['entry_seo_title']   = 'HTML Tag Title:';
-$_['entry_seo_h1']      = 'HTML Tag H1:';
-$_['entry_meta_keyword'] = 'Meta Tag Keywords:';
-$_['entry_meta_description'] = 'Meta Tag Description:';
 
-// Error
+// Error 
 $_['error_warning']     = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']  = 'Warning: You do not have permission to modify information!';
 $_['error_title']       = 'Information Title must be between 3 and 64 characters!';

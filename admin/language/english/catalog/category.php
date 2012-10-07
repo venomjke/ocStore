@@ -19,7 +19,7 @@ $_['entry_name']             = 'Category Name:';
 $_['entry_meta_keyword'] 	 = 'Meta Tag Keywords:';
 $_['entry_meta_description'] = 'Meta Tag Description:';
 $_['entry_description']      = 'Description:';
-$_['entry_parent']           = 'Parent Category:';
+$_['entry_parent']           = 'Parent:';
 $_['entry_store']            = 'Stores:';
 $_['entry_keyword']          = 'SEO Keyword:<br /><span class="help">Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.</span>';
 $_['entry_image']            = 'Image:';
@@ -28,10 +28,8 @@ $_['entry_column']           = 'Columns:<br/><span class="help">Number of column
 $_['entry_sort_order']       = 'Sort Order:';
 $_['entry_status']           = 'Status:';
 $_['entry_layout']           = 'Layout Override:';
-$_['entry_seo_title']        = 'HTML Tag Title:';
-$_['entry_seo_h1']           = 'HTML Tag H1:';
 
-// Error
+// Error 
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify categories!';
 $_['error_name']             = 'Category Name must be between 2 and 32 characters!';

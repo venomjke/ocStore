@@ -1,8 +1,8 @@
 <?php
 // Heading
-$_['heading_title']          = 'Products';
+$_['heading_title']          = 'Products'; 
 
-// Text
+// Text  
 $_['text_success']           = 'Success: You have modified products!';
 $_['text_plus']              = '+';
 $_['text_minus']             = '-';
@@ -26,9 +26,6 @@ $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_name']             = 'Product Name:';
-// Add
-$_['column_category']        = 'Category';
-// End add
 $_['entry_meta_keyword'] 	 = 'Meta Tag Keywords:';
 $_['entry_meta_description'] = 'Meta Tag Description:';
 $_['entry_description']      = 'Description:';
@@ -42,8 +39,8 @@ $_['entry_jan']              = 'JAN:<br/><span class="help">Japanese Article Num
 $_['entry_isbn']             = 'ISBN:<br/><span class="help">International Standard Book Number</span>';
 $_['entry_mpn']              = 'MPN:<br/><span class="help">Manufacturer Part Number</span>';
 $_['entry_location']         = 'Location:';
+$_['entry_shipping']         = 'Requires Shipping:'; 
 $_['entry_manufacturer']     = 'Manufacturer:';
-$_['entry_shipping']         = 'Requires Shipping:';
 $_['entry_date_available']   = 'Date Available:';
 $_['entry_quantity']         = 'Quantity:';
 $_['entry_minimum']          = 'Minimum Quantity:<br/><span class="help">Force a minimum ordered amount</span>';
@@ -70,16 +67,13 @@ $_['entry_option_value']     = 'Option Value:';
 $_['entry_required']         = 'Required:';
 $_['entry_status']           = 'Status:';
 $_['entry_sort_order']       = 'Sort Order:';
-$_['entry_category']         = 'Categories:';
+$_['entry_category']         = 'Categories:<br /><span class="help">(Autocomplete)</span>';
+$_['entry_filter']           = 'Filters:<br /><span class="help">(Autocomplete)</span>';
 $_['entry_download']         = 'Downloads:';
 $_['entry_related']          = 'Related Products:<br /><span class="help">(Autocomplete)</span>';
 $_['entry_tag']          	 = 'Product Tags:<br /><span class="help">comma separated</span>';
 $_['entry_reward']           = 'Reward Points:';
 $_['entry_layout']           = 'Layout Override:';
-$_['entry_main_category']    = 'Category:';
-$_['entry_seo_title']        = 'HTML Tag Title:';
-$_['entry_seo_h1']           = 'HTML Tag H1:';
-
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
